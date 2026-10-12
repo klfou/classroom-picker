@@ -22,7 +22,7 @@ function checkLayout(d,label){
   for(const other of cards.slice(i+1))disjoint(c.bounds,other.bounds,`${label}: cards do not overlap`);
  }
  assert.equal(d.selectedNameVisible,false,`${label}: timer covers roster names`);
- assert.equal(l.title.text,'背书倒计时');bounded(l.title.bounds,w,h,`${label}: title`);assert.ok(Math.abs(l.title.top-h*.09)<1e-8,`${label}: title is anchored at9% of visible height`);assert.ok(Math.abs(l.title.height-Math.min(64,w*.07,h*.13))<1e-8,`${label}: title uses the shared screen-space visual height`);assert.ok(l.title.bounds.maxY<Math.min(...cards.map(c=>c.bounds.minY)),`${label}: title leaves positive breathing room above all running and finish cards`);
+ assert.equal(l.title,undefined,`${label}: removed heading has no layout or paint target`);
  const finished=cards.some(c=>c.role==='finish');
  if(finished){assert.equal(cards.length,3);assert.equal(chars(d),'时间到');assert.equal(l.colon,null);assert.equal(l.decimal,null);assert.ok(cards.every(c=>c.role==='finish'))}
  else{
@@ -30,7 +30,7 @@ function checkLayout(d,label){
   assert.ok(main.every(c=>c.width===main[0].width&&c.height===main[0].height&&c.y===main[0].y),`${label}: four equally sized aligned main cards`);
   assert.ok(minor.every(c=>c.width===minor[0].width&&c.height===minor[0].height&&c.y===minor[0].y),`${label}: two equally sized aligned hundredths cards`);
   assert.ok(minor[0].width<main[0].width&&minor[0].height<main[0].height,`${label}: hundredths are smaller`);
-  const digitTarget=countdownDigitLayout(w,h);assert.ok(Math.abs(l.digitTargetHeight-digitTarget.height)<1e-8,`${label}: main ink shares unchanged classroom height`);for(const c of cards){assert.ok(c.glyphBounds,`${label}: actual cached core bounds are exposed`);assert.ok(Math.abs(c.glyphTargetHeight-digitTarget.height*(c.role==='main'?1:.30))<1e-8,`${label}: uniform alphabet scale retains main/fraction hierarchy`);assert.ok(c.glyphHeight<=c.glyphTargetHeight+1e-8&&c.glyphHeight>=c.glyphTargetHeight*.95,`${label}: natural glyph-height differences stay within the alphabet envelope`);bounded(c.glyphBounds,w,h,`${label}: actual central ink`);disjoint(c.glyphBounds,l.title.bounds,`${label}: title cannot overlap central ink`);
+  const digitTarget=countdownDigitLayout(w,h);assert.ok(Math.abs(l.digitTargetHeight-digitTarget.height)<1e-8,`${label}: main ink shares unchanged classroom height`);for(const c of cards){assert.ok(c.glyphBounds,`${label}: actual cached core bounds are exposed`);assert.ok(Math.abs(c.glyphTargetHeight-digitTarget.height*(c.role==='main'?1:.30))<1e-8,`${label}: uniform alphabet scale retains main/fraction hierarchy`);assert.ok(c.glyphHeight<=c.glyphTargetHeight+1e-8&&c.glyphHeight>=c.glyphTargetHeight*.95,`${label}: natural glyph-height differences stay within the alphabet envelope`);bounded(c.glyphBounds,w,h,`${label}: actual central ink`);
    const inner=c.innerFrameBounds,halfX=.4*c.width/420,halfY=.4*c.height/588,horizontalGap=Math.min(c.glyphBounds.minX-inner.minX,inner.maxX-c.glyphBounds.maxX)-halfX;
    assert.ok(horizontalGap>=c.width*.024,`${label}: widest alphabet ink clears both complete inner side rules (${horizontalGap})`);
    for(const corner of c.cornerEnvelopeBounds){
@@ -41,7 +41,7 @@ function checkLayout(d,label){
   }
   assert.ok(l.colon&&l.decimal,`${label}: separators remain separate from cards`);
   for(const [kind,item]of [['colon',l.colon],['decimal',l.decimal]]){
-   bounded(item.bounds,w,h,`${label}: ${kind}`);for(const c of cards)disjoint(item.bounds,c.bounds,`${label}: ${kind} does not overlap a card`);disjoint(item.bounds,l.title.bounds,`${label}: ${kind} does not overlap title`);
+   bounded(item.bounds,w,h,`${label}: ${kind}`);for(const c of cards)disjoint(item.bounds,c.bounds,`${label}: ${kind} does not overlap a card`);
   }
   assert.ok(main[1].bounds.maxX<=l.colon.bounds.minX&&l.colon.bounds.maxX<=main[2].bounds.minX,`${label}: colon separates MM and SS`);
   assert.ok(l.decimal.bounds.maxX<=minor[0].bounds.minX,`${label}: decimal precedes hundredths`);
@@ -54,6 +54,7 @@ const inCard=(print,card)=>{const x=(print.bounds.minX+print.bounds.maxX)/2,y=(p
 function actualFaces(canvas,debug){const visible=flattenedText(canvas,1/debug.dpr).filter(p=>/^[0-9时间到♥♦♠♣]$/.test(p.text));return debug.timerCards.map(card=>({card,prints:visible.filter(p=>inCard(p,card))}))}
 const outputChars=(canvas,debug)=>actualFaces(canvas,debug).map(({prints})=>prints.filter(p=>/^[0-9时间到]$/.test(p.text)).sort((a,b)=>(b.bounds.maxY-b.bounds.minY)-(a.bounds.maxY-a.bounds.minY))[0]?.text||'').join('');
 function checkArtwork(canvas,d,label){
+ assert.ok(flattenedText(canvas,1/d.dpr).every(p=>p.text!=='背书倒计时'),`${label}: no heading is painted`);
  const faces=actualFaces(canvas,d);assert.equal(outputChars(canvas,d),chars(d),`${label}: actual core crops show exact timer characters`);
  for(const [slot,{card,prints}]of faces.entries()){
   const finished=card.role==='finish',suit=['♠','♥','♣','♦'][slot%4],color=slot%2?'#883b52':PAPER_PALETTE.ink;
@@ -130,7 +131,7 @@ try{
  const retainedSurfaces=[...surfaces.slice(1,5),surfaces.at(-1),...allFaces];view.dispose();assertCache(view.debug().timerCache,{digits:0,finish:0,total:0});assert.deepEqual(view.debug().timerCards,[]);assert.equal(view.debug().timerLayout,null);assert.equal(view.debug().textureCount,0);assert.equal(view.debug().resources.surfaces,0);assert.equal(view.debug().resources.cpuBytes,0);assert.ok(retainedSurfaces.every(face=>face.width===1&&face.height===1),'All retained artwork, background and timer surfaces release their backing stores');
  const disposedAllocated=surfaces.length;view.setCountdown({status:'running',remaining:300000});view.setActive(true);view.resize(1920,810);view.render(999999);assert.equal(surfaces.length,disposedAllocated,'Disposed adapter cannot recreate timer faces');view.dispose();
  const finishedOutput=new Canvas(320,180),finishedFirst=createPaperCards(finishedOutput,{active:false});finishedFirst.setCountdown({status:'finished',remaining:0});finishedFirst.render(1);assertCache(finishedFirst.debug().timerCache,{digits:0,finish:0,total:0});assert.equal(finishedFirst.debug().frame,0);finishedFirst.setActive(true);assertCache(finishedFirst.debug().timerCache,{digits:0,finish:3,total:3},'First activation after expiry builds only the three finish faces');assert.ok(finishedFirst.debug().resources.surfaces<=9);checkArtwork(finishedOutput,finishedFirst.debug(),'Finished-first actual artwork');checkLayout(finishedFirst.debug(),'first active frame is already finished');finishedFirst.dispose();assert.equal(finishedFirst.debug().resources.surfaces,0);
- console.log('PASS paper timer: nine desktop/mobile/short aspect ratios × three DPRs, shared9% title anchor/visual size, title/colon/decimal/card spacing, no clipping or overlap, hidden CPU gating, finish-first allocation and complete disposal');
+ console.log('PASS paper timer: nine desktop/mobile/short aspect ratios × three DPRs, zero heading draw/layout work, unchanged colon/decimal/card spacing, no clipping or overlap, hidden CPU gating, finish-first allocation and complete disposal');
 }finally{
  Math.random=restore.random;if(restore.raf===undefined)delete globalThis.requestAnimationFrame;else globalThis.requestAnimationFrame=restore.raf;if(restore.dpr===undefined)delete globalThis.devicePixelRatio;else globalThis.devicePixelRatio=restore.dpr;
 }

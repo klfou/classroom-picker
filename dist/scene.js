@@ -217,7 +217,7 @@ function moveToBoard(pos,target){
 }
 function finishBoardReturn(){boardReturning=false;controls.enabled=true;if(boardSaved){controls.maxPolarAngle=boardSaved.maxPolar;controls.enableDamping=boardSaved.damping}boardSaved=null}
 function go(pos,target){if(boardMode)return;if(boardReturning)finishBoardReturn();moveCamera(pos,target)}
-function boardCamera(){const target=new THREE.Vector3(0,3.15,-14.98),halfFov=Math.tan(camera.fov*Math.PI/360);const size=boardTimer.fit(camera.aspect),fittedDistance=(size.height/2+.06)/halfFov,distance=Math.min(3,fittedDistance);boardTimer.group.scale.setScalar((distance-.24)/(fittedDistance-.24));boardTimer.fitTitle(camera.fov,distance,...dimensions());return {target,pos:target.clone().add(new THREE.Vector3(0,0,distance))}}
+function boardCamera(){const target=new THREE.Vector3(0,3.15,-14.98),halfFov=Math.tan(camera.fov*Math.PI/360);const size=boardTimer.fit(camera.aspect),fittedDistance=(size.height/2+.06)/halfFov,distance=Math.min(3,fittedDistance);boardTimer.group.scale.setScalar((distance-.24)/(fittedDistance-.24));return {target,pos:target.clone().add(new THREE.Vector3(0,0,distance))}}
 function setBoardMode(active){
  if(active===boardMode)return;
  spaceCards.setCountdown(active?lastBoardState:null);paperCards.setCountdown(active?lastBoardState:null);

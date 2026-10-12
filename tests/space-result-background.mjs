@@ -5,8 +5,6 @@ import * as THREE from '../dist/vendor/three.module.js';
 import {createSpaceCards} from '../dist/space-cards.js';
 import {createCardModel} from '../dist/space-card-model.js';
 import {countdownComposition} from '../dist/space-countdown.js';
-import {countdownTitleLayout} from '../dist/countdown-title-layout.js';
-import {glyphs,units} from '../dist/board-glyphs.js';
 class Context {
  constructor(){this.images=[];this.fills=[]}
  createLinearGradient(){return {addColorStop(){}}}createRadialGradient(){return {addColorStop(){}}}
@@ -54,9 +52,8 @@ for(const kind of ['canvas','webgl']){
  view.reveal(names[4],6550);view.render(6910);checkCount(1);view.setNames(['新学生']);assert.equal(view.debug().winner,'');assert.ok(view.debug().visibleCardCount>0);view.dispose();view.dispose();
 }
 for(const [w,h,viewportWidth,viewportHeight]of [[1100,388.5,1366,518],[354.9,369,390,492]]){
- const composition=countdownComposition(running,w,h,viewportWidth,viewportHeight),expected=countdownTitleLayout(viewportWidth,viewportHeight);let minY=Infinity,maxY=-Infinity;
- for(const e of composition.entries.filter(e=>e.role==='title')){const ys=glyphs[e.char].outline.flatMap(([,p])=>p.map(([,y])=>y/units));minY=Math.min(minY,e.y-Math.max(...ys)*e.size);maxY=Math.max(maxY,e.y-Math.min(...ys)*e.size)}
- assert.ok(Math.abs(minY+viewportHeight*.49-h/2-expected.top)<1e-9,'Title visible top follows the shared9%viewport target');assert.ok(Math.abs(maxY-minY-expected.height)<1e-9,'Title visible height follows the shared screen-pixel target');
+ const composition=countdownComposition(running,w,h,viewportWidth,viewportHeight);
+ assert.ok(composition.entries.every(e=>e.role!=='title'),'No heading is allocated for either rendering backend');
  assert.deepEqual(composition.entries.filter(e=>e.role!=='title'),countdownComposition({...running,hundredths:'01'},w,h,viewportWidth,viewportHeight).entries.filter(e=>e.role!=='title').map((e,i)=>({...e,char:composition.entries.filter(e=>e.role!=='title')[i].char})),'Viewport-calibrated main and fractional positions stay stable across ticks');
 }
-console.log('PASS result/timer stars-only presentation: hidden idle continuity, one selected plaque, zero timer plaques, Canvas/WebGL parity, reset/new draw/theme/context restoration, upright extruded bounds, title height and texture/cache stability. '+JSON.stringify(reports));
+console.log('PASS result/timer stars-only presentation: hidden idle continuity, one selected plaque, zero timer plaques, Canvas/WebGL parity, reset/new draw/theme/context restoration, upright extruded bounds, zero heading entries and texture/cache stability. '+JSON.stringify(reports));

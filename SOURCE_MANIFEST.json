@@ -15,8 +15,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 2780,
-      "sha256": "5be804526aa945b59b92a2cc80a3ed798121c48c8049c75ac37ba5e1a580ce7d"
+      "bytes": 4029,
+      "sha256": "b935295df1f12fb0929346d991af5be2eab7956449283616e9369542877055b2"
     },
     {
       "path": "SNAPSHOT_NOTES.md",
@@ -45,8 +45,8 @@
     },
     {
       "path": "desktop/assets-manifest.json",
-      "bytes": 7481,
-      "sha256": "8235fd3cca4c943c1f80b0df0a01a287c6605c1f917b9be2c283230a2861a8df"
+      "bytes": 7334,
+      "sha256": "2943a75a512447eecb8f3417e636c004cbdf33b63578eee31d3d6d283a4b35ae"
     },
     {
       "path": "desktop/build.cjs",
@@ -85,8 +85,8 @@
     },
     {
       "path": "dist/board-countdown.js",
-      "bytes": 6496,
-      "sha256": "ae752cf44d636740998e0affd475acf1cbb17c61a1de01a25ce25389f1b6d870"
+      "bytes": 5348,
+      "sha256": "0c2ce1e4c2bea9bb53f69b6e81203f7599caf78d5122ecd40161c0ca4021e1b4"
     },
     {
       "path": "dist/board-glyphs-LICENSE.txt",
@@ -110,18 +110,13 @@
     },
     {
       "path": "dist/countdown-digit-layout.js",
-      "bytes": 1723,
-      "sha256": "87e0f2e58c515870e262d5f1c5bbfcd4b151dab02367ff4ff77fe1418100d9d8"
+      "bytes": 1992,
+      "sha256": "4b13e2cf5c5fc8be58b10768cbae8ee07512ea791db54a552ee7832b65e808ba"
     },
     {
       "path": "dist/countdown-state.js",
       "bytes": 1183,
       "sha256": "76183d4f371473cfe1e861ea13c433d99551ec2b9629e26ad2ef51caf18f8b4e"
-    },
-    {
-      "path": "dist/countdown-title-layout.js",
-      "bytes": 360,
-      "sha256": "9ea1e2ee6b30d0ae4385291fc8fac65d1296b23995f31d8a7fbf136507c656ca"
     },
     {
       "path": "dist/countdown.js",
@@ -200,8 +195,8 @@
     },
     {
       "path": "dist/paper-cards.js",
-      "bytes": 43302,
-      "sha256": "ff036b4ad0c907343b98997bcca3ef8cc407207d1ba021f92511eb0f71f701f6"
+      "bytes": 40108,
+      "sha256": "9ae0a78ab00a114c917591892dfc55fb2ba5949ce780062bb207dcf82c05fcaa"
     },
     {
       "path": "dist/render-budget.js",
@@ -220,8 +215,8 @@
     },
     {
       "path": "dist/scene.js",
-      "bytes": 56247,
-      "sha256": "91cc70af6ce0853ef8771756b245aefbd496c131a432622bca4623a93e8213f5"
+      "bytes": 56190,
+      "sha256": "128b8ee4bb6b425b2a9d53592d4b4aa08115cc6a46e2d4d41c9723dc49a8fe3e"
     },
     {
       "path": "dist/selection-timing.js",
@@ -270,8 +265,8 @@
     },
     {
       "path": "dist/space-countdown.js",
-      "bytes": 13804,
-      "sha256": "c4ecfc51fdc2b0fcc905be519e752325c98a8e6b41dcaa6eceddf7c0625cdae0"
+      "bytes": 11689,
+      "sha256": "9d1446d6245e2750a027544e37071a685f6d73382f8b5aaff9049522c596b847"
     },
     {
       "path": "dist/space-meteors.js",
@@ -334,6 +329,36 @@
       "sha256": "60fb4cb16e70e376a0f3e32d5d5cd2e0824859a984b452a0407a5c92ac61711a"
     },
     {
+      "path": "docs/images/classroom-countdown.png",
+      "bytes": 117195,
+      "sha256": "b92012437dcacf7cf33216492a19bf345db1471105607ace1b823587ef4c5b40"
+    },
+    {
+      "path": "docs/images/classroom-pick.png",
+      "bytes": 361185,
+      "sha256": "bb15bc45fd40761de99e6c16cae1a9812708bbc719b9d99f03b2365d8d3c6862"
+    },
+    {
+      "path": "docs/images/paper-countdown.png",
+      "bytes": 268166,
+      "sha256": "cd15ecf6540659d9e99f4270806cc93e67a19151cb5404413efe40e323cbc45b"
+    },
+    {
+      "path": "docs/images/paper-pick.png",
+      "bytes": 513902,
+      "sha256": "50d9d2527447a2e17932e4b4e28215b9fb3e357d62b13e9b4bcc4b1e4e604bd5"
+    },
+    {
+      "path": "docs/images/space-countdown.png",
+      "bytes": 107877,
+      "sha256": "bbc60908ea539d6e303331b05d792c7fa9a8a60334916612df3d073b08fbfafb"
+    },
+    {
+      "path": "docs/images/space-pick.png",
+      "bytes": 76161,
+      "sha256": "da494cacae34f215c28eaaeaca812590dfee09b3c24c41b1c47900db7ea3ebb3"
+    },
+    {
       "path": "scripts/test.mjs",
       "bytes": 586,
       "sha256": "1a9d3a0c5c95619f79aa8602a5a95033b46e1fd1f88ffe1cfb7cf0b41f2e89ab"
@@ -345,8 +370,8 @@
     },
     {
       "path": "tests/countdown-digit-layout.mjs",
-      "bytes": 11141,
-      "sha256": "ee634c036ef5d39ae6c6fdf75eba398cd161cdedae3c41e7edae1600b4b94daf"
+      "bytes": 13265,
+      "sha256": "4ad52e3c450e5e09486e864c05bfb694939b9ead4cb7e9def9897343b4252ab5"
     },
     {
       "path": "tests/countdown-presets.mjs",
@@ -355,8 +380,8 @@
     },
     {
       "path": "tests/countdown-title-layout.mjs",
-      "bytes": 5604,
-      "sha256": "dfd53960f45e206c37d10e80af6d179f0542ca3bc9bcce17c914d8e1194abb13"
+      "bytes": 2354,
+      "sha256": "522f79855a2479149e4143f9f4cb3f63f5ef86996cdf6df244deee75a3606671"
     },
     {
       "path": "tests/duration-buttons.mjs",
@@ -405,13 +430,13 @@
     },
     {
       "path": "tests/paper-cards.mjs",
-      "bytes": 20581,
-      "sha256": "d831e2930652a7879e34e6abfb4114abaaea276ba040633541b7377c3e7f194f"
+      "bytes": 20564,
+      "sha256": "71ef1af4c8e21af0b8f1697ddadcaa6ac500dfbfbffce0c78c1767e82fa39061"
     },
     {
       "path": "tests/paper-countdown-cards.mjs",
-      "bytes": 26759,
-      "sha256": "4291762b2f54b71c6f1a1c8fdcd7ee631b83abb29544c4afe48b2dd77ab596ef"
+      "bytes": 26328,
+      "sha256": "1498909358e346ba8e1373d93809baf1500f1d19385fbf85a7eec5a6299fc043"
     },
     {
       "path": "tests/paper-patterned-back.mjs",
@@ -480,8 +505,8 @@
     },
     {
       "path": "tests/space-card-webgl.mjs",
-      "bytes": 8710,
-      "sha256": "1b86d5243fed468f889fe7caafe30a47a9db9de1e7a71bddd17d82c5cb2386ca"
+      "bytes": 8709,
+      "sha256": "45f2181ece4695ace547c824452c6ed41b5af6c2f55f1b086584dce35ab0aebb"
     },
     {
       "path": "tests/space-cards.mjs",
@@ -495,8 +520,8 @@
     },
     {
       "path": "tests/space-result-background.mjs",
-      "bytes": 8801,
-      "sha256": "7dd402f84b58c09cffd028fc86eaa8cc9e257601c097a773ab0dbdc486437f60"
+      "bytes": 8234,
+      "sha256": "7194d0a01ec554c6e44eb4eb146ff70d993bd916bb42fa7d42b5c7d0a749d5fd"
     },
     {
       "path": "tests/speech-sounds.mjs",
