@@ -15,8 +15,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 2780,
-      "sha256": "5be804526aa945b59b92a2cc80a3ed798121c48c8049c75ac37ba5e1a580ce7d"
+      "bytes": 3915,
+      "sha256": "c5b7045284d42e4071112e760248e473a506ac3385681d3c32a1e33b1b330670"
     },
     {
       "path": "SNAPSHOT_NOTES.md",
@@ -45,8 +45,8 @@
     },
     {
       "path": "desktop/assets-manifest.json",
-      "bytes": 7481,
-      "sha256": "8235fd3cca4c943c1f80b0df0a01a287c6605c1f917b9be2c283230a2861a8df"
+      "bytes": 7334,
+      "sha256": "ccf1cadfe96201f2f0f3aefedb36b4dd7ed3d01fccd7daf7b1ec0876c3fdc57a"
     },
     {
       "path": "desktop/build.cjs",
@@ -85,8 +85,8 @@
     },
     {
       "path": "dist/board-countdown.js",
-      "bytes": 6496,
-      "sha256": "ae752cf44d636740998e0affd475acf1cbb17c61a1de01a25ce25389f1b6d870"
+      "bytes": 4168,
+      "sha256": "bf12b18cc0e6fe33a6dcb9d14c3bfd2ae77fd7b23ef9a6e604cf906dd0eafea5"
     },
     {
       "path": "dist/board-glyphs-LICENSE.txt",
@@ -117,11 +117,6 @@
       "path": "dist/countdown-state.js",
       "bytes": 1183,
       "sha256": "76183d4f371473cfe1e861ea13c433d99551ec2b9629e26ad2ef51caf18f8b4e"
-    },
-    {
-      "path": "dist/countdown-title-layout.js",
-      "bytes": 360,
-      "sha256": "9ea1e2ee6b30d0ae4385291fc8fac65d1296b23995f31d8a7fbf136507c656ca"
     },
     {
       "path": "dist/countdown.js",
@@ -200,8 +195,8 @@
     },
     {
       "path": "dist/paper-cards.js",
-      "bytes": 43302,
-      "sha256": "ff036b4ad0c907343b98997bcca3ef8cc407207d1ba021f92511eb0f71f701f6"
+      "bytes": 41508,
+      "sha256": "561963ec4d5d947ad0dcf173bd81dc7ac692159ea729fb9e0987272cc0aba217"
     },
     {
       "path": "dist/render-budget.js",
@@ -220,8 +215,8 @@
     },
     {
       "path": "dist/scene.js",
-      "bytes": 56247,
-      "sha256": "91cc70af6ce0853ef8771756b245aefbd496c131a432622bca4623a93e8213f5"
+      "bytes": 56190,
+      "sha256": "128b8ee4bb6b425b2a9d53592d4b4aa08115cc6a46e2d4d41c9723dc49a8fe3e"
     },
     {
       "path": "dist/selection-timing.js",
@@ -270,8 +265,8 @@
     },
     {
       "path": "dist/space-countdown.js",
-      "bytes": 13804,
-      "sha256": "c4ecfc51fdc2b0fcc905be519e752325c98a8e6b41dcaa6eceddf7c0625cdae0"
+      "bytes": 11085,
+      "sha256": "db189266e2f88ba682d890d0bb01dbdcf7cafcf8674e525209feab9187f185c2"
     },
     {
       "path": "dist/space-meteors.js",
@@ -334,6 +329,36 @@
       "sha256": "60fb4cb16e70e376a0f3e32d5d5cd2e0824859a984b452a0407a5c92ac61711a"
     },
     {
+      "path": "docs/images/classroom-countdown.png",
+      "bytes": 110764,
+      "sha256": "842762614b632264f89b0b42a2d806ad7eb82b39c621d83352712f938967ddf4"
+    },
+    {
+      "path": "docs/images/classroom-pick.png",
+      "bytes": 361185,
+      "sha256": "bb15bc45fd40761de99e6c16cae1a9812708bbc719b9d99f03b2365d8d3c6862"
+    },
+    {
+      "path": "docs/images/paper-countdown.png",
+      "bytes": 268965,
+      "sha256": "c43fe6caf997c79ab148fd98be8c8ad43c37e52e906482845ebc1cd65b12804f"
+    },
+    {
+      "path": "docs/images/paper-pick.png",
+      "bytes": 513902,
+      "sha256": "50d9d2527447a2e17932e4b4e28215b9fb3e357d62b13e9b4bcc4b1e4e604bd5"
+    },
+    {
+      "path": "docs/images/space-countdown.png",
+      "bytes": 116833,
+      "sha256": "31cd9cd80f54a7fcbb845b68a10daa695843ae9090e964146ce87735180e2d53"
+    },
+    {
+      "path": "docs/images/space-pick.png",
+      "bytes": 76161,
+      "sha256": "da494cacae34f215c28eaaeaca812590dfee09b3c24c41b1c47900db7ea3ebb3"
+    },
+    {
       "path": "scripts/test.mjs",
       "bytes": 586,
       "sha256": "1a9d3a0c5c95619f79aa8602a5a95033b46e1fd1f88ffe1cfb7cf0b41f2e89ab"
@@ -345,8 +370,8 @@
     },
     {
       "path": "tests/countdown-digit-layout.mjs",
-      "bytes": 11141,
-      "sha256": "ee634c036ef5d39ae6c6fdf75eba398cd161cdedae3c41e7edae1600b4b94daf"
+      "bytes": 11204,
+      "sha256": "d65d9872f5c85fa513cbd54a4faecc0da27e768127bc79bc5041ca489bbe77f3"
     },
     {
       "path": "tests/countdown-presets.mjs",
@@ -355,8 +380,8 @@
     },
     {
       "path": "tests/countdown-title-layout.mjs",
-      "bytes": 5604,
-      "sha256": "dfd53960f45e206c37d10e80af6d179f0542ca3bc9bcce17c914d8e1194abb13"
+      "bytes": 2835,
+      "sha256": "302c4c1abf3316d98f4716e6b033a8474b95936f49c7964e4ce96dcce2b648b0"
     },
     {
       "path": "tests/duration-buttons.mjs",
@@ -372,6 +397,16 @@
       "path": "tests/fixed-draw-duration.mjs",
       "bytes": 5546,
       "sha256": "5e1b8b2cded1790a05f7810e6db518c05bfa28bbe2865c083e85d0aa03c759f2"
+    },
+    {
+      "path": "tests/helpers/countdown-heading-baseline.json",
+      "bytes": 2101,
+      "sha256": "9e5d08cd90cfb75e4ffb49ec0c4c90692c8f245c7f4e622c8273e2cf8b052995"
+    },
+    {
+      "path": "tests/helpers/countdown-heading-snapshot.mjs",
+      "bytes": 3601,
+      "sha256": "6afc23d9d271a4f439c7849a3cf8d69aae4cc179fc8bb81aa8adebe8c490fdb9"
     },
     {
       "path": "tests/helpers/deterministic-dom.mjs",
@@ -405,13 +440,13 @@
     },
     {
       "path": "tests/paper-cards.mjs",
-      "bytes": 20581,
-      "sha256": "d831e2930652a7879e34e6abfb4114abaaea276ba040633541b7377c3e7f194f"
+      "bytes": 20564,
+      "sha256": "71ef1af4c8e21af0b8f1697ddadcaa6ac500dfbfbffce0c78c1767e82fa39061"
     },
     {
       "path": "tests/paper-countdown-cards.mjs",
-      "bytes": 26759,
-      "sha256": "4291762b2f54b71c6f1a1c8fdcd7ee631b83abb29544c4afe48b2dd77ab596ef"
+      "bytes": 26328,
+      "sha256": "1498909358e346ba8e1373d93809baf1500f1d19385fbf85a7eec5a6299fc043"
     },
     {
       "path": "tests/paper-patterned-back.mjs",
@@ -480,8 +515,8 @@
     },
     {
       "path": "tests/space-card-webgl.mjs",
-      "bytes": 8710,
-      "sha256": "1b86d5243fed468f889fe7caafe30a47a9db9de1e7a71bddd17d82c5cb2386ca"
+      "bytes": 8709,
+      "sha256": "45f2181ece4695ace547c824452c6ed41b5af6c2f55f1b086584dce35ab0aebb"
     },
     {
       "path": "tests/space-cards.mjs",
@@ -495,8 +530,8 @@
     },
     {
       "path": "tests/space-result-background.mjs",
-      "bytes": 8801,
-      "sha256": "7dd402f84b58c09cffd028fc86eaa8cc9e257601c097a773ab0dbdc486437f60"
+      "bytes": 8234,
+      "sha256": "7194d0a01ec554c6e44eb4eb146ff70d993bd916bb42fa7d42b5c7d0a749d5fd"
     },
     {
       "path": "tests/speech-sounds.mjs",
