@@ -15,8 +15,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 4029,
-      "sha256": "b935295df1f12fb0929346d991af5be2eab7956449283616e9369542877055b2"
+      "bytes": 4286,
+      "sha256": "64d92bb24bd47b873ab5d8743ea9b6840f32a369b72d526dd0f6222b38bc3976"
     },
     {
       "path": "SNAPSHOT_NOTES.md",
@@ -46,7 +46,7 @@
     {
       "path": "desktop/assets-manifest.json",
       "bytes": 7334,
-      "sha256": "c9c04ab182440c370bd9b83efa275b39d38ed7daeb0db721b13c5bc1862348ff"
+      "sha256": "aabf0869c3be8638d67fd05f933954ca20ac364cdfc34d440feb27150c70d3b1"
     },
     {
       "path": "desktop/build.cjs",
@@ -140,8 +140,8 @@
     },
     {
       "path": "dist/excel-transfer.js",
-      "bytes": 31067,
-      "sha256": "08151a63ff14bff77f41f89d8a027ffe9a71e721f9088d7945802f592cb38880"
+      "bytes": 32081,
+      "sha256": "571f3f1a4da0c9fe7642c4c58ad210d06ab1a3e4d97cb71d6e26fa1db89d6411"
     },
     {
       "path": "dist/index.html",
@@ -215,8 +215,8 @@
     },
     {
       "path": "dist/scene.js",
-      "bytes": 56258,
-      "sha256": "95bb85969f4e99e3e4f55592d4fdf21cf0192929d21e338dcf6b10409e2ac9f0"
+      "bytes": 56513,
+      "sha256": "2bfd2befcb48911526d07e1badef281df3b62e0100dfc075ef27e2a9bce41bde"
     },
     {
       "path": "dist/selection-timing.js",
@@ -389,14 +389,24 @@
       "sha256": "f29fefcfbf3d8574a6469a59ab0fc6c49768334d58b106d5aeda88989bd3abb2"
     },
     {
+      "path": "tests/excel-teacher-view.mjs",
+      "bytes": 9943,
+      "sha256": "723c9c10013e0b1d6043b225d69352981cb858eb6447568f3eb347a6599bef84"
+    },
+    {
       "path": "tests/excel-transfer.mjs",
-      "bytes": 30192,
-      "sha256": "6b583cd67c2eda1297e9bdd0bfcae109d77858c84abc8f7c2bb7e88b82cfeb21"
+      "bytes": 30205,
+      "sha256": "d2fddf00770071be560d05abc9744888a57c9880b6a2fdd167adcbdc2050aa85"
     },
     {
       "path": "tests/fixed-draw-duration.mjs",
-      "bytes": 5546,
-      "sha256": "5e1b8b2cded1790a05f7810e6db518c05bfa28bbe2865c083e85d0aa03c759f2"
+      "bytes": 5688,
+      "sha256": "2908300e58ef4003f6df32607a66aa3661a3478a2bb23e95d77807ccc543b703"
+    },
+    {
+      "path": "tests/fixtures/excel-v2-forward.xlsx",
+      "bytes": 8978,
+      "sha256": "0debf6ad11086ec7b54d68b1f7452c0ac796cf5cbb93a43399122b1c761cf0a0"
     },
     {
       "path": "tests/helpers/deterministic-dom.mjs",
@@ -445,8 +455,8 @@
     },
     {
       "path": "tests/paper-theme-integration.mjs",
-      "bytes": 45770,
-      "sha256": "40e3801185840f33bc4f3eda6366c885b7cbfcc56ccdce96eb69eb1cc34fccb8"
+      "bytes": 46119,
+      "sha256": "a7f0a908cd9670fb9b121eab297f4748f569e16f203f752e74489f183c43dd63"
     },
     {
       "path": "tests/paper-theme-palette.mjs",
@@ -475,8 +485,8 @@
     },
     {
       "path": "tests/roster-scene-lifecycle.mjs",
-      "bytes": 9599,
-      "sha256": "988059f08325e543a5d853fad8d35438f74fd5cb2028e193f57de626f56112fe"
+      "bytes": 10966,
+      "sha256": "45f2e2820f0192a24be4e057694b3cc2e7c77f1233e948c4df739462e16e4cdb"
     },
     {
       "path": "tests/seat-editor.mjs",
@@ -535,8 +545,8 @@
     },
     {
       "path": "tests/teacher-seat-view.mjs",
-      "bytes": 9363,
-      "sha256": "4dc6794d199f521738e98ee78cad369f953ca4ec5e4531a0a00b25211047bfbc"
+      "bytes": 9365,
+      "sha256": "8f1c732dd0a43f3684c0a1b2eacac5e57e668cf463b1587fd2956fe36e6ff17e"
     },
     {
       "path": "tests/theme-draw-timing.mjs",

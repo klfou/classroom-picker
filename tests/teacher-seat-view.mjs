@@ -91,7 +91,7 @@ for(const item of seed.classes){
 switchClass('sixteen');
 const beforeEdit=classesSnapshot();
 card(16,1).click();type('后左已编辑');$('save').click();
-assert.equal($('save').disabled,true);assert.match($('roster-error').textContent,/座位已保存/);
+assert.equal($('save').disabled,true);assert.match($('roster-error').textContent,/已保存 \d+ 人/);
 const saved=app.classStore.current.seats;
 assert.deepEqual(saved.find(s=>s.id==='sixteen-back-left'),{row:16,col:1,name:'后左已编辑',id:'sixteen-back-left'});
 assert.deepEqual(saved.map(s=>[s.id,s.row,s.col,s.gender||'']),beforeEdit.classes.find(c=>c.id==='sixteen').seats.map(s=>[s.id,s.row,s.col,s.gender||'']));

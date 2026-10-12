@@ -35,15 +35,15 @@ const deleted=await readExcel(changed(wb=>{delete wb.Sheets[wb.SheetNames[1]];wb
 const autoCopy=await readExcel(changed(wb=>XLSX.utils.book_append_sheet(wb,structuredClone(sheet(wb)),'复制班')));eq(autoCopy.classes.length,4);eq(autoCopy.classes[0].id,'class-id-1');assert.notEqual(autoCopy.classes[3].id,autoCopy.classes[0].id);checks++;eq(autoCopy.classes[3].name,'复制班');
 const originalLast=await readExcel(changed(wb=>{XLSX.utils.book_append_sheet(wb,structuredClone(sheet(wb)),'复制班');wb.SheetNames=[wb.SheetNames[3],...wb.SheetNames.slice(0,3)];}));eq(originalLast.classes[1].id,'class-id-1');assert.notEqual(originalLast.classes[0].id,'class-id-1');checks++;
 const copied=await readExcel(changed(wb=>{const copy=structuredClone(sheet(wb));removeMeta(copy);XLSX.utils.book_append_sheet(wb,copy,'复制班');}));eq(copied.classes.length,4);assert.notEqual(copied.classes[3].id,copied.classes[0].id);checks++;
-const edited=await readExcel(changed(wb=>{setCell(sheet(wb),'B5','新姓名');setCell(sheet(wb),'C5','未设置');}));eq(edited.classes[0].seats[0].id,'student-a');eq(edited.classes[0].seats[0].name,'新姓名');eq(edited.classes[0].seats[0].gender,undefined);
-for(const [ref,value,pattern] of [['B5',123,/B5.*必须是文本/],['C5','未知',/C5.*性别/],['B5','x'.repeat(81),/B5.*80/],['B3',2,/B3/],['A5','第2排',/A5/],['B2','黑板换边',/B2/],['R5','第9列学生',/R5.*超出/],['B21','第17排学生',/B21.*超出/],['AH4','漏掉学生',/AH4.*超出/],['C1','误贴姓名',/C1.*超出/],['AA2',3,/AA2.*版本/],['AA4','__proto__',/AA4.*标识/],['AA7','false',/AA7.*布尔/]])await bad(changed(wb=>setCell(sheet(wb),ref,value)),pattern);
-await bad(changed(wb=>{delete sheet(wb).B5;}),/C5.*没有姓名/);
-await bad(changed(wb=>{sheet(wb).B5={t:'n',v:1,f:'1+0'};}),/公式/);
+const edited=await readExcel(changed(wb=>{setCell(sheet(wb),'B20','新姓名');setCell(sheet(wb),'C20','未设置');}));eq(edited.classes[0].seats[0].id,'student-a');eq(edited.classes[0].seats[0].name,'新姓名');eq(edited.classes[0].seats[0].gender,undefined);
+for(const [ref,value,pattern] of [['B20',123,/B20.*必须是文本/],['C20','未知',/C20.*性别/],['B20','x'.repeat(81),/B20.*80/],['B3',2,/B3/],['A5','第2排',/A5/],['B2','黑板换边',/B2/],['R5','第9列学生',/R5.*超出/],['B22','第17排学生',/B22.*超出/],['AH4','漏掉学生',/AH4.*超出/],['C1','误贴姓名',/C1.*超出/],['AA2',4,/AA2.*版本/],['AA4','__proto__',/AA4.*标识/],['AA7','false',/AA7.*布尔/]])await bad(changed(wb=>setCell(sheet(wb),ref,value)),pattern);
+await bad(changed(wb=>{delete sheet(wb).B20;}),/C20.*没有姓名/);
+await bad(changed(wb=>{sheet(wb).B20={t:'n',v:1,f:'1+0'};}),/公式/);
 await bad(changed(wb=>{setCell(sheet(wb),'AG26','student-a');}),/学生标识重复/);
-await bad(changed(wb=>sheet(wb)['!merges'].push(XLSX.utils.decode_range('B5:C5'))),/B5:C5.*合并/);
-const cleared=await readExcel(changed(wb=>{delete sheet(wb).B5;delete sheet(wb).C5;}));eq(cleared.classes[0].seats.length,2);
+await bad(changed(wb=>sheet(wb)['!merges'].push(XLSX.utils.decode_range('B20:C20'))),/B20:C20.*合并/);
+const cleared=await readExcel(changed(wb=>{delete sheet(wb).B20;delete sheet(wb).C20;}));eq(cleared.classes[0].seats.length,2);
 const blankOutside=await readExcel(changed(wb=>{setCell(sheet(wb),'B1000000','');}));eq(makePackage(blankOutside),expected);
-const literal=book().Sheets[book().SheetNames[2]].B5;eq(literal.t,'s');eq(literal.f,undefined);eq(literal.v,'=SUM(A1:A2)');
+const literal=book().Sheets[book().SheetNames[2]].B12;eq(literal.t,'s');eq(literal.f,undefined);eq(literal.v,'=SUM(A1:A2)');
 const p=unzipSync(bytes),xml=strFromU8(p['xl/worksheets/sheet1.xml']);
 assert.match(xml,/<dataValidation[^>]+type="list"/);checks++;
 assert.match(xml,/<formula1>"男,女"<\/formula1>/);checks++;
@@ -74,17 +74,17 @@ await bad(repack(parts=>{for(let i=0;i<513;i++)parts[`extra-${i}.xml`]=strToU8('
 const all=[];for(let i=0;i<200;i++)all.push({id:`c-${i}`,name:`班级${i}`,noRepeat:i%2===0,sample:false,seats:Array.from({length:128},(_,j)=>({id:`student-${j}`,row:Math.floor(j/8)+1,col:j%8+1,name:`虚构${j}`,gender:j%2?'male':''}))});
 const large={version:3,classes:all,activeId:all[0].id,deleted:[]};const largeBytes=writeExcel(large);assert.ok(largeBytes.length<=MAX_EXCEL_BYTES);checks++;
 const largeRead=await readExcel(largeBytes);eq(largeRead.classes.length,200);eq(largeRead.classes[199].seats.length,128);eq(makePackage(largeRead),makePackage(large));
-// New v2 templates are eight rows, same-row name/gender pairs, with blank unknown gender.
+// New v3 templates are eight rows in teacher view, with same-row name/gender pairs.
 const templateBytes=writeExcel(null,{template:true}),templateBook=XLSX.read(templateBytes,{type:'array'}),templateSheet=sheet(templateBook);
-eq(templateSheet.AA2.v,2);eq(templateSheet.AA9.v,8);eq(templateSheet.A5.v,'第1排');eq(templateSheet.A12.v,'第8排');eq(templateSheet.A13,undefined);
-eq(templateSheet.B4.v,'姓名');eq(templateSheet.C4.v,'性别');eq(templateSheet.B5.v,'示例学生甲');eq(templateSheet.C5.v,'女');eq(templateSheet.D6.v,'示例学生丙');eq(templateSheet.E6.v,'');
+eq(templateSheet.AA2.v,3);eq(templateSheet.AA9.v,8);eq(templateSheet.A5.v,'第8排');eq(templateSheet.A12.v,'第1排');eq(templateSheet.B13.v,'黑板 / 讲台（第1排最近）');
+eq(templateSheet.B4.v,'姓名');eq(templateSheet.C4.v,'性别');eq(templateSheet.B12.v,'示例学生甲');eq(templateSheet.C12.v,'女');eq(templateSheet.D11.v,'示例学生丙');eq(templateSheet.E11.v,'');
 for(const part of Object.values(unzipSync(templateBytes))){assert.ok(!strFromU8(part).includes('未设置'));checks++;}
 const templateXML=strFromU8(unzipSync(templateBytes)['xl/worksheets/sheet1.xml']);assert.match(templateXML,/C5:C12 E5:E12 G5:G12 I5:I12 K5:K12 M5:M12 O5:O12 Q5:Q12/);checks++;
 assert.match(templateXML,/topLeftCell="B5"/);checks++;
-// Presentation-only changes preserve the v2 schema while giving print a precise,
+// The v3 orientation has an explicit marker and a precise,
 // per-sheet seat-only region and standard one-page landscape settings.
-eq(templateBook.Workbook.Names.filter(n=>n.Name==='_xlnm.Print_Area').map(n=>[n.Sheet,n.Ref]),[[0,"'示例班级'!$A$1:$Q$12"]]);
-eq(book().Workbook.Names.filter(n=>n.Name==='_xlnm.Print_Area').map(n=>n.Ref),["'虚构一班'!$A$1:$Q$20","'空班'!$A$1:$Q$12","'A_B__特殊___'!$A$1:$Q$12"]);
+eq(templateBook.Workbook.Names.filter(n=>n.Name==='_xlnm.Print_Area').map(n=>[n.Sheet,n.Ref]),[[0,"'示例班级'!$A$1:$Q$13"]]);
+eq(book().Workbook.Names.filter(n=>n.Name==='_xlnm.Print_Area').map(n=>n.Ref),["'虚构一班'!$A$1:$Q$21","'空班'!$A$1:$Q$13","'A_B__特殊___'!$A$1:$Q$13"]);
 assert.match(templateXML,/<pageSetUpPr fitToPage="1" autoPageBreaks="0"\/>/);checks++;
 assert.match(templateXML,/<pageSetup paperSize="9" orientation="landscape" fitToWidth="1" fitToHeight="1" usePrinterDefaults="0"\/>/);checks++;
 assert.match(templateXML,/<printOptions horizontalCentered="1" headings="0" gridLines="0"\/>/);checks++;
@@ -93,34 +93,34 @@ const orderedTags=['<dataValidations','<printOptions','<pageMargins','<pageSetup
 assert.match(templateXML,/<row[^>]*r="5"[^>]*ht="32"/);checks++;
 const exportStyles=strFromU8(unzipSync(templateBytes)['xl/styles.xml']);assert.match(exportStyles,/formatCode="&quot;第&quot;0&quot;列&quot;"/);checks++;
 assert.match(exportStyles,/rgb="FFFAF8F2"/);checks++;assert.match(exportStyles,/rgb="FF153F33"/);checks++;
-assert.match(templateXML,/<c[^>]*r="C5"[^>]*s="11"/);checks++;
-assert.match(templateXML,/<c[^>]*r="G5"[^>]*s="10"/);checks++;
-assert.match(templateXML,/<c[^>]*r="E6"[^>]*s="13"/);checks++;
+assert.match(templateXML,/<c[^>]*r="C12"[^>]*s="11"/);checks++;
+assert.match(templateXML,/<c[^>]*r="G12"[^>]*s="10"/);checks++;
+assert.match(templateXML,/<c[^>]*r="E11"[^>]*s="13"/);checks++;
 const visibleNotes=Object.entries(templateSheet).filter(([ref])=>/^S\d+$/.test(ref)).map(([,cell])=>cell.v).join(' ');assert.ok(!/metadata|隐藏|标识|Z:AG|技术/i.test(visibleNotes));checks++;assert.ok(visibleNotes.includes('姓名在左，性别在右。'));checks++;
 const formattedTemplate=XLSX.read(templateBytes,{type:'array',cellNF:true});for(let col=0;col<8;col++){const ref=XLSX.utils.encode_cell({r:2,c:1+col*2}),cell=sheet(formattedTemplate)[ref];eq(cell.v,col+1);eq(cell.z,'"第"0"列"');eq(XLSX.utils.format_cell(cell),`第${col+1}列`);}
 assert.doesNotMatch(exportStyles,/style="medium"/);checks++;assert.match(templateXML,/showRowColHeaders="0"/);checks++;
-const quoted=writeExcel({classes:[{id:'quoted',name:"O'虚构班",noRepeat:true,sample:false,seats:[{id:'last',name:'末排',row:16,col:8,gender:''}]}]});eq(XLSX.read(quoted,{type:'array'}).Workbook.Names[0].Ref,"'O''虚构班'!$A$1:$Q$20");eq((await readExcel(quoted)).classes[0].seats[0].row,16);
+const quoted=writeExcel({classes:[{id:'quoted',name:"O'虚构班",noRepeat:true,sample:false,seats:[{id:'last',name:'末排',row:16,col:8,gender:''}]}]});eq(XLSX.read(quoted,{type:'array'}).Workbook.Names[0].Ref,"'O''虚构班'!$A$1:$Q$21");eq((await readExcel(quoted)).classes[0].seats[0].row,16);
 
 for(let max=8;max<=16;max++) {
   const c={id:`max-${max}`,name:`虚构${max}排`,noRepeat:false,sample:false,seats:[{id:'last',row:max,col:8,name:'末排学生',gender:''}]};
   const out=writeExcel({classes:[c]}),wb=XLSX.read(out,{type:'array'}),ws=sheet(wb),read=await readExcel(out);
-  eq(wb.Workbook.Names.find(n=>n.Name==='_xlnm.Print_Area').Ref,`'虚构${max}排'!$A$1:$Q$${max+4}`);
-  eq(ws.AA9.v,max);eq(ws[`A${max+4}`].v,`第${max}排`);eq(ws[`P${max+4}`].v,'末排学生');eq(read.classes[0].seats[0].row,max);eq(read.classes[0].seats[0].col,8);
+  eq(wb.Workbook.Names.find(n=>n.Name==='_xlnm.Print_Area').Ref,`'虚构${max}排'!$A$1:$Q$${max+5}`);
+  eq(ws.AA9.v,max);eq(ws[`A${max+4}`].v,'第1排');eq(ws.P5.v,'末排学生');eq(read.classes[0].seats[0].row,max);eq(read.classes[0].seats[0].col,8);
   removeMeta(ws);eq((await readExcel(pack(wb))).classes[0].seats[0].row,max);
 }
 eq(book().Sheets['空班'].AA9.v,8);
 const templateEdit=fn=>{const wb=XLSX.read(templateBytes,{type:'array'});fn(sheet(wb));return pack(wb);};
-await bad(templateEdit(ws=>setCell(ws,'B13','第9排越界')),/B13.*超出/);
+await bad(templateEdit(ws=>setCell(ws,'B14','第9排越界')),/B14.*超出/);
 await bad(templateEdit(ws=>setCell(ws,'R5','第9列越界')),/R5.*超出/);
 await bad(templateEdit(ws=>setCell(ws,'C4','姓名')),/C4.*表头/);
 await bad(templateEdit(ws=>setCell(ws,'AA9',7)),/AA9.*8–16/);
 await bad(templateEdit(ws=>setCell(ws,'AA9',17)),/AA9.*8–16/);
 await bad(templateEdit(ws=>setCell(ws,'AA2',1)),/AA2.*版本/);
 await bad(templateEdit(ws=>{delete ws.Z1;delete ws.AA1;setCell(ws,'AA2',3);}),/Z1.*资料格式/);
-await bad(templateEdit(ws=>{removeMeta(ws);setCell(ws,'A8','第5排');}),/A8.*连续/);
+await bad(templateEdit(ws=>{removeMeta(ws);setCell(ws,'A8','第9排');}),/A8.*标签/);
 await bad(templateEdit(ws=>{for(const key of Object.keys(ws)){const {r,c}=key.startsWith('!')?{r:99,c:0}:XLSX.utils.decode_cell(key);if(c>=25&&c<=32&&r<10)delete ws[key];}}),/Z1.*资料格式/);
-const blankGender=await readExcel(templateEdit(ws=>delete ws.C5));eq(blankGender.classes[0].seats[0].gender,undefined);
-const legacyUnknown=await readExcel(templateEdit(ws=>setCell(ws,'C5','未设置')));eq(legacyUnknown.classes[0].seats[0].gender,undefined);
+const blankGender=await readExcel(templateEdit(ws=>delete ws.C12));eq(blankGender.classes[0].seats[0].gender,undefined);
+const legacyUnknown=await readExcel(templateEdit(ws=>setCell(ws,'C12','未设置')));eq(legacyUnknown.classes[0].seats[0].gender,undefined);
 // Genuine frozen v1 bytes remain supported, with and without metadata.
 const legacyState=await readExcel(LEGACY_V1_TEMPLATE),legacyBook=XLSX.read(LEGACY_V1_TEMPLATE,{type:'array'});
 eq(sheet(legacyBook).S2.v,1);eq(sheet(legacyBook).C7.v,'未设置');eq(makePackage(legacyState),makePackage(await readExcel(templateBytes)));
@@ -134,6 +134,6 @@ await bad(legacyChanged(wb=>setCell(sheet(wb),'S2',3)),/S2.*版本/);
 await bad(legacyChanged(wb=>setCell(sheet(wb),'S2',2)),/S2.*版本/);
 await bad(legacyChanged(wb=>{removeMeta(sheet(wb),1);setCell(sheet(wb),'A6','第3排 · 姓名');}),/A6/);
 const mixed=XLSX.read(templateBytes,{type:'array'}),oldCopy=structuredClone(sheet(legacyBook));XLSX.utils.book_append_sheet(mixed,oldCopy,'旧版复制班');const mixedState=await readExcel(pack(mixed));eq(mixedState.classes.length,2);eq(mixedState.classes[0].id,'example-class');assert.notEqual(mixedState.classes[1].id,'example-class');checks++;eq(mixedState.classes[1].name,'旧版复制班');
-const styled=XLSX.read(bytes,{type:'array',cellStyles:true}).Sheets[book().SheetNames[0]];eq(styled['!rows'][3].hidden,true);eq(styled['!cols'][1].wch>styled['!cols'][2].wch,true);for(let col=25;col<33;col++)eq(styled['!cols'][col].hidden,true);eq(styled.S3.v,'填写说明');for(let row=5;row<=9;row++)eq(typeof styled['S'+row].v,'string');eq(styled.AA2.v,2);
+const styled=XLSX.read(bytes,{type:'array',cellStyles:true}).Sheets[book().SheetNames[0]];eq(styled['!rows'][3].hidden,true);eq(styled['!cols'][1].wch>styled['!cols'][2].wch,true);for(let col=25;col<33;col++)eq(styled['!cols'][col].hidden,true);eq(styled.S3.v,'填写说明');for(let row=5;row<=9;row++)eq(typeof styled['S'+row].v,'string');eq(styled.AA2.v,3);
 
 console.log(`PASS ${checks} Excel grid, roundtrip, metadata, ZIP safety, and maximum-size checks (${largeBytes.length} bytes for 200×128).`);

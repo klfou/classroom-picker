@@ -258,7 +258,7 @@ function updatePickedLabels(){
  for(const p of people)p.label.classList.toggle('picked',used.has(p.i)&&chosen!==p.i);
 }
 function setResult(tag,text){$('#result').classList.toggle('has-name',tag.includes('请起立'));$('#result .result-tag').textContent=tag;$('#result strong').textContent=text}
-function setBusy(value){busy=value;for(const id of ['pick','edit','repeat-allow','repeat-once']){const button=$('#'+id);button.disabled=value;button.setAttribute('aria-busy',String(value))}$('#pick').disabled=value||!people.length}
+function setBusy(value){busy=value;for(const id of ['pick','edit','repeat-allow','repeat-once']){const button=$('#'+id);button.disabled=value;button.setAttribute('aria-busy',String(value))}}
 function setHighlight(index,selected=false){
  candidate=index;
  for(const p of people){
@@ -272,7 +272,8 @@ function setHighlight(index,selected=false){
  sceneRevision++;
 }
 function pick(){
- if(busy||!people.length)return;
+ if(busy)return;
+ if(!people.length){openEditor({addStudent:true});return;}
  drawCandidates=people.filter(p=>!noRepeat||!used.has(p.i));
  if(!drawCandidates.length){setResult('点名提示','所有学生都已点过');return}
  window.cancelCountdown?.();if(boardMode)setBoardMode(false);
@@ -294,7 +295,7 @@ function cancelDraw(){const interrupted=drawStart!==null;spaceCards.cancel();pap
 function cancelTween(){if(boardMode)return;tween=null;if(boardReturning)finishBoardReturn()}
 $('#pick').onclick=pick;$('#overview').onclick=()=>{window.leaveCountdownView?.();if(drawStart===null){if(activeTheme==='space')spaceCards.reset();else if(activeTheme==='paper')paperCards.reset()}home()};
 controls.addEventListener('start',cancelTween);
-function updatePickLabel(){$('#pick span').textContent=!names.length?'请先填写名单':'开始点名'}
+function updatePickLabel(){$('#pick span').textContent=!names.length?'添加学生':'开始点名'}
 function saveProgress(){
  if(classStore.current.noRepeat===noRepeat)return true;
  try{classStore.save({noRepeat});return true}catch(error){storageNotice(error.message);return false}
@@ -315,7 +316,7 @@ function applyRoster(next,sample=false){
  const checked=next.length?validateRows(next).seats:[];
  try{classStore.save({seats:checked,sample,used:[],noRepeat})}catch(error){storageNotice(error.message);$('#roster-error').textContent=error.message;return false}
  cancelDraw();seats=checked;names=checked.map(s=>s.name);isSample=sample;sessionProgress.delete(classStore.current.id);used=sessionUsedFor(classStore.current);chosen=-1;setHighlight(-1);
- makeDesks();home();setBusy(false);updatePickLabel();setResult('座位已更新 · '+classStore.current.name,names.length?'准备开始点名':'请先填写名单');editorDirty=false;return true;
+ makeDesks();home();setBusy(false);updatePickLabel();setResult(`${classStore.current.name} · 已保存 ${names.length} 人`,names.length?'准备开始点名':'点击添加学生填写座位');editorDirty=false;return true;
 }
 function confirmationLock(locked){for(const selector of ['.roster-content','#seat-editor-bar','.class-controls','.transfer-controls','#class-name-form','.dialog-actions'])$(selector).inert=locked}
 function hideConfirmation(){pendingPanelAction=null;$('#panel-confirm').hidden=true;confirmationLock(false)}
@@ -343,12 +344,12 @@ function loadEditor(){
  closeEditorMenus();
  editorDirty=false;rosterEditor.load(seats);$('#save').disabled=true;$('#roster-error').textContent='';closeNameForm();hideConfirmation();renderClasses();
 }
-function openEditor(){if(!avatarLibrary)return;sounds.stop();loadEditor();$('#roster-dialog').showModal();$('#class-select').focus()}
+function openEditor({addStudent=false}={}){if(!avatarLibrary)return;sounds.stop();loadEditor();$('#roster-dialog').showModal();if(addStudent){rosterEditor.select(1,1);$('#roster').querySelector('.seat-card.is-selected')?.scrollIntoView?.({block:'nearest',inline:'nearest'});$('#seat-name').focus()}else $('#class-select').focus()}
 $('#edit').onclick=openEditor;
 $('#save').onclick=()=>{
  try{const parsed=rosterEditor.validate();const unchanged=JSON.stringify(parsed.seats)===JSON.stringify(seats);
  if(unchanged){editorDirty=false;$('#save').disabled=true;$('#roster-error').textContent='座位没有变化';return}
- if(applyRoster(parsed.seats,false)){rosterEditor.load(seats);$('#save').disabled=true;hideConfirmation();renderClasses();$('#roster-error').textContent=nameDirty()?'座位已保存；班级名称尚未保存':'座位已保存';}
+ if(applyRoster(parsed.seats,false)){rosterEditor.load(seats);$('#save').disabled=true;hideConfirmation();renderClasses();$('#roster-error').textContent=`${classStore.current.name} · 已保存 ${names.length} 人${nameDirty()?'；班级名称尚未保存':''}`;}
  }catch(error){$('#roster-error').textContent=error.message}
 };
 function closeEditor(){guardChanges(()=>{editorDirty=false;closeNameForm();hideConfirmation();$('#roster-dialog').close()})}

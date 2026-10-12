@@ -244,10 +244,10 @@ if(reopening){
  await test('an empty production roster has no phantom cards, draw, sound or timer cancellation',async()=>{
   await clean('paper');const originalSeats=state().seats;
   try{
-   assert.equal(app.applyRoster([]),true);await env.flush();const d=app.paperCards.debug();assert.equal(d.cardCount,0);assert.deepEqual(d.names,[]);assert.equal(d.winner,'');assert.equal($('pick').disabled,true);
+   assert.equal(app.applyRoster([]),true);await env.flush();const d=app.paperCards.debug();assert.equal(d.cardCount,0);assert.deepEqual(d.names,[]);assert.equal(d.winner,'');assert.equal($('pick').disabled,false);assert.equal($('pick').querySelector('span').textContent,'添加学生');
    $('timer-primary').click();const deadline=env.now+300000,before=calls.length,spoken=env.speech.spoken.length,generation=qa().drawGeneration;
-   for(const theme of ['paper','space','classroom','paper']){app.setTheme(theme);app.pick();await env.step(125);assert.equal(state().busy,false);assert.equal(state().selected,-1);assert.equal(timer().snapshot.status,'running');assert.equal(timer().snapshot.remaining,deadline-env.now);assert.equal(app.paperCards.debug().cardCount,0)}
-   assert.equal(calls.length,before);assert.equal(env.speech.spoken.length,spoken);assert.equal(qa().drawGeneration,generation);assert.equal(env.frames.size,1);
+   for(const theme of ['paper','space','classroom','paper']){app.setTheme(theme);app.pick();await env.step(125);assert.equal(state().busy,false);assert.equal(state().selected,-1);assert.equal(timer().snapshot.status,'running');assert.equal(timer().snapshot.remaining,deadline-env.now);assert.equal(app.paperCards.debug().cardCount,0);assert.equal($('roster-dialog').open,true);assert.equal(document.activeElement,$('seat-name'));$('editor-close').click();assert.equal($('roster-dialog').open,false)}
+   assert.deepEqual(calls.slice(before).map(c=>c.kind),Array(4).fill('sounds.stop'),'Empty roster opens the editor without draw or result sounds');assert.equal(env.speech.spoken.length,spoken);assert.equal(qa().drawGeneration,generation);assert.equal(env.frames.size,1);
   }finally{window.cancelCountdown();app.cancelDraw();assert.equal(app.applyRoster(originalSeats),true);await env.flush()}
  });
 
