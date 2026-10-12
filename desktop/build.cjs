@@ -1,0 +1,64 @@
+'use strict';
+const fs = require('node:fs');
+const path = require('node:path');
+const crypto = require('node:crypto');
+const ROOT = __dirname;
+const WEB = path.resolve(ROOT, '../dist');
+const sha = x => crypto.createHash('sha256').update(x).digest('hex');
+const VERSION = '1.8.2';
+const ELECTRON = '44.7.0';
+function files(dir, prefix = '') {
+  return fs.readdirSync(dir, { withFileTypes: true }).flatMap(e => {
+    if (e.isSymbolicLink()) throw new Error('Symbolic links are not packaged: ' + prefix + e.name);
+    if (e.isDirectory()) return files(path.join(dir, e.name), prefix + e.name + '/');
+    if (!e.isFile()) throw new Error('Not a regular asset: ' + prefix + e.name);
+    return [prefix + e.name];
+  }).sort();
+}
+async function run() {
+  const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'assets-manifest.json')));
+  const expected = manifest.map(x => x.path).sort();
+  const actual = files(WEB);
+  if (JSON.stringify(actual) !== JSON.stringify(expected)) throw new Error('dist file list differs from the approved sanitized-source manifest. Review changes before updating the manifest.');
+  for (const entry of manifest) {
+    const bytes = fs.readFileSync(path.join(WEB, entry.path));
+    if (bytes.length !== entry.size || sha(bytes) !== entry.sha256) throw new Error('Changed asset: ' + entry.path);
+  }
+  const app = JSON.parse(fs.readFileSync(path.join(ROOT, 'app-package.json')));
+  if (app.version !== VERSION || app.main !== 'main.cjs') throw new Error('Unexpected application version/main');
+  console.log('Verified ' + actual.length + ' sanitized-source assets; desktop ' + VERSION);
+  if (process.argv.includes('--verify-only')) return;
+  const output = path.join(ROOT, 'out', VERSION);
+  if (fs.existsSync(output)) throw new Error('Output already exists: ' + output + '. Move it away before rebuilding. Nothing was overwritten.');
+  const workRoot = path.join(ROOT, '.build');
+  fs.mkdirSync(workRoot, { recursive: true });
+  const work = fs.mkdtempSync(path.join(workRoot, 'stage-'));
+  try {
+    for (const relative of actual) {
+      const destination = path.join(work, 'dist', relative);
+      fs.mkdirSync(path.dirname(destination), { recursive: true });
+      fs.copyFileSync(path.join(WEB, relative), destination);
+    }
+    fs.copyFileSync(path.join(ROOT, 'main.cjs'), path.join(work, 'main.cjs'));
+    fs.copyFileSync(path.join(ROOT, 'app-package.json'), path.join(work, 'package.json'));
+    const module = await import('@electron/packager');
+    const packager = module.default || module.packager;
+    const results = await packager({ dir: work, out: output, name: 'SunlitClassroom',
+      executableName: 'SunlitClassroom', platform: 'win32', arch: 'x64',
+      electronVersion: ELECTRON, appVersion: VERSION, asar: true,
+      overwrite: false, prune: false, download: { cacheRoot: path.join(ROOT, '.cache', 'electron') } });
+    for (const folder of results) {
+      const exe = fs.readFileSync(path.join(folder, 'SunlitClassroom.exe'));
+      const pe = exe.readUInt32LE(0x3c);
+      if (exe.toString('ascii', pe, pe + 4) !== 'PE\0\0' || exe.readUInt16LE(pe + 4) !== 0x8664) throw new Error('Expected Windows x64 PE');
+      fs.copyFileSync(path.join(ROOT, 'README.md'), path.join(folder, 'BUILD-README.md'));
+      fs.copyFileSync(path.join(ROOT, 'THIRD-PARTY.md'), path.join(folder, 'THIRD-PARTY.md'));
+      const asar = fs.readFileSync(path.join(folder, 'resources/app.asar'));
+      fs.writeFileSync(path.join(folder, 'build-manifest.json'), JSON.stringify({ version: VERSION, electron: ELECTRON,
+        upstreamCommit: '365796b4493178fdee6cf4b68b60621d1fdef810', sourceSnapshot: 'sanitized-source-handoff; see SNAPSHOT_NOTES.md', assetCount: actual.length,
+        asarSha256: sha(asar), exeSha256: sha(exe), signed: false, windowsRunVerified: false }, null, 2));
+      console.log('Built: ' + folder);
+    }
+  } finally { fs.rmSync(work, { recursive: true, force: true }); }
+}
+run().catch(error => { console.error(error.message); process.exitCode = 1; });

@@ -1,0 +1,262 @@
+[
+  {
+    "path": "audio/LICENSE.txt",
+    "size": 474,
+    "sha256": "78cf2fbe01f241fb39ae60b9a40b2c6283410c7d11c5d0e6cd93450a8b0a2f7b"
+  },
+  {
+    "path": "audio/rollcall-drum.mp3",
+    "size": 187740,
+    "sha256": "e6fd796d8d041903c7de709f68b68b5e0dbc89369677162460751d1c84abc8a9"
+  },
+  {
+    "path": "avatars.js",
+    "size": 15005,
+    "sha256": "f2d5f224f61621b474a0084555737305a1e71f7483f4bcf7a316e9f425bedd9d"
+  },
+  {
+    "path": "board-countdown.js",
+    "size": 6496,
+    "sha256": "ae752cf44d636740998e0affd475acf1cbb17c61a1de01a25ce25389f1b6d870"
+  },
+  {
+    "path": "board-glyphs-LICENSE.txt",
+    "size": 14712,
+    "sha256": "849f4ea9c214fa4ac3593b770c699f387534b11ce671264c1b10d85bdcb5997b"
+  },
+  {
+    "path": "board-glyphs.js",
+    "size": 27530,
+    "sha256": "515845009670ed728a883059b957d2462971bcc23d79493f5374f63f9b9f7b12"
+  },
+  {
+    "path": "class-transfer.js",
+    "size": 3434,
+    "sha256": "aa9cb7b8316952fea8e944fcc4d6095ef79ec172465ae26d0beb542b6a3d5821"
+  },
+  {
+    "path": "classes.js",
+    "size": 6875,
+    "sha256": "bdafb559208f04c91bb97e538c410a129ee97eec9574f4211ad7d75569593afd"
+  },
+  {
+    "path": "countdown-digit-layout.js",
+    "size": 1723,
+    "sha256": "87e0f2e58c515870e262d5f1c5bbfcd4b151dab02367ff4ff77fe1418100d9d8"
+  },
+  {
+    "path": "countdown-state.js",
+    "size": 1183,
+    "sha256": "76183d4f371473cfe1e861ea13c433d99551ec2b9629e26ad2ef51caf18f8b4e"
+  },
+  {
+    "path": "countdown-title-layout.js",
+    "size": 360,
+    "sha256": "9ea1e2ee6b30d0ae4385291fc8fac65d1296b23995f31d8a7fbf136507c656ca"
+  },
+  {
+    "path": "countdown.js",
+    "size": 3994,
+    "sha256": "8b6ea93a3067f972c8cf3f42d20b3e5f17faac5209d93afbbe22c446f4541126"
+  },
+  {
+    "path": "draw-timing.js",
+    "size": 538,
+    "sha256": "75586162856fddbac09ca5196d0add9f894454d676bf79ad28dc779776fb4c4f"
+  },
+  {
+    "path": "drumroll.js",
+    "size": 2046,
+    "sha256": "dba6b33f4bf2e6781f3ea2a1ba23b229deee85a50429d36790000b6a0586a11b"
+  },
+  {
+    "path": "duration-buttons.js",
+    "size": 1268,
+    "sha256": "1c17945a8b5f57921fab6021447b435adf81c1e3b74c17c6739f33fb2887015a"
+  },
+  {
+    "path": "excel-transfer.js",
+    "size": 31067,
+    "sha256": "08151a63ff14bff77f41f89d8a027ffe9a71e721f9088d7945802f592cb38880"
+  },
+  {
+    "path": "index.html",
+    "size": 6256,
+    "sha256": "501cbfc3b7c27b68553262c2154ad75b7958cc021ca80e9f132e9dd09049f791"
+  },
+  {
+    "path": "models/boy-hero.scene.json",
+    "size": 3660935,
+    "sha256": "33652d445855a9081ba2a569d274542c9ef2c3c7ee9948b7c1a06ce334073fdd"
+  },
+  {
+    "path": "models/boy-software.scene.json",
+    "size": 481975,
+    "sha256": "ce4ccbc35509709bb68c688e68cc56bbcb7faa1f32ede3d19c03be95ac8559ea"
+  },
+  {
+    "path": "models/boy.scene.json",
+    "size": 1007943,
+    "sha256": "45cf2209f6c8f80d5cbc175badd5db82e4dedda3ae11096da20b3f7beab2954a"
+  },
+  {
+    "path": "models/girl-hero.scene.json",
+    "size": 3450727,
+    "sha256": "f99371f7563e6360101c625ec82378f0ef0a0b4e2a0f669b6b23ebe58793437c"
+  },
+  {
+    "path": "models/girl-software.scene.json",
+    "size": 493152,
+    "sha256": "52d5ae7866da6dccbd0aa00c99c98664ec35d136b42ae2e76d64f2d0e107d5cf"
+  },
+  {
+    "path": "models/girl.scene.json",
+    "size": 1026680,
+    "sha256": "769a574ea930d54cede9706c3e7db5b49209013f7cb92459355b91ba3cac1544"
+  },
+  {
+    "path": "models/relaxed-hand-morphs.json",
+    "size": 3128611,
+    "sha256": "bfdd7d4de10a7d1a9119f81dc569a93bfa6771a8e20097969fac66c7a35dcbb2"
+  },
+  {
+    "path": "models/teacher.scene.json",
+    "size": 1843705,
+    "sha256": "7c6ab58d12aad304eb60a5033298812ea5f0d1f025f0148d1a862d153f6e7bce"
+  },
+  {
+    "path": "name-readout.js",
+    "size": 2818,
+    "sha256": "055ca4054d9f723e899e56fae683719a106898409a1e3ab2feac159efa949321"
+  },
+  {
+    "path": "paper-cards.js",
+    "size": 43302,
+    "sha256": "ff036b4ad0c907343b98997bcca3ef8cc407207d1ba021f92511eb0f71f701f6"
+  },
+  {
+    "path": "render-budget.js",
+    "size": 1539,
+    "sha256": "9ae2e57d53cae97206445b727aeb85bc9b3f1b929feb85aa5f311b7041a32de7"
+  },
+  {
+    "path": "roster-editor.js",
+    "size": 10233,
+    "sha256": "0d6752bb712235dc5be0f5496c2769ed5ef76f8256b8492e88ace04e48dc60a3"
+  },
+  {
+    "path": "roster.js",
+    "size": 4559,
+    "sha256": "37b820845a93cb22494df85ac2ba6bee2349712a755933ac24e8fc145ceaebf4"
+  },
+  {
+    "path": "scene.js",
+    "size": 56247,
+    "sha256": "91cc70af6ce0853ef8771756b245aefbd496c131a432622bca4623a93e8213f5"
+  },
+  {
+    "path": "selection-timing.js",
+    "size": 270,
+    "sha256": "7bbdf83e13ef67121f59e5f738078d9242e4c4e32ba35f4e267751ee79dc7d63"
+  },
+  {
+    "path": "software-renderer.js",
+    "size": 7776,
+    "sha256": "5b188284b6687cc6a28e70b9cdc524dece821a05212247488153cac8092f9a24"
+  },
+  {
+    "path": "sound-waveforms.js",
+    "size": 1544,
+    "sha256": "2a8c86d695b0c753cd8fb5e2bb26a127d9ab33c90191936864fd996009e69fdf"
+  },
+  {
+    "path": "sounds.js",
+    "size": 4699,
+    "sha256": "2de5deabed8d1e325c86b2ff55324f665bb84c2b73aead2698dd18e4e8019b77"
+  },
+  {
+    "path": "space-card-art.js",
+    "size": 8454,
+    "sha256": "3e43ea1df045f81b1207679b32fff9ff15f46cb8c2e980cf20fea6977f88789d"
+  },
+  {
+    "path": "space-card-canvas.js",
+    "size": 4957,
+    "sha256": "c621100d72da4cea6a533005924936f0740cfa19de366bc294954b0732d0500f"
+  },
+  {
+    "path": "space-card-model.js",
+    "size": 11632,
+    "sha256": "353ffe07feaf732264f91fa7e5f60b8354e90fcbf1a22ecfb609a019d8f07fae"
+  },
+  {
+    "path": "space-card-webgl.js",
+    "size": 11189,
+    "sha256": "9ec9dc24ee13799e71184d3d1b34597c237bde176a77cd00ce53167aece46b28"
+  },
+  {
+    "path": "space-cards.js",
+    "size": 6700,
+    "sha256": "75d6561342b6b119b6d2c5b71d2611da253de715b946b7d7d9e82c828c4afd1b"
+  },
+  {
+    "path": "space-countdown.js",
+    "size": 13804,
+    "sha256": "c4ecfc51fdc2b0fcc905be519e752325c98a8e6b41dcaa6eceddf7c0625cdae0"
+  },
+  {
+    "path": "space-meteors.js",
+    "size": 4235,
+    "sha256": "5f9b05ccba22f151e64b74b38db0a7bfacf9ddfa4dc6bf80e4875534e12f0eba"
+  },
+  {
+    "path": "style.css",
+    "size": 48977,
+    "sha256": "7d0d74742b8b77c32aff38e3de5ed270ac67fd34363581128940705833fbf074"
+  },
+  {
+    "path": "vendor/EXCEL-VENDOR-NOTICE.txt",
+    "size": 1545,
+    "sha256": "0a0b3265db4cfa89871e8ca76c8f0eb004d99273da9ade16eb2c3776dbb9c467"
+  },
+  {
+    "path": "vendor/FFLATE-LICENSE.txt",
+    "size": 1069,
+    "sha256": "0a1df3a083d0c010560aa342e87959c8c1070e6fd54545741f083f22d0c8b551"
+  },
+  {
+    "path": "vendor/OrbitControls.js",
+    "size": 38703,
+    "sha256": "b97879c748170baadeb3fb84cea1ffdf4674e283dc06042f34e2acb95a76042c"
+  },
+  {
+    "path": "vendor/SHEETJS-LICENSE.txt",
+    "size": 11355,
+    "sha256": "4d2a38ac35cda06a555c84074a819d413339cd3691b822cae50f8f322fe01f64"
+  },
+  {
+    "path": "vendor/THREE-LICENSE.txt",
+    "size": 1081,
+    "sha256": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601"
+  },
+  {
+    "path": "vendor/fflate-0.8.3.mjs",
+    "size": 90922,
+    "sha256": "b7ca4450b19559a1d50eb381adcee94b82449674be4cd17789d9beba7e6122a1"
+  },
+  {
+    "path": "vendor/three.core.js",
+    "size": 1403455,
+    "sha256": "eb077d2417f61d3e6d9264c317cabc4ea35769ed6b0ab533067292a550784c20"
+  },
+  {
+    "path": "vendor/three.module.js",
+    "size": 603113,
+    "sha256": "c8211c69345d2e9949dc7a8ac969380497aa0600a5a8ac6a459c8cd02dd9cb8a"
+  },
+  {
+    "path": "vendor/xlsx-0.20.3.mjs",
+    "size": 1008308,
+    "sha256": "1a0fb062ee9781b13f6687371b202aaefc53b6ce55b530c027e01f9c087b77db"
+  }
+]

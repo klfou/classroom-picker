@@ -1,0 +1,9 @@
+{
+  "name": "sunlit-classroom-desktop-build",
+  "version": "1.8.2",
+  "private": true,
+  "description": "Build-only tools; not included in the desktop application",
+  "engines": { "node": ">=24.0.0 <25" },
+  "scripts": { "verify": "node build.cjs --verify-only", "build:win": "node build.cjs" },
+  "devDependencies": { "@electron/packager": "20.3.0" }
+}

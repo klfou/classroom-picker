@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {createClassroomSounds} from '../dist/sounds.js';
+const cn={lang:'zh-CN',localService:true};
+const spoken=[],listeners={},notes={hidden:true,textContent:''};let cancelled=0;
+const doc={hidden:false,addEventListener(k,f){(listeners[k]??=[]).push(f)},getElementById(){return notes}};
+const host={speechSynthesis:{getVoices:()=>[cn],cancel(){cancelled++},resume(){},speak(u){spoken.push(u);queueMicrotask(()=>u.onend())},addEventListener(){}},SpeechSynthesisUtterance:class{constructor(text){this.text=text}},addEventListener(){}};
+const sounds=createClassroomSounds({host,document:doc,storage:{getItem(){return null},setItem(){}},loadSample:async()=>null});
+const wait=()=>new Promise(r=>setTimeout(r,700));
+sounds.begin(1000);sounds.result('测试甲');await wait();assert.deepEqual(spoken.map(u=>u.text),['测试甲']);assert.equal(spoken[0].volume,1);assert.equal(sounds.volume,65);
+sounds.result('无抽选');await wait();assert.equal(spoken.length,1);
+sounds.begin(1000);sounds.result('旧结果');sounds.begin(1000);await wait();assert.equal(spoken.length,1);sounds.setVolume(35);sounds.result('新结果');await wait();assert.equal(spoken.length,2);assert.equal(spoken[1].volume,1);assert.equal(sounds.volume,35);
+sounds.begin(1000);sounds.result('静音测试');sounds.setEnabled(false);await wait();assert.equal(spoken.length,2);
+sounds.setEnabled(true);sounds.begin(1000);sounds.result('中断测试');sounds.stop();await wait();assert.equal(spoken.length,2);
+sounds.begin(1000);doc.hidden=true;for(const fn of listeners.visibilitychange)fn();doc.hidden=false;sounds.result('后台结束');await wait();assert.equal(spoken.length,2);
+sounds.setVolume(0);sounds.begin(1000);sounds.result('零音量');await wait();assert.equal(spoken.length,2);
+sounds.stop();assert.ok(cancelled>0);console.log('PASS speech/sound integration: final once, no replay, newer draw, mute, stop, background completion, zero volume.');

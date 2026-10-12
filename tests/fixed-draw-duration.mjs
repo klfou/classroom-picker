@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import vm from 'node:vm';
+import {selectionTimeline} from '../dist/selection-timing.js';
+import {drawTimingForTheme,CLASSROOM_DRAW_TIMING,SPACE_DRAW_TIMING,PAPER_DRAW_TIMING} from '../dist/draw-timing.js';
+const scene=readFileSync(new URL('../dist/scene.js',import.meta.url),'utf8');
+const html=readFileSync(new URL('../dist/index.html',import.meta.url),'utf8');
+const constants=scene.match(/const drawSeconds=1;let drawDurationMs=1000;/)?.[0];
+assert.ok(constants);assert.doesNotMatch(scene,/sunlit-draw-seconds|draw-duration|drawDurationButtons/);
+assert.doesNotMatch(html,/draw-duration|点名时长/);assert.match(html,/id="timer-minutes"/);
+assert.match(scene,/\$\('#pick'\)\.onclick=pick/);assert.match(scene,/event\.code==='Space'.*pick\(\)/);
+const pickSource=scene.slice(scene.indexOf('function pick(){'),scene.indexOf('function finishPick(){'));
+let checks=0;
+for(const saved of['2','3'])for(const fails of[false,true]){
+ let storageCalls=0,clock=500,cancelled=0;const audio=[],result=[],label={};
+ const starts=[],paperStarts=[],prepared=[];let randomCalls=0;
+ const context={noRepeat:true,activeTheme:'classroom',drawTimingForTheme,spaceCards:{start:(...args)=>starts.push(args)},paperCards:{start:(...args)=>paperStarts.push(args),prepare:(...args)=>prepared.push(args)},names:['学生一','学生二'],pendingPick:null,drawOriginTheme:null,randomIndex(){randomCalls++;return 1},busy:false,people:[0,1].map(i=>({i,target:1,avatar:{setDetailed(){}}})),boardMode:false,used:new Set(),drawGeneration:0,revealTimer:null,drawCandidates:[],flashOrder:[],chosen:-1,drawStart:null,drawTimeline:[],flashCount:0,lastFlashSlot:-1,selectionTimeline,performance:{now:()=>clock},clearTimeout(){},window:{cancelCountdown(){cancelled++}},setBoardMode(){},setPoseTarget(p,target){p.target=target},suspenseOrder:xs=>xs,setBusy:value=>context.busy=value,setHighlight(){},updatePickedLabels(){},home(){},sounds:{begin:(duration,start)=>audio.push({duration,start})},setResult:(...v)=>result.push(v),$:()=>label,localStorage:{getItem(){storageCalls++;if(fails)throw Error('denied');return saved},setItem(){storageCalls++;if(fails)throw Error('denied')}}};
+ vm.createContext(context);vm.runInContext(constants+'\n'+pickSource+'\ngetDuration=()=>({drawSeconds,drawDurationMs});',context);
+ context.pick();assert.equal(context.getDuration().drawSeconds,1);assert.equal(context.getDuration().drawDurationMs,1000);assert.deepEqual(audio,[{duration:1000,start:500}]);assert.equal(context.drawTimeline.length,18);assert.ok(context.drawTimeline.every(t=>t>=0&&t<1000));assert.match(result[0][0],/1 秒/);assert.equal(starts.at(-1)[1],CLASSROOM_DRAW_TIMING);checks+=7;
+ for(let i=0;i<20;i++)context.pick();assert.equal(audio.length,1);assert.equal(cancelled,1);checks+=2;
+ context.busy=false;context.used.add(0);clock=1700;context.pick();assert.deepEqual(context.drawCandidates.map(p=>p.i),[1]);assert.equal(audio.at(-1).duration,1000);checks+=2;
+ context.busy=false;context.used.add(1);const exhaustedAudio=audio.length,exhaustedCancelled=cancelled,exhaustedGeneration=context.drawGeneration;context.pick();assert.equal(context.used.size,2);assert.equal(context.drawCandidates.length,0);assert.equal(audio.length,exhaustedAudio);assert.equal(cancelled,exhaustedCancelled);assert.equal(context.drawGeneration,exhaustedGeneration);assert.equal(result.at(-1)[1],'所有学生都已点过');assert.equal(context.busy,false);checks+=7;
+ context.busy=false;context.noRepeat=false;context.used.add(0);context.pick();assert.equal(context.drawCandidates.length,2);assert.equal(audio.at(-1).duration,1000);assert.equal(storageCalls,0);checks+=3;
+ context.busy=false;context.activeTheme='space';clock=2300;context.pick();assert.equal(context.getDuration().drawDurationMs,1750);assert.deepEqual(audio.at(-1),{duration:1750,start:2300});assert.equal(starts.at(-1)[1],SPACE_DRAW_TIMING);assert.equal(context.drawTimeline.length,32);assert.ok(context.drawTimeline.every(t=>t>=0&&t<1750));assert.match(result.at(-1)[0],/旋转 1 秒/);checks+=6;
+ context.activeTheme='classroom';context.pick();assert.equal(context.getDuration().drawDurationMs,1750);assert.equal(starts.at(-1)[1],SPACE_DRAW_TIMING);checks+=2;
+ context.busy=false;context.pick();assert.equal(context.getDuration().drawDurationMs,1000);assert.equal(audio.at(-1).duration,1000);assert.equal(starts.at(-1)[1],CLASSROOM_DRAW_TIMING);checks+=3;
+ context.busy=false;context.activeTheme='paper';clock=3600;const priorRng=randomCalls;context.pick();assert.equal(context.getDuration().drawDurationMs,600);assert.deepEqual(audio.at(-1),{duration:600,start:3600});assert.equal(starts.at(-1)[1],PAPER_DRAW_TIMING);assert.equal(paperStarts.at(-1)[1],PAPER_DRAW_TIMING);assert.deepEqual(paperStarts,starts);assert.equal(result.at(-1)[0],'翻牌点名');assert.equal(randomCalls-priorRng,1);assert.equal(context.pendingPick.i,1);assert.equal(context.flashOrder.length,0);assert.equal(prepared.length,1);assert.deepEqual(prepared[0],['学生二',3600,1,PAPER_DRAW_TIMING]);checks+=11;
+ context.busy=false;context.people=[];const count=audio.length;context.pick();assert.equal(audio.length,count);checks++;
+}
+console.log(`PASS ${checks} production-pick assertions: fixed classroom 1000ms, space 1750ms with 1000ms rotation and paper one 600ms flip, synchronized adapters, accepted-start profile/audio snapshot, obsolete storage ignored, busy guard, no-repeat exhaustion preserves picks/timer/audio, repeat and empty-class guard; timer UI remains.`);

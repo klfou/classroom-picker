@@ -1,0 +1,64 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
+import {register} from 'node:module';
+import {CLASS_KEY,BACKUP_KEY} from '../dist/classes.js';
+import {makePackage} from '../dist/class-transfer.js';
+import {drawTimingForTheme} from '../dist/draw-timing.js';
+register('./helpers/theme-scene-loader.mjs',import.meta.url);
+const {setup,dist,$}=await import('./helpers/theme-environment.mjs');
+const seed={version:3,activeId:'a',classes:['a','b'].map((id,i)=>({id,name:`测试${i+1}班`,noRepeat:true,sample:false,used:['1:1','1:2'],seats:[{id:`${id}-one`,row:1,col:1,name:'同名同学',gender:'female'},{id:`${id}-two`,row:1,col:2,name:'同名同学',gender:'male'}]})),deleted:[]};
+const reopening=process.argv[2]==='--reopen';
+const storage=reopening?JSON.parse(Buffer.from(process.argv[3],'base64').toString()):{[CLASS_KEY]:JSON.stringify(seed),[BACKUP_KEY]:JSON.stringify(seed)};
+const env=await setup({storage});await import(dist+'/scene.js');const app=window.classroom;await env.awaitReady(app.ready);env.bindRenderer(app.renderer);await import(dist+'/countdown.js');
+const state=()=>app.getState(),qa=()=>__sharedThemeQA(),timer=()=>__sharedCountdownQA();
+const toggle=value=>{$(value?'repeat-once':'repeat-allow').click()};
+const switchClass=id=>assert.equal(app.classAction(()=>app.classStore.switch(id)),true);
+const pick=async(random=0)=>{env.randomQueue=Array(1000).fill(random);app.pick();assert.equal(state().busy,true);await env.step(drawTimingForTheme(state().theme).total);await env.flush();await env.step(1600);await env.flush();assert.equal(state().busy,false);return state().selected};
+const stored=()=>JSON.parse(localStorage.getItem(CLASS_KEY));
+const snapshotStorage=()=>Object.fromEntries([CLASS_KEY,BACKUP_KEY,'sunlit-theme'].map(key=>[key,localStorage.getItem(key)]).filter(([,value])=>value!==null));
+
+assert.deepEqual(state().used,[],'Every newly opened document ignores persisted historical picks');
+if(reopening){
+ const expected=stored();
+ for(const item of expected.classes){switchClass(item.id);assert.deepEqual(state().used,[]);assert.deepEqual(state().seats,item.seats);assert.deepEqual(state().names,item.seats.map(s=>s.name));}
+ await pick();assert.equal(state().used.length,1);
+ console.log('PASS reopened document: all classes start empty while names, IDs, genders and seats remain intact');
+}else{
+ const originalSource=readFileSync(new URL('../dist/scene.js',import.meta.url),'utf8');
+ assert.doesNotMatch(originalSource,/classStore\.current\.used|item\.used\.includes|恢复当时的点名进度/);
+ assert.deepEqual(stored(),seed,'Loading must not rewrite or erase durable roster data');
+ const writes=[],nativeSet=localStorage.setItem;
+ localStorage.setItem=(key,value)=>{writes.push(key);nativeSet(key,value)};
+ const beforePick=localStorage.getItem(CLASS_KEY),beforeBackup=localStorage.getItem(BACKUP_KEY);
+ assert.equal(await pick(),0);assert.deepEqual(state().used,[0]);assert.deepEqual(writes,[],'Picking makes no storage writes');
+ assert.equal(localStorage.getItem(CLASS_KEY),beforePick);assert.equal(localStorage.getItem(BACKUP_KEY),beforeBackup);
+ toggle(true);assert.deepEqual(writes,[],'An unchanged preference makes no storage writes');
+ toggle(false);assert.deepEqual(writes,[BACKUP_KEY,CLASS_KEY]);assert.deepEqual(app.classStore.current.used,seed.classes[0].used,'Saving the preference does not save session picks');
+ writes.length=0;assert.equal(await pick(),0);assert.equal(await pick(1),1);assert.deepEqual(state().used,[0,1],'Allowed-repeat picks also accumulate in session history');assert.deepEqual(writes,[]);
+ toggle(true);const allPicked=state().used;app.setTheme('space');app.setTheme('paper');app.setTheme('classroom');assert.deepEqual(state().used,allPicked);
+ $('timer-primary').click();await env.step(150);const beforeTimer=timer().snapshot,generation=qa().drawGeneration,audioEvents=env.audio.events.length,speechEvents=env.speech.spoken.length;
+ for(let i=0;i<3;i++)app.pick();
+ assert.deepEqual(state().used,allPicked);assert.equal(state().busy,false);assert.equal(qa().drawGeneration,generation);assert.equal(qa().drawStart,null);assert.equal(env.audio.events.length,audioEvents);assert.equal(env.speech.spoken.length,speechEvents);assert.deepEqual(timer().snapshot,beforeTimer);assert.equal(timer().boardVisible,true);assert.equal($('result strong').textContent,'所有学生都已点过');
+ await env.step(1000);assert.equal(timer().snapshot.remaining,beforeTimer.remaining-1000,'Exhausted attempts leave an active timer running');
+ toggle(false);app.pick();assert.equal(timer().snapshot.status,'ready','An accepted pick still cancels countdown');app.cancelDraw();toggle(true);window.cancelCountdown();
+ switchClass('b');assert.deepEqual(state().used,[],'Each class starts with its own empty session');assert.equal(await pick(),0);assert.deepEqual(state().used,[0]);
+ switchClass('a');assert.deepEqual(state().used,[0,1]);app.classStore.rename('已改名测试班');app.restoreClass();assert.deepEqual(state().used,[0,1],'Renaming keeps session picks');
+ assert.equal(app.classAction(()=>app.classStore.delete()),true);assert.deepEqual(state().used,[0]);assert.equal(app.classAction(()=>app.classStore.undo()),true);assert.deepEqual(state().used,[0,1],'Undoing deletion in the same document retains its class history');
+ const reopened=spawnSync(process.execPath,[fileURLToPath(import.meta.url),'--reopen',Buffer.from(JSON.stringify(snapshotStorage())).toString('base64')],{encoding:'utf8'});
+ assert.equal(reopened.status,0,reopened.stderr||reopened.stdout);process.stdout.write(reopened.stdout);
+ const unchangedRoster=state().seats;assert.equal(app.applyRoster(unchangedRoster),true);assert.deepEqual(state().used,[],'Successful roster edits retain the existing reset behavior');switchClass('b');assert.deepEqual(state().used,[0],'Editing another roster does not reset this class');switchClass('a');
+ const durableBeforeFailure=app.classStore.state,rawBeforeFailure=localStorage.getItem(CLASS_KEY);let failedWrites=0;
+ localStorage.setItem=()=>{failedWrites++;throw Error('simulated storage quota')};
+ assert.equal(await pick(),0);assert.equal(await pick(),1);assert.equal(failedWrites,0,'Selection works without any storage write even while writes are blocked');app.restoreClass();assert.deepEqual(state().used,[0,1]);
+ assert.equal(app.applyRoster([{name:'未保存姓名',row:2,col:2}]),false);assert.deepEqual(state().used,[0,1]);assert.deepEqual(state().names,unchangedRoster.map(s=>s.name));assert.deepEqual(app.classStore.state,durableBeforeFailure);assert.equal(localStorage.getItem(CLASS_KEY),rawBeforeFailure);
+ toggle(false);assert.deepEqual(state().used,[0,1],'A failed preference save cannot erase picks');assert.match($('storage-notice').textContent,/保存失败/);toggle(true);app.restoreClass();assert.deepEqual(state().used,[0,1]);
+ localStorage.setItem=(key,value)=>{writes.push(key);nativeSet(key,value)};
+ const stageImport=async()=>{app.cancelDraw();window.cancelCountdown();$('edit').click();const text=JSON.stringify(makePackage(app.classStore.state));await $('class-transfer-file').onchange({target:{files:[{name:'session-test.json',size:Buffer.byteLength(text),text:async()=>text}],value:'session-test.json'}});assert.equal($('panel-confirm').hidden,false)};
+ await stageImport();localStorage.setItem=()=>{throw Error('simulated storage quota')};const failedImportState=app.classStore.state;$('panel-confirm-ok').click();assert.deepEqual(state().used,[0,1]);assert.deepEqual(app.classStore.state,failedImportState,'Failed import preserves roster and session history');
+ localStorage.setItem=(key,value)=>{writes.push(key);nativeSet(key,value)};
+ await stageImport();const importOriginal=app.classStore.state;$('panel-confirm-ok').click();assert.deepEqual(state().used,[],'Import clears matching IDs and identical rosters too');assert.deepEqual(app.classStore.getTransferBackup(),importOriginal,'Import still preserves the original durable backup');switchClass('b');assert.deepEqual(state().used,[]);await pick();switchClass('a');await pick();
+ $('class-backup-restore').click();assert.match($('panel-confirm-text').textContent,/点名进度将清零/);$('panel-confirm-ok').click();assert.deepEqual(state().used,[]);switchClass('b');assert.deepEqual(state().used,[],'Restoring a backup never revives historical or earlier session picks');assert.deepEqual(app.classStore.current.seats,seed.classes[1].seats.map(({id,row,col,name,gender})=>({row,col,name,gender,id})));assert.deepEqual(app.classStore.current.used,seed.classes[1].used,'Legacy durable data is preserved but ignored');
+ console.log('PASS session selection: old storage ignored, no pick writes, per-class/theme/mode history, rename/undo, exhaustion preserves audio/countdown, reload reset, storage failure, roster/import/backup invalidation and durable data safety');
+}

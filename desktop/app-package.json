@@ -1,0 +1,9 @@
+{
+  "name": "sunlit-classroom",
+  "productName": "晴窗教室",
+  "version": "1.8.2",
+  "description": "离线三维教室点名工具",
+  "main": "main.cjs",
+  "private": true,
+  "author": "SunlitClassroom"
+}

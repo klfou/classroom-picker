@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#f4f1e9">
+<title>晴窗教室 · 随机点名</title><meta name="description" content="按真实座位排列的三维课堂点名，支持在线编辑座位、姓名与性别">
+<link rel="stylesheet" href="style.css"><script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
+</head>
+<body>
+<header><div class="brand"><span class="sun">✳</span>晴窗教室</div><span id="scene-note">64 位同学 · 8 列 / 8 排</span></header>
+<main id="viewport" aria-label="可旋转缩放的三维教室"><div id="labels"></div><div class="gesture">拖动旋转 · 滚轮缩放 · 右键平移</div><div class="compat" hidden>兼容画质</div><div id="loading">正在打开教室…</div></main>
+<div id="storage-notice" role="alert" hidden></div>
+<div id="screen-help" role="status" hidden></div>
+<footer>
+ <div class="main-controls">
+  <div id="result" aria-live="polite"><span class="result-tag">8 列 · 每两列一组</span><strong>把讲台交给下一位</strong><span id="speech-status" hidden></span></div>
+  <div class="primary-actions">
+   <button id="pick"><span>开始点名</span></button>
+   <div class="inline-timer"><div class="inline-timer-main"><button id="timer-primary"><strong id="timer-action-label">倒计时</strong><span id="timer-mini"></span></button></div></div>
+  </div>
+ </div>
+ <div class="bottom-toolbar">
+  <div class="theme-choices" role="radiogroup" aria-label="界面主题"><button type="button" role="radio" aria-checked="true" tabindex="0" data-theme-choice="classroom">晴窗教室</button><button type="button" role="radio" aria-checked="false" tabindex="-1" data-theme-choice="space">星空卡片</button><button type="button" role="radio" aria-checked="false" tabindex="-1" data-theme-choice="paper">翻牌点名</button></div>
+  <button id="edit" class="toolbar-button">班级与座位</button>
+  <div class="view-tools"><button id="overview" aria-label="回到全班视角">全班视角</button></div>
+  <div class="repeat-mode" role="group" aria-label="点名重复模式"><button type="button" id="repeat-allow" data-no-repeat="false" aria-pressed="false">允许重复</button><button type="button" id="repeat-once" data-no-repeat="true" aria-pressed="true">不重复点名</button></div>
+  <div class="duration-control"><span id="timer-minutes-label">计时时长</span><div id="timer-minutes" class="duration-options" role="radiogroup" aria-labelledby="timer-minutes-label"><button type="button" role="radio" data-value="3" aria-checked="false" tabindex="-1">3 分钟</button><button type="button" role="radio" data-value="5" aria-checked="true" tabindex="0">5 分钟</button><button type="button" role="radio" data-value="10" aria-checked="false" tabindex="-1">10 分钟</button></div></div>
+  <button id="sound-toggle" title="控制点名音效、姓名播报和倒计时提示音；姓名使用本机中文语音，多音字读音可能不准" class="toolbar-button" aria-pressed="true">♪ 音效开</button>
+  <button id="fullscreen" class="toolbar-button">⛶ 全屏</button>
+ </div>
+</footer>
+<dialog id="roster-dialog" aria-labelledby="editor-title">
+ <form method="dialog">
+  <div class="dialog-top"><h2 id="editor-title">班级与座位 <span id="editor-class-name"></span></h2><button type="button" id="editor-x" aria-label="关闭班级与座位">×</button></div>
+  <div class="class-controls"><label class="sr-only" for="class-select">当前班级</label><select id="class-select" aria-label="切换班级"></select><button type="button" id="class-create">＋ 新增班级</button><details id="class-more"><summary aria-label="更多班级操作">⋯</summary><div class="class-more-menu"><button type="button" id="class-rename">修改班级名称</button><button type="button" id="class-delete">删除班级</button><button type="button" id="class-undo" hidden>撤销删除</button></div></details></div>
+  <div id="class-name-form" hidden><label id="class-name-label" for="class-name">班级名称</label><input id="class-name" aria-describedby="class-name-error" maxlength="30" autocomplete="off" placeholder="班级名称（最多30字）"><button type="button" id="class-name-save">确认</button><button type="button" id="class-name-cancel">取消</button></div>
+  <div id="class-name-error" role="alert" hidden></div>
+  <div class="seat-section-top"><h3>座位安排</h3><span>老师视角 · 点击座位编辑</span></div>
+  <div class="roster-content">
+   <div class="seat-plan">
+    <div id="roster" aria-label="按排和列选择学生座位"></div>
+    <div class="preview-board">讲台 · 老师视角 · 第 1 排最近</div>
+   </div>
+  </div>
+  <div id="seat-editor-bar" aria-label="编辑选中的座位"></div>
+  <div class="panel-bottom">
+   <div id="roster-error" role="status" aria-live="polite"></div>
+   <div id="panel-confirm" role="alert" hidden><span id="panel-confirm-text"></span><div><button type="button" id="panel-confirm-cancel">继续编辑</button><button type="button" id="panel-confirm-ok">放弃修改并继续</button></div></div>
+   <div class="dialog-actions"><div class="transfer-controls"><button type="button" id="class-import">导入班级</button><button type="button" id="class-export">导出班级</button><details class="transfer-menu" id="backup-menu" hidden><summary>备份与恢复⌄</summary><div><button type="button" id="class-backup-download" hidden>下载备份 Excel</button><button type="button" id="class-backup-restore" hidden>恢复导入前备份</button></div></details><input type="file" id="class-transfer-file" accept=".xlsx,.json,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/json" hidden></div><div class="editor-actions"><button type="button" id="editor-close" class="close">取消</button><button type="button" id="save" class="solid" disabled>保存更改</button></div></div>
+
+  </div>
+ </form>
+</dialog>
+<div id="timer-announcement" class="sr-only" role="status" aria-live="polite"></div>
+<script type="module" src="scene.js"></script><script type="module" src="countdown.js"></script>
+</body></html>

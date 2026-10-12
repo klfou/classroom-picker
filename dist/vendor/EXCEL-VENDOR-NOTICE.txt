@@ -1,0 +1,30 @@
+Offline Excel libraries bundled with 晴窗教室
+
+All runtime imports are relative local files. No CDN or network is required.
+Retrieved from official distributors on 2026-10-10; original source is unmodified.
+
+SheetJS Community Edition 0.20.3 (Apache-2.0)
+  Upstream: https://sheetjs.com/
+  Official installation documentation:
+    https://docs.sheetjs.com/docs/getting-started/installation/standalone/
+  Source: https://cdn.sheetjs.com/xlsx-0.20.3/package/xlsx.mjs
+  License: https://cdn.sheetjs.com/xlsx-0.20.3/package/LICENSE
+  Local module: xlsx-0.20.3.mjs
+  SHA-256: 1a0fb062ee9781b13f6687371b202aaefc53b6ce55b530c027e01f9c087b77db
+  Local license: SHEETJS-LICENSE.txt
+  SHA-256: 4d2a38ac35cda06a555c84074a819d413339cd3691b822cae50f8f322fe01f64
+
+fflate 0.8.3 (MIT)
+  Upstream: https://github.com/101arrowz/fflate
+  Official registry: https://www.npmjs.com/package/fflate/v/0.8.3
+  Package: https://registry.npmjs.org/fflate/-/fflate-0.8.3.tgz
+  File in package: package/esm/browser.js
+  Local module: fflate-0.8.3.mjs
+  SHA-256: b7ca4450b19559a1d50eb381adcee94b82449674be4cd17789d9beba7e6122a1
+  License copied from package/LICENSE to FFLATE-LICENSE.txt
+  SHA-256: 0a1df3a083d0c010560aa342e87959c8c1070e6fd54545741f083f22d0c8b551
+
+XLSX safety limits live in ../excel-transfer.js. ZIP content is streamed with
+actual-size and CRC checks before SheetJS parsing; only generated exports use
+unzipSync. File limit 5 MiB; cumulative actual decompression limit 20 MiB;
+512 ZIP entries (supports 200 class worksheets plus XLSX supporting files).

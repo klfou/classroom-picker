@@ -1,0 +1,7 @@
+Audio supplied by the project owner on 2026-10-12.
+The owner stated that it is their original work and authorized its use in this project and source handoff.
+Local filename: rollcall-drum.mp3
+Original uploaded filename: 566-preview.mp3
+The MP3 bytes and embedded metadata are unchanged.
+No additional open-source or general redistribution license is granted by this notice.
+The application retains its existing original-pitch excerpt, fade, gain and cymbal-tail processing.

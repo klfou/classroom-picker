@@ -1,0 +1,33 @@
+Blackboard/countdown outline data: source and license supplement
+
+Applies to: board-glyphs.js
+Data license: SIL Open Font License, Version 1.1 (OFL-1.1)
+Full license and existing notices: board-glyphs-LICENSE.txt
+This supplement does not replace or remove those notices.
+
+Source font family: Noto Sans CJK SC
+Source font style: Bold
+Source font version: Version 2.004;hotconv 1.0.118;makeotfexe 2.5.65603
+Source font copyright, transcribed from its name metadata:
+© 2014-2021 Adobe (http://www.adobe.com/).
+
+Upstream font project: https://github.com/notofonts/noto-cjk
+Upstream font license:
+https://github.com/notofonts/noto-cjk/blob/main/Sans/LICENSE
+Official OFL text and guidance: https://openfontlicense.org/
+
+Modification: a subset of 29 character outlines and advance widths was
+converted to JavaScript data for application rendering, at 1000 units/em.
+The application data file is named board-glyphs.js. It is not a complete,
+unmodified upstream font. The Noto family name above identifies provenance;
+it is not a claim of upstream endorsement of this conversion.
+
+Verification on 2026-10-12: all 29 stored outlines exactly matched the SC
+Bold font in NotoSansCJK-Bold.ttc, version 2.004, using fontTools
+RecordingPen comparison. This check did not reconstruct the original
+conversion script or download history.
+
+The derived font-outline data remain under OFL-1.1. Any separate application
+license must preserve that treatment and all required font notices. The
+GPL-3+ section of the existing Debian package-level notice is scoped to
+its debian/* packaging files, not the font data or the whole application.
