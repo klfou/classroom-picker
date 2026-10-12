@@ -46,7 +46,7 @@
     {
       "path": "desktop/assets-manifest.json",
       "bytes": 7334,
-      "sha256": "2943a75a512447eecb8f3417e636c004cbdf33b63578eee31d3d6d283a4b35ae"
+      "sha256": "c9c04ab182440c370bd9b83efa275b39d38ed7daeb0db721b13c5bc1862348ff"
     },
     {
       "path": "desktop/build.cjs",
@@ -215,8 +215,8 @@
     },
     {
       "path": "dist/scene.js",
-      "bytes": 56190,
-      "sha256": "128b8ee4bb6b425b2a9d53592d4b4aa08115cc6a46e2d4d41c9723dc49a8fe3e"
+      "bytes": 56258,
+      "sha256": "95bb85969f4e99e3e4f55592d4fdf21cf0192929d21e338dcf6b10409e2ac9f0"
     },
     {
       "path": "dist/selection-timing.js",
@@ -275,8 +275,8 @@
     },
     {
       "path": "dist/style.css",
-      "bytes": 48977,
-      "sha256": "7d0d74742b8b77c32aff38e3de5ed270ac67fd34363581128940705833fbf074"
+      "bytes": 49030,
+      "sha256": "edd498be348c116090771690aba83ff7271e09effca114c37b38ca1c6a0c25dc"
     },
     {
       "path": "dist/vendor/EXCEL-VENDOR-NOTICE.txt",
@@ -450,8 +450,8 @@
     },
     {
       "path": "tests/paper-theme-palette.mjs",
-      "bytes": 7708,
-      "sha256": "fd0e94ff1f09d8df46cebd832dca48bf023be578ca1a3b097d7d5a8ca5171cad"
+      "bytes": 8038,
+      "sha256": "d5ad89dcdba85bfd873aaec9e3170cb562954083926b788c893b55d230975df6"
     },
     {
       "path": "tests/render-budget.mjs",
@@ -472,6 +472,11 @@
       "path": "tests/repeat-mode.mjs",
       "bytes": 3247,
       "sha256": "ce87c8aebaa1d3cd0723391b2123d08db4a652e9186d538c965373a24e606bad"
+    },
+    {
+      "path": "tests/roster-scene-lifecycle.mjs",
+      "bytes": 9599,
+      "sha256": "988059f08325e543a5d853fad8d35438f74fd5cb2028e193f57de626f56112fe"
     },
     {
       "path": "tests/seat-editor.mjs",

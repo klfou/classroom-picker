@@ -258,7 +258,7 @@ function updatePickedLabels(){
  for(const p of people)p.label.classList.toggle('picked',used.has(p.i)&&chosen!==p.i);
 }
 function setResult(tag,text){$('#result').classList.toggle('has-name',tag.includes('请起立'));$('#result .result-tag').textContent=tag;$('#result strong').textContent=text}
-function setBusy(value){busy=value;for(const id of ['pick','edit','repeat-allow','repeat-once'])$('#'+id).disabled=value;$('#pick').disabled=value||!people.length}
+function setBusy(value){busy=value;for(const id of ['pick','edit','repeat-allow','repeat-once']){const button=$('#'+id);button.disabled=value;button.setAttribute('aria-busy',String(value))}$('#pick').disabled=value||!people.length}
 function setHighlight(index,selected=false){
  candidate=index;
  for(const p of people){
