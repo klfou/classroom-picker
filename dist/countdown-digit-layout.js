@@ -1,4 +1,4 @@
-// Screen-space reference for main numerals, taken from the unchanged classroom
+// Screen-space reference for main numerals, taken from the classroom
 // board at its settled camera endpoint. These are the extremal Y/Z vertices of
 // its cached 0–9 extrusions (0 supplies the envelope), including every bevel
 // layer. Keeping a fixed alphabet envelope avoids resizing on each timer tick.
@@ -22,6 +22,9 @@ export function countdownDigitLayout(width,height){
  // projection, leaving this same fitted distance for every endpoint viewport.
  const fitted=(Math.max(3.8,10/Math.max(.2,width/height))/2+.15)/halfFov,focal=height/(2*halfFov);
  let top=Infinity,bottom=-Infinity;
- for(const [z,minY,maxY]of layers){const pixels=focal/(fitted-.24-.035-2.5*z);top=Math.min(top,height/2-(-.95+2.5*maxY)*pixels);bottom=Math.max(bottom,height/2-(-.95+2.5*minY)*pixels)}
+ for(const [z,minY,maxY]of layers){const pixels=focal/(fitted-.24-.035-2.75*z);top=Math.min(top,height/2-(-.80+2.75*maxY)*pixels);bottom=Math.max(bottom,height/2-(-.80+2.75*minY)*pixels)}
  return {height:bottom-top,top,bottom,centerY:(top+bottom)/2};
 }
+
+// The completion alphabet uses the same screen-space reference in every theme.
+export function countdownFinishLayout(width,height){const ink=countdownDigitLayout(width,height).height*.85,centerY=height*.48;return {height:ink,top:centerY-ink/2,bottom:centerY+ink/2,centerY}}

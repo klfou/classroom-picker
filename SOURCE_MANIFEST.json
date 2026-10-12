@@ -15,8 +15,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 3915,
-      "sha256": "c5b7045284d42e4071112e760248e473a506ac3385681d3c32a1e33b1b330670"
+      "bytes": 4029,
+      "sha256": "b935295df1f12fb0929346d991af5be2eab7956449283616e9369542877055b2"
     },
     {
       "path": "SNAPSHOT_NOTES.md",
@@ -46,7 +46,7 @@
     {
       "path": "desktop/assets-manifest.json",
       "bytes": 7334,
-      "sha256": "ccf1cadfe96201f2f0f3aefedb36b4dd7ed3d01fccd7daf7b1ec0876c3fdc57a"
+      "sha256": "2943a75a512447eecb8f3417e636c004cbdf33b63578eee31d3d6d283a4b35ae"
     },
     {
       "path": "desktop/build.cjs",
@@ -85,8 +85,8 @@
     },
     {
       "path": "dist/board-countdown.js",
-      "bytes": 4168,
-      "sha256": "bf12b18cc0e6fe33a6dcb9d14c3bfd2ae77fd7b23ef9a6e604cf906dd0eafea5"
+      "bytes": 5348,
+      "sha256": "0c2ce1e4c2bea9bb53f69b6e81203f7599caf78d5122ecd40161c0ca4021e1b4"
     },
     {
       "path": "dist/board-glyphs-LICENSE.txt",
@@ -110,8 +110,8 @@
     },
     {
       "path": "dist/countdown-digit-layout.js",
-      "bytes": 1723,
-      "sha256": "87e0f2e58c515870e262d5f1c5bbfcd4b151dab02367ff4ff77fe1418100d9d8"
+      "bytes": 1992,
+      "sha256": "4b13e2cf5c5fc8be58b10768cbae8ee07512ea791db54a552ee7832b65e808ba"
     },
     {
       "path": "dist/countdown-state.js",
@@ -195,8 +195,8 @@
     },
     {
       "path": "dist/paper-cards.js",
-      "bytes": 41508,
-      "sha256": "561963ec4d5d947ad0dcf173bd81dc7ac692159ea729fb9e0987272cc0aba217"
+      "bytes": 40108,
+      "sha256": "9ae0a78ab00a114c917591892dfc55fb2ba5949ce780062bb207dcf82c05fcaa"
     },
     {
       "path": "dist/render-budget.js",
@@ -265,8 +265,8 @@
     },
     {
       "path": "dist/space-countdown.js",
-      "bytes": 11085,
-      "sha256": "db189266e2f88ba682d890d0bb01dbdcf7cafcf8674e525209feab9187f185c2"
+      "bytes": 11689,
+      "sha256": "9d1446d6245e2750a027544e37071a685f6d73382f8b5aaff9049522c596b847"
     },
     {
       "path": "dist/space-meteors.js",
@@ -330,8 +330,8 @@
     },
     {
       "path": "docs/images/classroom-countdown.png",
-      "bytes": 110764,
-      "sha256": "842762614b632264f89b0b42a2d806ad7eb82b39c621d83352712f938967ddf4"
+      "bytes": 117195,
+      "sha256": "b92012437dcacf7cf33216492a19bf345db1471105607ace1b823587ef4c5b40"
     },
     {
       "path": "docs/images/classroom-pick.png",
@@ -340,8 +340,8 @@
     },
     {
       "path": "docs/images/paper-countdown.png",
-      "bytes": 268965,
-      "sha256": "c43fe6caf997c79ab148fd98be8c8ad43c37e52e906482845ebc1cd65b12804f"
+      "bytes": 268166,
+      "sha256": "cd15ecf6540659d9e99f4270806cc93e67a19151cb5404413efe40e323cbc45b"
     },
     {
       "path": "docs/images/paper-pick.png",
@@ -350,8 +350,8 @@
     },
     {
       "path": "docs/images/space-countdown.png",
-      "bytes": 116833,
-      "sha256": "31cd9cd80f54a7fcbb845b68a10daa695843ae9090e964146ce87735180e2d53"
+      "bytes": 107877,
+      "sha256": "bbc60908ea539d6e303331b05d792c7fa9a8a60334916612df3d073b08fbfafb"
     },
     {
       "path": "docs/images/space-pick.png",
@@ -370,8 +370,8 @@
     },
     {
       "path": "tests/countdown-digit-layout.mjs",
-      "bytes": 11204,
-      "sha256": "d65d9872f5c85fa513cbd54a4faecc0da27e768127bc79bc5041ca489bbe77f3"
+      "bytes": 13265,
+      "sha256": "4ad52e3c450e5e09486e864c05bfb694939b9ead4cb7e9def9897343b4252ab5"
     },
     {
       "path": "tests/countdown-presets.mjs",
@@ -380,8 +380,8 @@
     },
     {
       "path": "tests/countdown-title-layout.mjs",
-      "bytes": 2835,
-      "sha256": "302c4c1abf3316d98f4716e6b033a8474b95936f49c7964e4ce96dcce2b648b0"
+      "bytes": 2354,
+      "sha256": "522f79855a2479149e4143f9f4cb3f63f5ef86996cdf6df244deee75a3606671"
     },
     {
       "path": "tests/duration-buttons.mjs",
@@ -397,16 +397,6 @@
       "path": "tests/fixed-draw-duration.mjs",
       "bytes": 5546,
       "sha256": "5e1b8b2cded1790a05f7810e6db518c05bfa28bbe2865c083e85d0aa03c759f2"
-    },
-    {
-      "path": "tests/helpers/countdown-heading-baseline.json",
-      "bytes": 2101,
-      "sha256": "9e5d08cd90cfb75e4ffb49ec0c4c90692c8f245c7f4e622c8273e2cf8b052995"
-    },
-    {
-      "path": "tests/helpers/countdown-heading-snapshot.mjs",
-      "bytes": 3601,
-      "sha256": "6afc23d9d271a4f439c7849a3cf8d69aae4cc179fc8bb81aa8adebe8c490fdb9"
     },
     {
       "path": "tests/helpers/deterministic-dom.mjs",

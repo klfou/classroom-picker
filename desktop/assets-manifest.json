@@ -16,8 +16,8 @@
   },
   {
     "path": "board-countdown.js",
-    "size": 4168,
-    "sha256": "bf12b18cc0e6fe33a6dcb9d14c3bfd2ae77fd7b23ef9a6e604cf906dd0eafea5"
+    "size": 5348,
+    "sha256": "0c2ce1e4c2bea9bb53f69b6e81203f7599caf78d5122ecd40161c0ca4021e1b4"
   },
   {
     "path": "board-glyphs-LICENSE.txt",
@@ -41,8 +41,8 @@
   },
   {
     "path": "countdown-digit-layout.js",
-    "size": 1723,
-    "sha256": "87e0f2e58c515870e262d5f1c5bbfcd4b151dab02367ff4ff77fe1418100d9d8"
+    "size": 1992,
+    "sha256": "4b13e2cf5c5fc8be58b10768cbae8ee07512ea791db54a552ee7832b65e808ba"
   },
   {
     "path": "countdown-state.js",
@@ -126,8 +126,8 @@
   },
   {
     "path": "paper-cards.js",
-    "size": 41508,
-    "sha256": "561963ec4d5d947ad0dcf173bd81dc7ac692159ea729fb9e0987272cc0aba217"
+    "size": 40108,
+    "sha256": "9ae0a78ab00a114c917591892dfc55fb2ba5949ce780062bb207dcf82c05fcaa"
   },
   {
     "path": "render-budget.js",
@@ -196,8 +196,8 @@
   },
   {
     "path": "space-countdown.js",
-    "size": 11085,
-    "sha256": "db189266e2f88ba682d890d0bb01dbdcf7cafcf8674e525209feab9187f185c2"
+    "size": 11689,
+    "sha256": "9d1446d6245e2750a027544e37071a685f6d73382f8b5aaff9049522c596b847"
   },
   {
     "path": "space-meteors.js",
