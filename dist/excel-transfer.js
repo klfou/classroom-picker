@@ -6,7 +6,9 @@ import {className} from './classes.js';
 
 export const MAX_EXCEL_BYTES = 5 * 1024 * 1024;
 export const MAX_EXCEL_UNCOMPRESSED_BYTES = 20 * 1024 * 1024;
-export const EXCEL_FORMAT = 'sunlit-classroom-grid', EXCEL_VERSION = 2;
+// v3 reverses only worksheet display rows; logical row 1 stays nearest the podium.
+// A distinct marker/version makes older readers reject rather than flip seats.
+export const EXCEL_FORMAT = 'sunlit-classroom-grid', EXCEL_VERSION = 3;
 const MAX_ENTRIES = 512, MAX_CELLS = 180000;
 const encoder = new TextEncoder(), decoder = new TextDecoder('utf-8', {fatal:true});
 const fail = message => { throw new Error(message); };
@@ -131,7 +133,7 @@ function requireText(ws,ref,sheet,label,max) {
   return cleaned;
 }
 function metadata(ws,sheet) {
-  const locations=[{version:1,start:18},{version:2,start:26}],hint=cellValue(ws,'A4')==='座位信息'?2:cellValue(ws,'A4')==='第1排 · 姓名'?1:null;
+  const locations=[{version:1,start:18},{version:2,start:26}],hint=['座位信息','座位信息 · 老师视角'].includes(cellValue(ws,'A4'))?2:cellValue(ws,'A4')==='第1排 · 姓名'?1:null;
   const present=locations.filter(({version,start})=>{
     const marker=!blank(cellValue(ws,address(1,start)))||!blank(cellValue(ws,address(1,start+1)))||cellValue(ws,address(2,start))==='Excel格式版本'||typeof cellValue(ws,address(2,start+1))==='number';
     // A partially erased metadata block is corrupt, not metadata-free. The
@@ -140,9 +142,10 @@ function metadata(ws,sheet) {
   });
   if(!present.length) return null;
   if(present.length!==1) context(sheet,'隐藏资料','发现两份冲突的格式资料，请使用完整的单一版本模板。');
-  const {version,start}=present[0],ref=row=>address(row,start+1),label=address(1,start);
+  const {version:locationVersion,start}=present[0],ref=row=>address(row,start+1),label=address(1,start);
   if(cellValue(ws,label)!=='晴窗教室隐藏资料'||cellValue(ws,ref(1))!==EXCEL_FORMAT) context(sheet,label,'隐藏资料格式不支持；请使用原始模板。');
-  if(cellValue(ws,ref(2))!==version||cellValue(ws,ref(3))!==TRANSFER_VERSION) context(sheet,ref(2),'Excel 资料版本不支持或位置不一致，请使用同版本或更新版晴窗教室重新导出。');
+  const version=cellValue(ws,ref(2));
+  if((locationVersion===1?version!==1:![2,3].includes(version))||cellValue(ws,ref(3))!==TRANSFER_VERSION) context(sheet,ref(2),'Excel 资料版本不支持或位置不一致，请使用同版本或更新版晴窗教室重新导出。');
   const id=validId(cellValue(ws,ref(4)),sheet,ref(4));
   const originalName=requireText(ws,ref(5),sheet,'原始班级名称',30),exportedName=requireText(ws,ref(6),sheet,'导出工作表名称',31);
   const noRepeat=cellValue(ws,ref(7)),sample=cellValue(ws,ref(8)),rows=version===1?16:cellValue(ws,ref(9));
@@ -153,28 +156,30 @@ function metadata(ws,sheet) {
 function gridLayout(ws,sheet,meta) {
   let version=meta?.version,rows=meta?.rows;
   if(!version) {
-    if(cellValue(ws,'A4')==='座位信息') {version=2;rows=0;while(rows<16&&cellValue(ws,address(rows+5,1))===`第${rows+1}排`)rows++;if(rows<8) context(sheet,address(rows+5,1),`缺少或改变了第${rows+1}排标签，请保留连续的第1–8排；最多支持16排。`);}
+    if(cellValue(ws,'A4')==='座位信息 · 老师视角') {version=3;rows=Number(/^第(\d+)排$/.exec(cellValue(ws,'A5'))?.[1]);if(!Number.isInteger(rows)||rows<8||rows>16)context(sheet,'A5','老师视角网格应由最后一排至第1排，最多16排。');}
+    else if(cellValue(ws,'A4')==='座位信息') {version=2;rows=0;while(rows<16&&cellValue(ws,address(rows+5,1))===`第${rows+1}排`)rows++;if(rows<8) context(sheet,address(rows+5,1),`缺少或改变了第${rows+1}排标签，请保留连续的第1–8排；最多支持16排。`);}
     else if(cellValue(ws,'A4')==='第1排 · 姓名') {version=1;rows=16;}
     else context(sheet,'A4','无法识别座位网格版本，请使用原始Excel模板，不要移动表头。');
   }
-  const v2=version===2,maxCol=v2?16:8,lastRow=v2?rows+3:34,metaCol=v2?25:17,noteCol=v2?18:10;
+  const v2=version>=2,teacher=version===3,boardRow=teacher?rows+5:2,maxCol=v2?16:8,lastRow=v2?rows+3:34,metaCol=v2?25:17,noteCol=v2?18:10;
   for(const merge of ws['!merges']??[]) {
+    const boardMerge=teacher&&merge.s.r===boardRow-1&&merge.e.r===boardRow-1&&merge.s.c===1&&merge.e.c===16;
     const seatHeader=v2&&merge.s.r===2&&merge.e.r===2&&merge.s.c>=1&&merge.s.c<=15&&merge.s.c%2===1&&merge.e.c===merge.s.c+1;
-    if(!seatHeader&&merge.s.r<=lastRow&&merge.e.r>=2&&merge.s.c<=maxCol&&merge.e.c>=1) context(sheet,XLSX.utils.encode_range(merge),'座位网格内不能合并单元格，请取消合并并按每格填写姓名或性别。');
+    if(!boardMerge&&!seatHeader&&merge.s.r<=lastRow&&merge.e.r>=2&&merge.s.c<=maxCol&&merge.e.c>=1) context(sheet,XLSX.utils.encode_range(merge),'座位网格内不能合并单元格，请取消合并并按每格填写姓名或性别。');
   }
   for(const [ref,cell] of Object.entries(ws)) {
     if(ref.startsWith('!'))continue;
     if(cell?.f)context(sheet,ref,'不支持公式，请粘贴为文本或数值。');
     if(blank(cell?.v))continue;
     const {r,c}=XLSX.utils.decode_cell(ref);
-    const inGrid=(r===0&&c===0)||(r===1&&c===1)||(r>=2&&r<=lastRow&&c<=maxCol);
+    const inGrid=(r===0&&c===0)||(r===boardRow-1&&c===1)||(r>=2&&r<=lastRow&&c<=maxCol);
     const inNotes=c===noteCol&&r>=1&&r<=(v2?15:14),inMeta=(c>=metaCol&&c<=metaCol+1&&r<(v2?9:8))||(c===metaCol&&r===9)||(c>=metaCol&&c<=metaCol+7&&r>=10&&r<26);
     if(!inGrid&&!inNotes&&!inMeta)context(sheet,ref,`此单元格超出模板范围。本页为${rows}排、每排8个座位，请勿增加或移动网格行列。`);
   }
-  for(const [ref,expected] of [['A3','排 / 列'],['B2','黑板 / 讲台（第1排最近）']])if(cellValue(ws,ref)!==expected)context(sheet,ref,'座位网格方向或表头已改变，请保留模板中的黑板位置和排列表头。');
+  for(const [ref,expected] of [['A3','排 / 列'],[address(boardRow,2),'黑板 / 讲台（第1排最近）']])if(cellValue(ws,ref)!==expected)context(sheet,ref,'座位网格方向或表头已改变，请保留模板中的黑板位置和排列表头。');
   if(v2) {
-    if(cellValue(ws,'A4')!=='座位信息')context(sheet,'A4','姓名与性别的表头已改变，请使用原始模板。');
-    for(let row=1;row<=rows;row++)if(cellValue(ws,address(row+4,1))!==`第${row}排`)context(sheet,address(row+4,1),`第${row}排标签已改变，请勿插入、删除或移动网格行列。`);
+    if(cellValue(ws,'A4')!==(teacher?'座位信息 · 老师视角':'座位信息'))context(sheet,'A4','姓名与性别的表头已改变，请使用原始模板。');
+    for(let row=1;row<=rows;row++)if(cellValue(ws,address(row+4,1))!==`第${teacher?rows+1-row:row}排`)context(sheet,address(row+4,1),`第${teacher?rows+1-row:row}排标签已改变，请勿插入、删除或移动网格行列。`);
     for(let col=1;col<=8;col++) {
       const nr=address(3,col*2),gr=address(3,col*2+1),value=cellValue(ws,nr);
       if((value!==col&&value!==String(col))||!blank(cellValue(ws,gr)))context(sheet,nr,'列号应按1–8排列，每个座位占姓名和性别两格，请勿移动表头。');
@@ -213,7 +218,7 @@ export async function readExcel(arrayBuffer) {
     let name;try{name=className(meta?.name??sheet);}catch(error){context(sheet,'工作表名称',error.message);}
     const id=meta?.id??stableId('class',name),seats=[],studentIds=new Set();
     for(let row=1;row<=layout.rows;row++) for(let col=1;col<=8;col++) {
-      const v2=layout.version===2,nr=v2?address(row+4,col*2):address(2*row+2,col+1),gr=v2?address(row+4,col*2+1):address(2*row+3,col+1),ir=address(row+10,layout.metaCol+col-1),rawName=cellValue(ws,nr),rawGender=cellValue(ws,gr);
+      const v2=layout.version>=2,gridRow=layout.version===3?layout.rows+5-row:row+4,nr=v2?address(gridRow,col*2):address(2*row+2,col+1),gr=v2?address(gridRow,col*2+1):address(2*row+3,col+1),ir=address(row+10,layout.metaCol+col-1),rawName=cellValue(ws,nr),rawGender=cellValue(ws,gr);
       if(blank(rawName)) {if(!blank(rawGender)) context(sheet,gr,`第${row}排第${col}列没有姓名，请同时清空性别或补全姓名。`);continue;}
       const studentName=requireText(ws,nr,sheet,'姓名',80);
       const key=blank(rawGender)?'':typeof rawGender==='string'?rawGender.trim().toLowerCase():null;
@@ -246,20 +251,20 @@ function sheetName(name,used) {
 }
 function gridSheet(c,sheet) {
   const rows=Math.max(8,...c.seats.map(s=>s.row)),ws={},set=(ref,value)=>{ws[ref]=typeof value==='string'?textCell(value):{t:typeof value==='boolean'?'b':'n',v:value};};
-  set('A1',c.name);set('B2','黑板 / 讲台（第1排最近）');set('A3','排 / 列');set('A4','座位信息');
+  set('A1',c.name);set(address(rows+5,2),'黑板 / 讲台（第1排最近）');set('A3','排 / 列');set('A4','座位信息 · 老师视角');
   for(let col=1;col<=8;col++){set(address(3,col*2),col);set(address(3,col*2+1),'');set(address(4,col*2),'姓名');set(address(4,col*2+1),'性别');}
-  for(let row=1;row<=rows;row++){set(address(row+4,1),`第${row}排`);for(let col=1;col<=8;col++){set(address(row+4,col*2),'');set(address(row+4,col*2+1),'');}}
-  for(const s of c.seats){set(address(s.row+4,s.col*2),s.name);set(address(s.row+4,s.col*2+1),s.gender==='male'?'男':s.gender==='female'?'女':'');set(address(s.row+10,s.col+25),s.id);}
+  for(let row=1;row<=rows;row++){set(address(row+4,1),`第${rows+1-row}排`);for(let col=1;col<=8;col++){set(address(row+4,col*2),'');set(address(row+4,col*2+1),'');}}
+  for(const s of c.seats){set(address(rows+5-s.row,s.col*2),s.name);set(address(rows+5-s.row,s.col*2+1),s.gender==='male'?'男':s.gender==='female'?'女':'');set(address(s.row+10,s.col+25),s.id);}
   set('S3','填写说明');
-  ['姓名在左，性别在右。','性别选男或女，也可留空。','空座两格都留空。','第1排最靠近黑板。','请勿移动或增删座位行列。'].forEach((text,i)=>set(address(i+5,19),text));
+  ['姓名在左，性别在右。','性别选男或女，也可留空。','空座两格都留空。','老师视角：上方后排，下方第1排。','请勿移动或增删座位行列。'].forEach((text,i)=>set(address(i+5,19),text));
   const meta=[['晴窗教室隐藏资料',EXCEL_FORMAT],['Excel格式版本',EXCEL_VERSION],['资料包版本',TRANSFER_VERSION],['班级标识',c.id],['原始班级名称',c.name],['导出工作表名称',sheet],['不重复抽选',c.noRepeat],['示例班级',c.sample],['网格排数',rows]];
   meta.forEach((row,i)=>row.forEach((v,j)=>set(address(i+1,j+26),v)));set('Z10','学生标识：与16排×8列座位对应');
   ws['!ref']='A1:AG26';
-  // Compact seat cards: one wide name cell plus a narrow gender cell.
-  for(let row=1;row<=rows+4;row++)for(let col=1;col<=17;col++)if(!ws[address(row,col)])set(address(row,col),'');
+  // Teacher view: back rows above front rows; columns and hidden student IDs retain logical coordinates.
+  for(let row=1;row<=rows+5;row++)for(let col=1;col<=17;col++)if(!ws[address(row,col)])set(address(row,col),'');
   ws['!cols']=[{wch:8},...Array.from({length:8},()=>[{wch:14},{wch:3.5}]).flat(),{wch:4},{wch:38},...Array.from({length:6},()=>({hidden:true,wch:3})),...Array.from({length:8},()=>({hidden:true,wch:14}))];
-  ws['!rows']=Array.from({length:rows+4},(_,i)=>i===3?{hidden:true,hpt:2}:{hpt:i===0?34:i===1?26:i===2?27:32});
-  ws['!merges']=[XLSX.utils.decode_range('A1:Q1'),XLSX.utils.decode_range('B2:Q2'),...Array.from({length:8},(_,i)=>({s:{r:2,c:1+i*2},e:{r:2,c:2+i*2}}))];
+  ws['!rows']=Array.from({length:rows+5},(_,i)=>(i===1||i===3)?{hidden:true,hpt:2}:{hpt:i===0?34:i===1?26:i===2?27:32});
+  ws['!merges']=[XLSX.utils.decode_range('A1:Q1'),XLSX.utils.decode_range(`B${rows+5}:Q${rows+5}`),...Array.from({length:8},(_,i)=>({s:{r:2,c:1+i*2},e:{r:2,c:2+i*2}}))];
   ws['!margins']={left:0.25,right:0.25,top:0.3,bottom:0.3,header:0.1,footer:0.1};
   return ws;
 }
@@ -288,9 +293,9 @@ function styleWorkbook(bytes) {
     const cellValues=new Map([...xml.matchAll(/<c\b[^>]*\br="([A-Z]+\d+)"[^>]*>([\s\S]*?)<\/c>/g)].map(match=>[match[1],/<v>([\s\S]*?)<\/v>/.exec(match[2])?.[1]??'']));
     xml=xml.replace(/<c\b([^>]*\br="([A-Z]+)(\d+)"[^>]*)>/g,(_,attributes,col,number)=>{
       const row=Number(number),column=XLSX.utils.decode_col(col);let s=0;
-      if(column<=16&&row<=gridRows+4)s=16;
+      if(column<=16&&row<=gridRows+5)s=16;
       if(col==='A'&&row===1)s=1;
-      else if(row===2&&column>=1&&column<=16)s=2;
+      else if(row===gridRows+5&&column>=1&&column<=16)s=2;
       else if(row===3&&column<=16)s=3;
       else if(row===4&&column<=16)s=column===0?9:column%2===1?7:8;
       else if(row>=5&&row<=gridRows+4&&column<=16) {
@@ -319,7 +324,7 @@ export function writeExcel(state,{template=false}={}) {
   const classes=template?templateClasses:makePackage(state).classes;
   const checked=canonical(classes),workbook=XLSX.utils.book_new(),used=new Set();
   workbook.Workbook={Names:[]};
-  for(const c of makePackage(checked).classes){const name=sheetName(c.name,used),index=workbook.SheetNames.length,rows=Math.max(8,...c.seats.map(s=>s.row));XLSX.utils.book_append_sheet(workbook,gridSheet(c,name),name);workbook.Workbook.Names.push({Name:'_xlnm.Print_Area',Sheet:index,Ref:`'${name.replace(/'/g,"''")}'!$A$1:$Q$${rows+4}`});}
+  for(const c of makePackage(checked).classes){const name=sheetName(c.name,used),index=workbook.SheetNames.length,rows=Math.max(8,...c.seats.map(s=>s.row));XLSX.utils.book_append_sheet(workbook,gridSheet(c,name),name);workbook.Workbook.Names.push({Name:'_xlnm.Print_Area',Sheet:index,Ref:`'${name.replace(/'/g,"''")}'!$A$1:$Q$${rows+5}`});}
   workbook.Props={Title:template?'晴窗教室 · Excel座位模板':'晴窗教室 · 班级座位资料',Author:'晴窗教室',Subject:'每个工作表一个班级，姓名与性别按座位网格排列'};
   const output=styleWorkbook(XLSX.write(workbook,{type:'array',bookType:'xlsx',compression:false,bookSST:false}));
   if(output.byteLength>MAX_EXCEL_BYTES) fail('导出的 Excel 超过 5 MB，请减少班级数量或姓名长度后再试。');

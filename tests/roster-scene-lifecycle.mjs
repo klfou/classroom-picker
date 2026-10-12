@@ -26,7 +26,7 @@ $('edit').click();
 const card=$('roster').querySelectorAll('.seat-card').find(c=>c.dataset.row==='8'&&c.dataset.col==='8');
 card.click();$('seat-name').value='新同学示例';$('seat-name').dispatchEvent({type:'input'});
 assert.equal($('save').disabled,false);$('save').click();
-assert.match($('roster-error').textContent,/座位已保存/);
+assert.match($('roster-error').textContent,/已保存 \d+ 人/);
 assert.equal(app.people().length,64);assert.equal(app.getState().seats.at(-1).name,'新同学示例');
 assert.equal(disposedMaterials,63*2+64,'Only per-person and per-table material instances are disposed');
 assert.equal(disposedGeometry,0,'Shared baked avatars and desk geometry must survive rebuild');
@@ -63,7 +63,7 @@ assert.deepEqual(env.assetErrors,[]);
 // selected standing avatar, countdown view, an empty class, and all 128 seats.
 const selectSeat=(row,col)=>$('roster').querySelectorAll('.seat-card').find(c=>Number(c.dataset.row)===row&&Number(c.dataset.col)===col).click();
 const typeName=name=>{$('seat-name').value=name;$('seat-name').dispatchEvent({type:'input'})};
-const save=()=>{$('save').click();assert.match($('roster-error').textContent,/座位已保存/);assert.equal($('save').disabled,true)};
+const save=()=>{$('save').click();assert.match($('roster-error').textContent,/已保存 \d+ 人/);assert.equal($('save').disabled,true)};
 const close=()=>{$('editor-close').click();assert.equal($('roster-dialog').open,false)};
 const renderKeyFrame=async()=>{await env.step(1500);assert.equal(env.frames.size,1);assert.ok(app.renderer.stats.triangles>0)};
 const switchClass=id=>{$('class-select').value=id;$('class-select').dispatchEvent({type:'change'});assert.equal(app.getState().classId,id)};
@@ -92,7 +92,7 @@ assert.deepEqual(env.assetErrors,[]);
 // independent of seat-name input. Adding one occupied seat enables picking.
 $('edit').click();$('class-create').click();$('class-name').value='5班';$('class-name').dispatchEvent({type:'input'});$('class-name-save').click();
 assert.equal(app.classStore.current.name,'5班');assert.equal(app.people().length,0);assert.equal(app.stations().length,64);
-assert.match($('scene-note').textContent,/0 位同学.*5班/);assert.equal($('pick').disabled,true);assert.equal($('pick').querySelector('span').textContent,'请先填写名单');assert.equal($('pick').getAttribute('aria-busy'),'false');
+assert.match($('scene-note').textContent,/0 位同学.*5班/);assert.equal($('pick').disabled,false);assert.equal($('pick').querySelector('span').textContent,'添加学生');assert.equal($('pick').getAttribute('aria-busy'),'false');
 close();await renderKeyFrame();
 assert.equal(app.teacher.visible,true);assert.equal($('roster-dialog').open,false);
 $('timer-primary').click();assert.equal(window.isCountdownRunning(),true);await renderKeyFrame();window.cancelCountdown();
@@ -100,6 +100,21 @@ $('edit').click();selectSeat(1,1);typeName('五班示例同学');save();close();
 assert.equal(app.people().length,1);assert.equal(app.getState().seats[0].name,'五班示例同学');
 assert.match($('scene-note').textContent,/1 位同学.*5班/);assert.equal($('pick').disabled,false);assert.equal($('pick').querySelector('span').textContent,'开始点名');
 assert.equal(app.classStore.current.seats.length,1);assert.equal($('pick').getAttribute('aria-busy'),'false');
+// All themes route an empty class directly to the current class/first empty
+// seat, without starting a draw or clearing/cross-writing another class.
+for(const theme of ['classroom','space','paper']){
+ app.setTheme(theme);app.applyRoster([]);const currentId=app.classStore.current.id;
+ assert.equal($('pick').disabled,false);assert.equal($('pick').querySelector('span').textContent,'添加学生');
+ $('pick').click();assert.equal($('roster-dialog').open,true);assert.equal(document.activeElement,$('seat-name'));
+ assert.equal(app.classStore.current.id,currentId);assert.equal(app.getState().busy,false);
+ typeName('新增演示同学');$('editor-close').click();assert.equal($('roster-dialog').open,true);assert.equal($('panel-confirm').hidden,false);
+ $('panel-confirm-cancel').click();assert.equal($('roster-dialog').open,true);save();
+ assert.equal($('roster-error').textContent,`${app.classStore.current.name} · 已保存 1 人`);
+ assert.equal(app.classStore.current.id,currentId);close();
+ assert.equal(app.getState().names[0],'新增演示同学');assert.equal($('pick').querySelector('span').textContent,'开始点名');
+ $('pick').click();assert.equal(app.getState().busy,true);assert.equal($('pick').getAttribute('aria-busy'),'true');app.cancelDraw();
+ assert.equal(app.getState().busy,false);assert.equal($('pick').getAttribute('aria-busy'),'false');
+}
 const {readFileSync}=await import('node:fs');const css=readFileSync(new URL('../dist/style.css',import.meta.url),'utf8');
 assert.match(css,/button:disabled\{[^}]*cursor:not-allowed/);assert.match(css,/button:disabled\[aria-busy="true"\]\{cursor:wait\}/);
 assert.doesNotMatch(css,/button:disabled\{[^}]*cursor:wait/);
