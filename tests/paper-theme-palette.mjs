@@ -15,7 +15,7 @@ const paper=css.slice(start,end),outside=css.slice(0,start)+css.slice(end);
 const hash=s=>createHash('sha256').update(s).digest('hex');
 // Normalize only the explicit disabled-vs-busy cursor fix; all palette/layout
 // declarations must still match the original shared fingerprint.
-const paletteBaseline=outside.replace('button:disabled{opacity:.5;cursor:not-allowed}button:disabled[aria-busy="true"]{cursor:wait}','button:disabled{opacity:.5;cursor:wait}');
+const paletteBaseline=outside.replace('button:disabled{opacity:.5;cursor:not-allowed}button:disabled[aria-busy="true"]{cursor:default}','button:disabled{opacity:.5;cursor:wait}');
 assert.equal(hash(paletteBaseline),'c592669bdca85f1c53efdc4a92008d1c7c59bcccc21fb371236101a195594893','Shared and SPACE CSS match the v95 teacher-view baseline');
 const rules=[...paper.replace(/\/\*[\s\S]*?\*\//g,'').matchAll(/([^{}]+)\{([^{}]*)\}/g)].map(([,selector,body])=>({selector:selector.trim(),declarations:Object.fromEntries(body.split(';').filter(Boolean).map(d=>{const i=d.indexOf(':');return[d.slice(0,i),d.slice(i+1)]}))}));
 const colorOnly=new Set(['color','background','border-color','outline-color','--green','--line']);

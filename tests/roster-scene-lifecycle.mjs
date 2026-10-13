@@ -116,6 +116,6 @@ for(const theme of ['classroom','space','paper']){
  assert.equal(app.getState().busy,false);assert.equal($('pick').getAttribute('aria-busy'),'false');
 }
 const {readFileSync}=await import('node:fs');const css=readFileSync(new URL('../dist/style.css',import.meta.url),'utf8');
-assert.match(css,/button:disabled\{[^}]*cursor:not-allowed/);assert.match(css,/button:disabled\[aria-busy="true"\]\{cursor:wait\}/);
+assert.match(css,/button:disabled\{[^}]*cursor:not-allowed/);assert.match(css,/button:disabled\[aria-busy="true"\]\{cursor:default\}/);
 assert.doesNotMatch(css,/button:disabled\{[^}]*cursor:wait/);
 console.log('PASS roster scene lifecycle: real add/save/close/rename/switch handlers, empty/64/128 seats, unknown/male/female avatar changes, standing/countdown edits, exact material disposal/shared geometry, CPU renderer key frames, one RAF, late hero resolution isolation, recovery after one render exception. Browser/GPU not covered.');
