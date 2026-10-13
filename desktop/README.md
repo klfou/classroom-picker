@@ -10,6 +10,7 @@
 ```sh
 npm ci --ignore-scripts
 npm run verify
+npm run test:portable
 npm run build:win
 ```
 
@@ -24,7 +25,7 @@ npm run build:win
 
 ## 数据与安全
 
-运行时固定使用 `%APPDATA%\SunlitClassroom`，不要更改此名称或清除该目录；已有班级/座位随升级保留。
+运行时使用程序根目录的 `Data/`；首次启动从旧 `%APPDATA%\SunlitClassroom` 安全复制并校验，旧目录保留。已有 Data 不会被其他电脑的名单覆盖。移动程序前完全退出，并复制完整目录（含 Data）。迁移失败默认停止；可保留迁移备份后重启并手动导入。详见 [便携数据说明](PORTABLE-DATA.md)。
 已点进度在当前文档内存中，关闭重开或刷新清空；名单资料持久保存。网页版资料可用 Excel 导出/导入迁移。
 保持原 `classroom://app` 本地协议、contextIsolation、sandbox、webSecurity；远程网络请求和外部导航被拒绝。
 Excel/JSON 导出仅允许本页产生的 Blob，保存位置由用户选择。
@@ -33,8 +34,7 @@ Excel/JSON 导出仅允许本页产生的 Blob，保存位置由用户选择。
 ## 可复现与验证边界
 
 这里的“可复现”指固定源码、资源校验和锁定构建依赖，可重新生成同版本应用；不承诺新压缩包与先前交付ZIP逐字节相同。
-main.cjs 从已交付1.8.2恢复并校验，SHA256为
-`24d0dfd9f41a71bbf3c9776d753885d1d0749a2a4d7188c9a892f53ea0fb7a8e`。
+本次在原1.8.2桌面壳上加入便携 Data 迁移；版本和 Electron 运行时保持不变，不生成发行包。main.cjs 已改变，旧交付版校验和不再适用于此文件。
 本构建配置先前已完成 npm ci、官方Electron下载及Windows x64打包/PE检查。本次音频和脱敏快照更新仅执行资源校验与语法检查，未重新构建exe。原发布版曾完成ASAR资源一致与包装模拟检查。这些不等于真实Windows运行测试。
 当前无Windows实机，启动、真实保存对话框、图形性能和声音仍需在目标Windows验收。
 未配置代码签名，不需付费证书。Windows可能提示未知发布者；不要关闭杀毒或绕过组织安全策略。

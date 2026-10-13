@@ -39,7 +39,7 @@ async function run() {
       fs.mkdirSync(path.dirname(destination), { recursive: true });
       fs.copyFileSync(path.join(WEB, relative), destination);
     }
-    fs.copyFileSync(path.join(ROOT, 'main.cjs'), path.join(work, 'main.cjs'));
+    for (const file of ['main.cjs', 'portable-data.cjs']) fs.copyFileSync(path.join(ROOT, file), path.join(work, file));
     fs.copyFileSync(path.join(ROOT, 'app-package.json'), path.join(work, 'package.json'));
     const module = await import('@electron/packager');
     const packager = module.default || module.packager;
