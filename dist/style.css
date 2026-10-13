@@ -260,3 +260,11 @@ body[data-theme=paper] #roster-dialog :is(button,a,input,select,textarea,summary
 
 /* Two full labels fit the existing phone toolbar row, including 320px screens. */
 @media(max-width:760px){.bottom-toolbar .repeat-mode{justify-self:stretch;gap:4px}.repeat-mode button{flex:1 1 auto;padding:6px 5px;font-size:12px}}
+
+/* Ten minute presets keep the label beside one compact, touch-safe group. */
+.duration-unit{display:block;font-size:10px;font-weight:400;opacity:.75}
+#timer-minutes{display:grid;grid-template-columns:repeat(10,44px);gap:2px;flex:none}
+#timer-minutes button{min-width:44px;min-height:44px;padding:5px 2px;font-size:14px}
+@media(max-width:1699px){#timer-minutes{grid-template-columns:repeat(5,44px)}}
+@media(max-width:760px){.bottom-toolbar .duration-control{grid-column:1/-1;justify-content:center}#timer-minutes{width:auto;flex:none;grid-template-columns:repeat(5,44px)}}
+@media(max-width:760px) and (min-height:541px){footer{height:398px}#viewport{bottom:398px}#screen-help{bottom:412px}}

@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';import{register}from'node:module';import{readFileSync}from'node:fs';
+register('./helpers/theme-scene-loader.mjs',import.meta.url);
+const{setup,dist,$,select}=await import('./helpers/theme-environment.mjs');
+const env=await setup();await import(dist+'/scene.js');const app=window.classroom;await env.awaitReady(app.ready);env.bindRenderer(app.renderer);await import(dist+'/countdown.js');await env.step(20);
+const qa=()=>__sharedCountdownQA();assert.equal(qa().selectedMinutes,2);assert.equal(qa().snapshot.remaining,120000);
+for(const theme of ['classroom','space','paper']){app.setTheme(theme);for(let n=1;n<=10;n++){select('timer-minutes',n);$('timer-primary').click();assert.equal(qa().snapshot.remaining,n*60000);await env.step(100);const next=n===10?1:n+1;select('timer-minutes',next);assert.equal(qa().snapshot.duration,n*60000);assert.equal(qa().snapshot.remaining,n*60000-100);assert.equal(document.querySelectorAll('#timer-minutes button').filter(b=>b.getAttribute('aria-checked')==='true').length,1);app.setTheme(theme==='space'?'paper':'space');assert.equal(qa().snapshot.remaining,n*60000-100);app.setTheme(theme);$('timer-primary').click();assert.equal(qa().snapshot.remaining,next*60000);window.cancelCountdown();}}
+assert.equal(env.frames.size,1);assert.equal(env.assetErrors.length,0);
+const buttons=[...$('timer-minutes').querySelectorAll('button')];buttons[0].dispatchEvent({type:'keydown',key:'End',preventDefault(){}});assert.equal(qa().selectedMinutes,10);buttons[9].dispatchEvent({type:'keydown',key:'Home',preventDefault(){}});assert.equal(qa().selectedMinutes,1);
+const css=readFileSync(new URL('../dist/style.css',import.meta.url),'utf8');assert.match(css,/#timer-minutes\{display:grid;grid-template-columns:repeat\(10,44px\)/);assert.match(css,/@media\(max-width:1699px\)\{#timer-minutes\{grid-template-columns:repeat\(5,44px\)/);assert.ok(5*44+4*2+6+48+6+2<=320-24,'Five-column options and horizontal label fit 320px with existing padding');
+console.log('PASS all 30 theme/minute combinations, default2, staged selection, restart, keyboard, one RAF, 320px static layout budget');

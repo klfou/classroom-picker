@@ -3,7 +3,7 @@ import {createCountdown,formatTime,splitPreciseTime} from './countdown-state.js'
 const $=id=>document.getElementById(id);
 let activeChime=null;
 function stopChime(){if(!activeChime)return;try{activeChime.oscillator.stop();activeChime.gain.disconnect()}catch{}activeChime=null}
-let boardVisible=false,audio,lastPreciseFrame=-Infinity,selectedMinutes=5;
+let boardVisible=false,audio,lastPreciseFrame=-Infinity,selectedMinutes=2;
 const soundEnabled=()=>$('sound-toggle').getAttribute('aria-pressed')==='true';
 function unlockAudio(force=false){if(!force&&!soundEnabled())return;try{audio??=new (window.AudioContext||window.webkitAudioContext)();if(audio.state!=='running'&&audio.state!=='closed')audio.resume().catch(()=>{})}catch{}}
 function soundVolume(){if(window.classroom?.getSoundVolume)return window.classroom.getSoundVolume();try{const v=localStorage.getItem('sunlit-sound-volume');return v!==null&&/^\d+$/.test(v)&&Number(v)<=100?Number(v):65}catch{return 65}}

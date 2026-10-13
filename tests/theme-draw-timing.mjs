@@ -16,9 +16,9 @@ const app=window.classroom;await env.awaitReady(app.ready);env.bindRenderer(app.
 if(!process.env.COUNTDOWN_FIRST)await import(dist+'/countdown.js');
 await env.step(1600);await env.flush();
 
-assert.equal(globalThis.__sharedCountdownQA().selectedMinutes,5,'Fresh page defaults to five minutes');
-assert.equal(globalThis.__sharedCountdownQA().snapshot.remaining,300000,'Ready state matches selected five minutes');
-$('timer-primary').click();assert.equal(globalThis.__sharedCountdownQA().snapshot.duration,300000,'First unmodified start uses five minutes');window.cancelCountdown();
+assert.equal(globalThis.__sharedCountdownQA().selectedMinutes,2,'Fresh page defaults to two minutes');
+assert.equal(globalThis.__sharedCountdownQA().snapshot.remaining,120000,'Ready state matches selected two minutes');
+$('timer-primary').click();assert.equal(globalThis.__sharedCountdownQA().snapshot.duration,120000,'First unmodified start uses two minutes');window.cancelCountdown();
 
 const qa=()=>globalThis.__sharedThemeQA(),timer=()=>globalThis.__sharedCountdownQA(),state=()=>app.getState(),debug=()=>app.spaceCards.debug();
 const shared=()=>{const {theme,software,...snapshot}=state();return snapshot};

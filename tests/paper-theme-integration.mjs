@@ -24,7 +24,7 @@ window.matchMedia=globalThis.matchMedia=query=>{
 };
 const setReducedMotion=value=>{prefersReducedMotion=value;for(const media of motionQueries){media.matches=value;for(const fn of media.listeners)fn({matches:value})}};
 let earlyTimerDeadline=null;
-if(process.env.COUNTDOWN_FIRST){await import(dist+'/countdown.js');if(process.env.EARLY_TIMER){$('timer-primary').click();earlyTimerDeadline=env.now+300000}}
+if(process.env.COUNTDOWN_FIRST){await import(dist+'/countdown.js');if(process.env.EARLY_TIMER){$('timer-primary').click();earlyTimerDeadline=env.now+120000}}
 await import(dist+'/scene.js');
 const app=window.classroom;await env.awaitReady(app.ready);env.bindRenderer(app.renderer);
 if(!process.env.COUNTDOWN_FIRST)await import(dist+'/countdown.js');
@@ -48,7 +48,7 @@ async function test(name,fn){await fn();checks++;console.log('PASS',name)}
 
 assert.ok(app.paperCards,'The production scene exposes the new paper adapter');
 assert.equal(state().theme,storage['sunlit-theme']);
-assert.equal(timer().selectedMinutes,5,'A fresh document defaults to five minutes');
+assert.equal(timer().selectedMinutes,2,'A fresh document defaults to two minutes');
 assert.deepEqual(state().used,[],'Legacy durable used picks are ignored at document startup');
 assert.equal(env.frames.size,1,'The production scene owns exactly one RAF');
 if(state().theme!=='paper'&&earlyTimerDeadline===null){assert.equal(app.paperCards.debug().frame,0,'An initially inactive paper adapter paints nothing');assert.equal(app.paperCards.debug().resources.surfaces,0,'An initially inactive paper adapter lazily avoids artwork allocation')}

@@ -62,7 +62,7 @@ for(const width of [320,360,375,390,430,540,760]){
  const footerWidth=width-24,cellWidth=(footerWidth-18)/4,available=cellWidth*2+6;
  const required=9*parseFloat(buttons['font-size'])+4*5+4+parseFloat(container.gap);
  assert.ok(required<=available,`${width}px: both full CJK labels and button padding fit the two-column budget`);
- assert.equal(style('footer',width).height,'354px');assert.equal(style('#viewport',width).bottom,'354px');
+ assert.equal(style('footer',width).height,'398px');assert.equal(style('#viewport',width).bottom,'398px');
  assert.equal(style('footer',width,480)['overflow-y'],'auto','Short phones keep all footer rows reachable');
 }
 

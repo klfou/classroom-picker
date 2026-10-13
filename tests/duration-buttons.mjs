@@ -73,3 +73,10 @@ const rapid=fixture([3,5,10],3);
 for(let i=0;i<90;i++)rapid.button([3,5,10][i%3]).click();
 rapid.check(10);equal(rapid.changes.length,90);
 console.log(`PASS ${assertions} duration-button assertions: initial/fallback selection, sparse presets, roving focus, wrap arrows, Home/End, native activation defaults, disabled rejection, reenable, and rapid changes.`);
+
+const allMinutes=Array.from({length:10},(_,i)=>i+1),expanded=fixture(allMinutes,2);expanded.check(2);
+for(const value of allMinutes){expanded.button(value).click();expanded.check(value)}
+for(const [start,key,expected] of [[10,'ArrowRight',1],[1,'ArrowLeft',10],[7,'Home',1],[3,'End',10],[1,'ArrowDown',2],[10,'ArrowUp',9]]){
+ const f=fixture(allMinutes,start),event=f.button(start).dispatch('keydown',{key});f.check(expected);equal(event.defaultPrevented,true);equal(f.document.activeElement,f.button(expected));
+}
+console.log('PASS all ten minute buttons, default2, single tab stop, full-range arrow wrapping and Home/End');

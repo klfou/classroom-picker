@@ -1,11 +1,11 @@
 // Deadline-based countdown. Rendering cadence never changes the elapsed time.
 export function createCountdown({now=()=>Date.now(),onFinish=()=>{}}={}) {
- let duration=300000,remaining=duration,deadline=0,status='ready';
+ let duration=120000,remaining=duration,deadline=0,status='ready';
  const snapshot=()=>({duration,remaining,status});
  function tick(){if(status==='running'){remaining=Math.max(0,deadline-now());if(remaining===0){status='finished';onFinish()}}return snapshot()}
  return {
   tick,
-  restart(minutes){if(![3,5,10].includes(minutes))return snapshot();duration=minutes*60000;remaining=duration;deadline=now()+duration;status='running';return snapshot()},
+  restart(minutes){if(!Number.isInteger(minutes)||minutes<1||minutes>10)return snapshot();duration=minutes*60000;remaining=duration;deadline=now()+duration;status='running';return snapshot()},
   cancel(){remaining=duration;deadline=0;status='ready';return snapshot()}
  };
 }

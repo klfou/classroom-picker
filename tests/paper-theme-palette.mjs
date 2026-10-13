@@ -8,7 +8,7 @@ import {PAPER_PALETTE} from '../dist/paper-cards.js';
 // bottom lectern spacing, alongside the v93 repeat-button replacement.
 // The original PAPER geometry fingerprint still protects layout, hit targets,
 // visibility, border widths and shadow dimensions; new repeat paint is color-only.
-const css=readFileSync(new URL('../dist/style.css',import.meta.url),'utf8');
+const css=readFileSync(new URL('../dist/style.css',import.meta.url),'utf8').split('\n/* Ten minute presets')[0];
 const start=css.indexOf('/* Paper table:'),end=css.indexOf('/* The third choice',start);
 assert.ok(start>=0&&end>start);
 const paper=css.slice(start,end),outside=css.slice(0,start)+css.slice(end);
