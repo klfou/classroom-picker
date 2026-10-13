@@ -23,8 +23,11 @@ function copyStorage(source, target) {
     if (entry.isDirectory()) { copyStorage(src, dst); continue; }
     if (!entry.isFile()) throw Error('旧数据包含不支持的文件，已停止迁移。');
     const before = fs.readFileSync(src);
-    fs.writeFileSync(dst, before, { flag: 'wx', mode: 0o600 });
-    const fd = fs.openSync(dst, 'r'); try { fs.fsyncSync(fd); } finally { fs.closeSync(fd); }
+    // Windows FlushFileBuffers requires a writable handle. Keep the exclusive
+    // create/write handle open through fsync; never flush a read-only source.
+    const fd = fs.openSync(dst, 'wx', 0o600);
+    try { fs.writeFileSync(fd, before); fs.fsyncSync(fd); }
+    finally { fs.closeSync(fd); }
     if (!before.equals(fs.readFileSync(dst)) || !before.equals(fs.readFileSync(src))) throw Error('旧数据在迁移中发生变化，已停止。');
   }
 }

@@ -43,4 +43,16 @@
     node tests/excel-teacher-view.mjs
     node scripts/test.mjs
 
-文件系统测试覆盖11项保护场景；启动测试使用模拟Electron验证锁失败、ready前路径设置、隐藏窗口不提前退出、验证失败/恢复与已有Data。它们不等于真实Windows或LevelDB验收。现有网页测试与合成旧版Excel兼容检查保留，本PR不修改任何网页文件。
+文件系统测试覆盖13项保护场景；启动测试使用模拟Electron验证锁失败、ready前路径设置、隐藏窗口不提前退出、验证失败/恢复与已有Data。它们不等于真实Windows或LevelDB验收。现有网页测试与合成旧版Excel兼容检查保留，本PR不修改任何网页文件。
+
+## Windows fsync 修复来源
+
+本次迁移模块和启动错误提示与已交付桌面1.8.4中的对应文件逐字节一致，仅移植这两处修复，不移植该发行包中的网页或更新器。GitHub构建版本仍为原1.8.2，本PR不构建/发布新版安装包。
+
+- 复制文件使用独占创建的可写句柄（wx），在同一个句柄上写入、fsync，最后关闭；不再重新打开只读句柄刷新，避免Windows拒绝只读句柄刷新。
+- 通用启动错误不再把每一种失败都归因于目录不可写；明确保留旧数据、Data和备份，报告具体错误。
+- 新增Windows语义模拟：拒绝只读句柄fsync、检查write→fsync→close顺序；注入复制刷新失败后检查句柄关闭、临时目录清理和旧数据不变。模拟不等于Windows实机测试。
+
+已交付ASAR SHA256：84d36cd52f96db9ef1a0703e59c6d6e10ddab4f86e2e8ebc896f43ca2ee692f0。
+main.cjs SHA256：4ec1520ad1c10ef0ccbe6f1261837acb54a89139e2640e972329bf7ccca9451b。
+portable-data.cjs SHA256：5baff9e02aa1dce96967c06c69d941f402e20f3aad62e31039cf4161cafc8e0d。

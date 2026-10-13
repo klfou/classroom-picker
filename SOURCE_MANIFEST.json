@@ -30,8 +30,8 @@
     },
     {
       "path": "desktop/PORTABLE-DATA.md",
-      "bytes": 4701,
-      "sha256": "b1f6bda9d965b3a01fc0b1c226763b17699053a2cba3ef2f8353d1a858f1e4f3"
+      "bytes": 5799,
+      "sha256": "d220ec661bb74f39a0af64587524832f173ccd0c35f3b307ac6b3dd59933b864"
     },
     {
       "path": "desktop/README.md",
@@ -60,8 +60,8 @@
     },
     {
       "path": "desktop/main.cjs",
-      "bytes": 8971,
-      "sha256": "2536a14549a40cc00668396babed0b15fae04847f430886d0ea9c34e5bd74dce"
+      "bytes": 9057,
+      "sha256": "4ec1520ad1c10ef0ccbe6f1261837acb54a89139e2640e972329bf7ccca9451b"
     },
     {
       "path": "desktop/package-lock.json",
@@ -75,13 +75,13 @@
     },
     {
       "path": "desktop/portable-data.cjs",
-      "bytes": 4274,
-      "sha256": "3ac5de4af1bd6eb1d7ec56d66575512e5ef2682bc0768a69420a4660949755c9"
+      "bytes": 4414,
+      "sha256": "5baff9e02aa1dce96967c06c69d941f402e20f3aad62e31039cf4161cafc8e0d"
     },
     {
       "path": "desktop/tests/portable-data.cjs",
-      "bytes": 5642,
-      "sha256": "f6631045cec543570641c99d4f9477e8da52c4b4d5824c48eba11cdd043632b4"
+      "bytes": 8535,
+      "sha256": "9ca84687ef4680ed912ced5c39d777b16f176b48471db89312c730649d7baf51"
     },
     {
       "path": "desktop/tests/startup.cjs",

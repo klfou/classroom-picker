@@ -75,5 +75,37 @@ try {
   assert.throws(()=>preparePortable({base,legacy}),/无效/);
   const linked=dir('linked');fs.symlinkSync(profile.data,path.join(linked,'Data'));assert.throws(()=>preparePortable({base:linked,legacy}),/链接/);
  });
+ test('Windows-like flush rejects read-only handles; migration uses one writable handle and closes it', () => {
+  const { runInNewContext } = require('node:vm');
+  const handles = new Map(), flushed = [], events = [];
+  const wrapped = {...fs,
+   openSync(file, flags, ...args) { const fd=fs.openSync(file,flags,...args);handles.set(fd,{file:String(file),flags});events.push(['open',fd,flags]);return fd; },
+   writeFileSync(file,...args) { if(typeof file==='number')events.push(['write',file]);return fs.writeFileSync(file,...args); },
+   fsyncSync(fd) { const h=handles.get(fd);assert.ok(h,'flush uses tracked fd');if(!/[wa+]/.test(h.flags))throw Object.assign(Error('Windows read-only flush denied'),{code:'EPERM'});flushed.push(h);events.push(['flush',fd]);return fs.fsyncSync(fd); },
+   closeSync(fd) { events.push(['close',fd]);handles.delete(fd);return fs.closeSync(fd); }
+  };
+  const module={exports:{}};
+  runInNewContext(fs.readFileSync(path.join(__dirname,'../portable-data.cjs'),'utf8'),{module,require:name=>name==='node:fs'?wrapped:require(name)});
+  const base=dir('windows-flush'),before=fs.readFileSync(path.join(db,'000003.log'));
+  const migrated=module.exports.preparePortable({base,legacy});
+  assert.equal(migrated.marker.status,'pending-validation');assert.equal(handles.size,0);
+  assert.deepEqual(fs.readFileSync(path.join(migrated.data,'Local Storage/leveldb/000003.log')),before);
+  assert.deepEqual(fs.readFileSync(path.join(db,'000003.log')),before);
+  const copied=flushed.filter(h=>h.file.includes('Local Storage'));assert.ok(copied.length>0);assert.ok(copied.every(h=>h.flags==='wx'));
+  for(let i=0;i<events.length;i++)if(events[i][0]==='write'){const fd=events[i][1];assert.deepEqual(events[i+1],['flush',fd]);assert.deepEqual(events[i+2],['close',fd]);}
+ });
+ test('copy flush failure closes the writable handle, removes only its stage, and preserves legacy', () => {
+  const { runInNewContext }=require('node:vm'),handles=new Map();let failures=0;
+  const wrapped={...fs,
+   openSync(file,flags,...args){const fd=fs.openSync(file,flags,...args);handles.set(fd,String(file));return fd;},
+   fsyncSync(fd){if(handles.get(fd)?.includes('Local Storage')){failures++;throw Object.assign(Error('synthetic flush failure'),{code:'EIO'});}return fs.fsyncSync(fd);},
+   closeSync(fd){handles.delete(fd);return fs.closeSync(fd);}
+  };
+  const module={exports:{}};runInNewContext(fs.readFileSync(path.join(__dirname,'../portable-data.cjs'),'utf8'),{module,require:name=>name==='node:fs'?wrapped:require(name)});
+  const base=dir('flush-failure'),before=fs.readFileSync(path.join(db,'000003.log'));
+  assert.throws(()=>module.exports.preparePortable({base,legacy}),/synthetic flush failure/);
+  assert.equal(failures,1);assert.equal(handles.size,0);assert.deepEqual(fs.readdirSync(base),[]);
+  assert.deepEqual(fs.readFileSync(path.join(db,'000003.log')),before);
+ });
  console.log(`${checks} portable filesystem checks passed. Synthetic bytes only, not a Chromium/Windows integration test.`);
 } finally { fs.rmSync(root,{recursive:true,force:true}); }

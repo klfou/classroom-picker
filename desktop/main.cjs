@@ -25,7 +25,7 @@ else {
     app.setPath('userData', profile.data);
     app.setPath('sessionData', profile.data);
   } catch (error) {
-    dialog.showErrorBox('班级数据未能安全打开', error.message + '\n请把完整程序放在可写的本地文件夹（例如桌面），关闭旧版本后重试。不会改用本机目录偷偷保存。');
+    dialog.showErrorBox('班级数据未能安全打开', error.message + '\n为保护班级资料，已停止启动；不会改用其他目录保存。请保留旧版资料、Data 和已有备份，不要删除数据目录。请提供上方完整错误文字，以便针对失败的操作处理。');
     app.exit(1);
   }
   app.on('second-instance', () => { if (mainWindow) { if (mainWindow.isMinimized()) mainWindow.restore(); mainWindow.focus(); } });
