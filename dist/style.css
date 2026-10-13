@@ -260,3 +260,10 @@ body[data-theme=paper] #roster-dialog :is(button,a,input,select,textarea,summary
 
 /* Two full labels fit the existing phone toolbar row, including 320px screens. */
 @media(max-width:760px){.bottom-toolbar .repeat-mode{justify-self:stretch;gap:4px}.repeat-mode button{flex:1 1 auto;padding:6px 5px;font-size:12px}}
+
+/* Native minute selector shares the horizontal toolbar label and theme palette. */
+.duration-control>label{flex-shrink:0}
+#timer-minutes{font:inherit;font-size:15px;min-width:98px;min-height:44px;border:1px solid #d9e2ce;border-radius:10px;padding:6px 10px;background:#edf2e5;color:#365a37;cursor:pointer}
+body[data-theme=space] #timer-minutes{background:#14263c;border-color:#345578;color:#c5dcf5;color-scheme:dark}
+body[data-theme=paper] #timer-minutes{background:#392936;border-color:#765c6b;color:#f1e4e2;color-scheme:dark}
+@media(max-width:760px){#timer-minutes{font-size:13px;min-width:94px}.bottom-toolbar .duration-control{grid-column:1/-1;justify-content:center;gap:7px}}

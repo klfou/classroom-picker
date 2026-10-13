@@ -15,8 +15,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 4286,
-      "sha256": "64d92bb24bd47b873ab5d8743ea9b6840f32a369b72d526dd0f6222b38bc3976"
+      "bytes": 4300,
+      "sha256": "fb4e17865883b0e1bf38cb1900c49e6c0f879f89dcf9cff0ef78d790fa10aa30"
     },
     {
       "path": "SNAPSHOT_NOTES.md",
@@ -51,7 +51,7 @@
     {
       "path": "desktop/assets-manifest.json",
       "bytes": 7334,
-      "sha256": "8a4407388245ec825b93e1e87865a6a08b15327c3b8d92f797c5e66cde091c8b"
+      "sha256": "d8829b53ebced1a896830719270cd3c1dc8fbd1257046c7e49bef61a211cfc5d"
     },
     {
       "path": "desktop/build.cjs",
@@ -135,13 +135,13 @@
     },
     {
       "path": "dist/countdown-state.js",
-      "bytes": 1183,
-      "sha256": "76183d4f371473cfe1e861ea13c433d99551ec2b9629e26ad2ef51caf18f8b4e"
+      "bytes": 1205,
+      "sha256": "93792a2c4fdf4f84f446f91f828305ae43b9379e0fc23562152f9fc34761562c"
     },
     {
       "path": "dist/countdown.js",
-      "bytes": 3994,
-      "sha256": "8b6ea93a3067f972c8cf3f42d20b3e5f17faac5209d93afbbe22c446f4541126"
+      "bytes": 4134,
+      "sha256": "7c748a8739890d6257679a12c4b79ae6599e8d64bbf0ffab29646063e4b16079"
     },
     {
       "path": "dist/draw-timing.js",
@@ -165,8 +165,8 @@
     },
     {
       "path": "dist/index.html",
-      "bytes": 6256,
-      "sha256": "501cbfc3b7c27b68553262c2154ad75b7958cc021ca80e9f132e9dd09049f791"
+      "bytes": 6296,
+      "sha256": "1dec460a2167008da46cd344807dfe4cdf2b6a450ec5925c9eaff99577e00250"
     },
     {
       "path": "dist/models/boy-hero.scene.json",
@@ -295,8 +295,8 @@
     },
     {
       "path": "dist/style.css",
-      "bytes": 49033,
-      "sha256": "e7ff0b293b2b1cb8e1e22cef5abd23b2b4450616fd8843de13c1d8b9e01bcf8c"
+      "bytes": 49716,
+      "sha256": "41a3238af5b6bcf5d91dedd16b5236dd73dadabb615c1a1d8168d005741e6fe2"
     },
     {
       "path": "dist/vendor/EXCEL-VENDOR-NOTICE.txt",
@@ -394,14 +394,19 @@
       "sha256": "81428f51f2e0aece3f7f9f8709bc4c4372e885ee0df359dadb0162154990a0ec"
     },
     {
+      "path": "tests/countdown-all-minutes.mjs",
+      "bytes": 1969,
+      "sha256": "51865348a5ae5662b450f047987573ed6b9ce129b6b136d8b3dcff9472061b67"
+    },
+    {
       "path": "tests/countdown-digit-layout.mjs",
-      "bytes": 13265,
-      "sha256": "4ad52e3c450e5e09486e864c05bfb694939b9ead4cb7e9def9897343b4252ab5"
+      "bytes": 14089,
+      "sha256": "26ea4eb0aadc4b08e03373ea6ff0cdc8a40788cd2d572e6d9ba676c7d1001562"
     },
     {
       "path": "tests/countdown-presets.mjs",
-      "bytes": 1772,
-      "sha256": "af75ff7135343cf25431660efdaba05bb646b1fa872780ff994f6274791b7bd8"
+      "bytes": 1828,
+      "sha256": "00e94cda595527ce248f3066bf3bd7794da259f3d163111aa15c3bb4ac402102"
     },
     {
       "path": "tests/countdown-title-layout.mjs",
@@ -445,8 +450,8 @@
     },
     {
       "path": "tests/helpers/theme-environment.mjs",
-      "bytes": 3980,
-      "sha256": "22cc1ef4e005c2c765f7f96726b7deab5718bebd472af49648a8962cb8b9f837"
+      "bytes": 4080,
+      "sha256": "bba165b27518e39a12f2a79567bca02678b9362dce9dcf9ef94cd673eee8252c"
     },
     {
       "path": "tests/helpers/theme-scene-loader.mjs",
@@ -470,8 +475,8 @@
     },
     {
       "path": "tests/paper-countdown-cards.mjs",
-      "bytes": 26328,
-      "sha256": "1498909358e346ba8e1373d93809baf1500f1d19385fbf85a7eec5a6299fc043"
+      "bytes": 26337,
+      "sha256": "b6a1b3363045a6ea57167dbe0d575b001173820e2fa2bf4b054190f8ddfecbfd"
     },
     {
       "path": "tests/paper-patterned-back.mjs",
@@ -480,13 +485,13 @@
     },
     {
       "path": "tests/paper-theme-integration.mjs",
-      "bytes": 46119,
-      "sha256": "a7f0a908cd9670fb9b121eab297f4748f569e16f203f752e74489f183c43dd63"
+      "bytes": 46118,
+      "sha256": "60068904c300d17c8cf32bbd57b4cf6c3c1da1e9b22325c9c68ea64fbdfc982d"
     },
     {
       "path": "tests/paper-theme-palette.mjs",
-      "bytes": 8041,
-      "sha256": "367afadcf0e0e142b204c8d8996b80e390b1a75f11494db0e954b875984ba545"
+      "bytes": 8641,
+      "sha256": "ee73a89d664b012900e19bc964bfa3c71cf4ad99b5fe282517dab27237fe03ba"
     },
     {
       "path": "tests/render-budget.mjs",
@@ -575,13 +580,13 @@
     },
     {
       "path": "tests/theme-draw-timing.mjs",
-      "bytes": 15328,
-      "sha256": "02baa575b2e7b569c36a2c3bfb7536bf4473502fca030e59bfac45438f754038"
+      "bytes": 15325,
+      "sha256": "ac689eccac28d3087f7f3bc43e4b4bf490c25bf4e9f25ad3e9a66641b2cff8a3"
     },
     {
       "path": "tests/timer-camera-takeover.mjs",
-      "bytes": 9441,
-      "sha256": "7213b2c0f6bf9acfac27651a38d8bd2e777ae3585488dd41bed002176b33d228"
+      "bytes": 9440,
+      "sha256": "132b1d116375e7c61955ad8f3324023e0034ff5d5fbbb42c5fc94bcab961ed78"
     }
   ]
 }
