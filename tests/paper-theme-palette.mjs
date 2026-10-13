@@ -8,7 +8,7 @@ import {PAPER_PALETTE} from '../dist/paper-cards.js';
 // bottom lectern spacing, alongside the v93 repeat-button replacement.
 // The original PAPER geometry fingerprint still protects layout, hit targets,
 // visibility, border widths and shadow dimensions; new repeat paint is color-only.
-const css=readFileSync(new URL('../dist/style.css',import.meta.url),'utf8').split('\n/* Ten minute presets')[0];
+const css=readFileSync(new URL('../dist/style.css',import.meta.url),'utf8').split('\n/* Native minute selector')[0];
 const start=css.indexOf('/* Paper table:'),end=css.indexOf('/* The third choice',start);
 assert.ok(start>=0&&end>start);
 const paper=css.slice(start,end),outside=css.slice(0,start)+css.slice(end);
@@ -73,3 +73,7 @@ for(const [,hex]of paper.matchAll(/#([\da-f]{6})(?:[\da-f]{2})?\b/gi)){
  if(Math.max(r,g,b)-Math.min(r,g,b)>35)assert.ok(b>=g,`Unexpected gold paint #${hex}`);
 }
 console.log(`PASS PAPER palette: v95 shared CSS and unchanged PAPER geometry byte contracts, renderer/UI identity, ${checks} contrast pairs (enabled ≥${minEnabled.toFixed(2)}:1, disabled after opacity ≥${minDisabled.toFixed(2)}:1), separate table/editor focus, explicit repeat-button states, no blue/green/gold paint.`);
+
+// Native dropdown text colors are checked separately from frozen scene styles.
+const selectorCss=readFileSync(new URL('../dist/style.css',import.meta.url),'utf8').split('/* Native minute selector')[1];
+for(const match of selectorCss.matchAll(/(?:^|\n)([^{}]+#timer-minutes|#timer-minutes)\{([^{}]+)\}/g)){const declarations=Object.fromEntries(match[2].split(';').filter(Boolean).map(d=>{const i=d.indexOf(':');return[d.slice(0,i),d.slice(i+1)]}));if(declarations.color&&declarations.background)readable(match[1],declarations.color,declarations.background);}

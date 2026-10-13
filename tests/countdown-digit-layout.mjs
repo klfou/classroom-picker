@@ -19,12 +19,12 @@ const hashes={
  'countdown.js':'8b6ea93a3067f972c8cf3f42d20b3e5f17faac5209d93afbbe22c446f4541126',
 };
 const hash=s=>createHash('sha256').update(s).digest('hex');
-// Normalize only this change's expanded minute validation and default2. Other
+// Normalize only expanded minute validation, default2 and native-select wiring. Other
 // scheduling/camera implementation bytes retain the previous approved hashes.
 for(const [file,expected]of Object.entries(hashes)){
  let source=fs.readFileSync(new URL('../dist/'+file,import.meta.url),'utf8');
  if(file==='countdown-state.js')source=source.replace('let duration=120000,','let duration=300000,').replace('!Number.isInteger(minutes)||minutes<1||minutes>10','![3,5,10].includes(minutes)');
- if(file==='countdown.js')source=source.replace('selectedMinutes=2;','selectedMinutes=5;');
+ if(file==='countdown.js'){source="import {createDurationButtons} from './duration-buttons.js';\n"+source.replace('selectedMinutes=2;','selectedMinutes=5;').replace(/const minutesSelect=\$\('timer-minutes'\);minutesSelect.value=String\(selectedMinutes\);\nminutesSelect.addEventListener\('change',[^\n]+/,"createDurationButtons($('timer-minutes'),selectedMinutes,minutes=>{selectedMinutes=minutes});");}
  assert.equal(hash(source),expected,file+' retains unchanged scheduling outside the approved minute choices');
 }
 // Restore only the removed, title-only call before comparing the original

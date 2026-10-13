@@ -10,7 +10,7 @@ assert.deepEqual(splitPreciseTime(599990),{text:'09:59',hundredths:'99'});assert
 now+=599999;assert.equal(timer.tick().remaining,1);assert.equal(finished,0);now++;assert.equal(timer.tick().status,'finished');timer.tick();assert.equal(finished,1);
 timer.restart(10);timer.cancel();now+=600001;assert.equal(timer.tick().status,'ready');assert.equal(finished,1);
 const html=readFileSync(new URL('../dist/index.html',import.meta.url),'utf8'),source=readFileSync(new URL('../dist/countdown.js',import.meta.url),'utf8');
-const group=html.match(/id="timer-minutes"[\s\S]*?<\/div>/)[0];assert.deepEqual([...group.matchAll(/data-value="(\d+)"/g)].map(m=>Number(m[1])),Array.from({length:10},(_,i)=>i+1));
-assert.match(group,/data-value="2" aria-label="2 分钟" aria-checked="true"/);assert.match(source,/selectedMinutes=2/);
+const group=html.match(/id="timer-minutes"[\s\S]*?<\/select>/)[0];assert.deepEqual([...group.matchAll(/value="(\d+)"/g)].map(m=>Number(m[1])),Array.from({length:10},(_,i)=>i+1));
+assert.match(group,/<option value="2" selected>/);assert.match(source,/selectedMinutes=2/);
 assert.doesNotMatch(source,/localStorage\.(?:getItem|setItem)\([^)]*(?:minutes|duration)/,'No duration persistence exists; legacy values cannot override the two minute startup default');
 console.log('PASS 1–10-minute presets, default2, unsupported legacy choices, 600000ms boundary/hundredths, finish-once and cancellation');

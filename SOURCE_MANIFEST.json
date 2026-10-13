@@ -15,8 +15,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 4303,
-      "sha256": "51694bdf7e9885b7c89d57cb688c06e41378225450af76ab31114fe46c60d377"
+      "bytes": 4300,
+      "sha256": "fb4e17865883b0e1bf38cb1900c49e6c0f879f89dcf9cff0ef78d790fa10aa30"
     },
     {
       "path": "SNAPSHOT_NOTES.md",
@@ -51,7 +51,7 @@
     {
       "path": "desktop/assets-manifest.json",
       "bytes": 7334,
-      "sha256": "c9028af0d269861a90629f4eafb6433d189b661429dff1d4ccb6f30def47277f"
+      "sha256": "e3e6c40d74d3ed84c7fcc6b7c411f3a27d8cc4fc4b2dc9008f0e803acbc06280"
     },
     {
       "path": "desktop/build.cjs",
@@ -140,8 +140,8 @@
     },
     {
       "path": "dist/countdown.js",
-      "bytes": 3994,
-      "sha256": "517b18f1a2bf3dbf07fd0829b8016fc1bd34136b268ece0d1a438db307a5df17"
+      "bytes": 4134,
+      "sha256": "7c748a8739890d6257679a12c4b79ae6599e8d64bbf0ffab29646063e4b16079"
     },
     {
       "path": "dist/draw-timing.js",
@@ -165,8 +165,8 @@
     },
     {
       "path": "dist/index.html",
-      "bytes": 7168,
-      "sha256": "a7b9c6f9a2712853ff8a595db8992422e39f29082f4d1d8ae77809dff785fe76"
+      "bytes": 6296,
+      "sha256": "1dec460a2167008da46cd344807dfe4cdf2b6a450ec5925c9eaff99577e00250"
     },
     {
       "path": "dist/models/boy-hero.scene.json",
@@ -295,8 +295,8 @@
     },
     {
       "path": "dist/style.css",
-      "bytes": 49722,
-      "sha256": "3d7df8f8771ba181cf996e612ca9cdc39cad47461ddc12023335003fd9d2213d"
+      "bytes": 49713,
+      "sha256": "58f132f1c1de446e2cb8021fcdd478e3539f9e0593001ce549266ab45b736310"
     },
     {
       "path": "dist/vendor/EXCEL-VENDOR-NOTICE.txt",
@@ -390,18 +390,18 @@
     },
     {
       "path": "tests/countdown-all-minutes.mjs",
-      "bytes": 2147,
-      "sha256": "135fad1ba24c8e64ba0f60b29960fe007c726cc8157ae68cc774d8caba8ba9da"
+      "bytes": 1969,
+      "sha256": "51865348a5ae5662b450f047987573ed6b9ce129b6b136d8b3dcff9472061b67"
     },
     {
       "path": "tests/countdown-digit-layout.mjs",
-      "bytes": 13769,
-      "sha256": "e9cf08e4e1a845e6bb4535f451e5b54b8fa5361d3cf688d1e3f10d36ce2f4467"
+      "bytes": 14089,
+      "sha256": "26ea4eb0aadc4b08e03373ea6ff0cdc8a40788cd2d572e6d9ba676c7d1001562"
     },
     {
       "path": "tests/countdown-presets.mjs",
-      "bytes": 1859,
-      "sha256": "acbf2f0c03f2089910fbd31dad8d7045a2619dc2b590bd0422335d4c7e4e56d3"
+      "bytes": 1828,
+      "sha256": "00e94cda595527ce248f3066bf3bd7794da259f3d163111aa15c3bb4ac402102"
     },
     {
       "path": "tests/countdown-title-layout.mjs",
@@ -410,8 +410,8 @@
     },
     {
       "path": "tests/duration-buttons.mjs",
-      "bytes": 4747,
-      "sha256": "7f030ca42870077d0bd44de3a321cead5ad001e854483f581242c4339da4274d"
+      "bytes": 4120,
+      "sha256": "f29fefcfbf3d8574a6469a59ab0fc6c49768334d58b106d5aeda88989bd3abb2"
     },
     {
       "path": "tests/excel-teacher-view.mjs",
@@ -445,8 +445,8 @@
     },
     {
       "path": "tests/helpers/theme-environment.mjs",
-      "bytes": 3980,
-      "sha256": "5e00abc5cb294636b2cd992bc19d358d9eb10450e239a3fbe843346247af20d2"
+      "bytes": 4080,
+      "sha256": "bba165b27518e39a12f2a79567bca02678b9362dce9dcf9ef94cd673eee8252c"
     },
     {
       "path": "tests/helpers/theme-scene-loader.mjs",
@@ -485,8 +485,8 @@
     },
     {
       "path": "tests/paper-theme-palette.mjs",
-      "bytes": 8074,
-      "sha256": "274cd83e4f3d57824fa4cf9b3a375b48266d9be15d62840d5f6611eac838d74b"
+      "bytes": 8638,
+      "sha256": "5a7512ae8c1a7cd8ae6665a5216a49097d8ff8b46559d0ecaa09a280686f1cc1"
     },
     {
       "path": "tests/render-budget.mjs",
@@ -501,7 +501,7 @@
     {
       "path": "tests/repeat-mode-controls.mjs",
       "bytes": 10085,
-      "sha256": "2d40b5d568041d86fc5b71d4ab4532c6f6f02109c3aa5d3289206b31a1103376"
+      "sha256": "d542e41c5498fda7f8d96ff12b7ac726a1ff5a1bb1998063eea30527fa9b8c85"
     },
     {
       "path": "tests/repeat-mode.mjs",
