@@ -22,3 +22,11 @@ SunlitClassroom/
 *.log
 .DS_Store
 Thumbs.db
+
+# Portable profiles and private class exports
+Data/
+Data-recovery-*/
+.Data-migration-*/
+.build/
+sunlit-classes-*.json
+sunlit-backup-*.json

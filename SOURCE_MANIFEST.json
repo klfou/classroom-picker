@@ -5,8 +5,8 @@
   "files": [
     {
       "path": ".gitignore",
-      "bytes": 194,
-      "sha256": "b4aeec5fc26d1d69de35aa8be9ee2243430cd417c1a4c31766f0cc6b82b53597"
+      "bytes": 334,
+      "sha256": "3b1d463ca968defa45d12565448f7202d65aa2c18485a86a0866b75239c94b82"
     },
     {
       "path": "ASSET_SOURCES.md",
@@ -29,9 +29,14 @@
       "sha256": "307128fcc69de76ccd06b63697fa79e8d60a7d978207e9d55c86f4f389cd9486"
     },
     {
+      "path": "desktop/PORTABLE-DATA.md",
+      "bytes": 5799,
+      "sha256": "d220ec661bb74f39a0af64587524832f173ccd0c35f3b307ac6b3dd59933b864"
+    },
+    {
       "path": "desktop/README.md",
-      "bytes": 3312,
-      "sha256": "2274f2ee14200ff390b616b2b448213291a4e7c59c4cca7b85a52628dbf7021c"
+      "bytes": 3644,
+      "sha256": "083281f3f441ac616209850a77d175a343b2c0eb43ef3cc7db33644d4a7240a7"
     },
     {
       "path": "desktop/THIRD-PARTY.md",
@@ -50,13 +55,13 @@
     },
     {
       "path": "desktop/build.cjs",
-      "bytes": 4012,
-      "sha256": "0bc711fcf2443659b5e3f917d81d7e1b9fd3a451a67ee866e718ba573a2d3515"
+      "bytes": 4054,
+      "sha256": "74a632ea37d55eaba8d366bf6559d0de7d50d608270c71a88e5ae9b2f897c2b4"
     },
     {
       "path": "desktop/main.cjs",
-      "bytes": 5353,
-      "sha256": "24d0dfd9f41a71bbf3c9776d753885d1d0749a2a4d7188c9a892f53ea0fb7a8e"
+      "bytes": 9057,
+      "sha256": "4ec1520ad1c10ef0ccbe6f1261837acb54a89139e2640e972329bf7ccca9451b"
     },
     {
       "path": "desktop/package-lock.json",
@@ -65,8 +70,23 @@
     },
     {
       "path": "desktop/package.json",
-      "bytes": 354,
-      "sha256": "b4d13a42d2b07db9de24a131dca6ee743f129bc24f7b6c7cddbfebc6ae4e930d"
+      "bytes": 429,
+      "sha256": "ef213333447bb8f7be154ceb69684c78792e622905c643eb53e6cccde9a5c299"
+    },
+    {
+      "path": "desktop/portable-data.cjs",
+      "bytes": 4414,
+      "sha256": "5baff9e02aa1dce96967c06c69d941f402e20f3aad62e31039cf4161cafc8e0d"
+    },
+    {
+      "path": "desktop/tests/portable-data.cjs",
+      "bytes": 8535,
+      "sha256": "9ca84687ef4680ed912ced5c39d777b16f176b48471db89312c730649d7baf51"
+    },
+    {
+      "path": "desktop/tests/startup.cjs",
+      "bytes": 3517,
+      "sha256": "9929936adaee11bbeca2ea86f992a4e30f2bba647ee08a067448cf6eec09ea29"
     },
     {
       "path": "dist/audio/LICENSE.txt",
