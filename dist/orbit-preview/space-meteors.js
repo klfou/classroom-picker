@@ -1,7 +1,7 @@
 // Short, staggered meteor flights shared by both presentation backends. The
 // caller owns time: no clock, RAF, random selection or frame-time surfaces here.
 // Increase launch cadence only; flight speed, envelope and shape stay unchanged.
-const COUNT=10,WAVE=3650/1.3,PERIOD=WAVE*2;
+const COUNT=1,WAVE=18000,PERIOD=WAVE*2;
 const fract=n=>n-Math.floor(n),hash=n=>fract(Math.sin(n*127.1+311.7)*43758.5453123);
 const clamp=n=>Math.max(0,Math.min(1,n)),smooth=n=>{n=clamp(n);return n*n*n*(n*(n*6-15)+10)};
 export function createMeteorField(surface){
@@ -21,10 +21,10 @@ export function createMeteorField(surface){
    const cycle=Math.floor((elapsed-p.group*WAVE)/PERIOD);
    if(cycle!==p.cycle){
     p.cycle=cycle;p.wave=cycle*2+p.group;const seed=p.wave*37+p.slot*11;
-    p.waveSize=2+Math.floor(hash(p.wave*13+407)*4);p.depth=hash(seed+631);p.delay=90+hash(p.wave+317)*95+p.slot*(90+hash(seed+557)*65);p.lifetime=1400+hash(seed+113)*1200;p.speed=280+p.depth*280;p.strength=.58+p.depth*.23;
+    p.waveSize=2+Math.floor(hash(p.wave*13+407)*4);p.depth=hash(seed+631);p.delay=90+hash(p.wave+317)*95+p.slot*(90+hash(seed+557)*65);p.lifetime=1400+hash(seed+113)*1200;p.speed=280+p.depth*280;p.strength=.20+p.depth*.09;
     p.anchorX=(p.slot+.48+(hash(seed+127)-.5)*.32)/p.waveSize;p.anchorY=.12+hash(seed+983)*.58;const angle=.52+hash(seed+971)*.19;p.cos=Math.cos(angle);p.sin=Math.sin(angle);
    }
-   const age=elapsed-p.wave*WAVE-p.delay,t=clamp(age/p.lifetime),travel=p.speed*scale*p.lifetime/1000;p.progress=t;p.x=p.anchorX*width+(t-.43)*travel*p.cos;p.y=p.anchorY*height+(t-.43)*travel*p.sin;p.length=(110+p.depth*165)*scale;p.thickness=(11+p.depth*8)*scale;
+   const age=elapsed-p.wave*WAVE-p.delay,t=clamp(age/p.lifetime),travel=p.speed*scale*p.lifetime/1000;p.progress=t;p.x=p.anchorX*width+(t-.43)*travel*p.cos;p.y=p.anchorY*height+(t-.43)*travel*p.sin;p.length=(65+p.depth*65)*scale;p.thickness=(6+p.depth*4)*scale;
    // The leading fade takes 170–310ms and the tail dissipates over the last
    // 38% of the flight. Empty time between clusters prevents a bright band.
    p.alpha=p.slot<p.waveSize&&age>0&&age<p.lifetime?p.strength*smooth(t/.12)*(1-smooth((t-.62)/.38)):0;

@@ -13,7 +13,7 @@ export const RIM=[];
 for(const [x,y,angle] of [[351,33,-Math.PI/2],[351,135,0],[33,135,Math.PI/2],[33,33,Math.PI]])for(let i=0;i<=4;i++){const a=angle+i*Math.PI/8;RIM.push({u:(x+20*Math.cos(a))/384,v:(y+20*Math.sin(a))/168})}
 export const UV=Array.from({length:9},(_,i)=>({u:i%3/2,v:Math.floor(i/3)/2}));
 const newPoints=points=>points.map(()=>({x:0,y:0,z:0}));
-const createShell=count=>Array.from({length:count},(_,i)=>{const y=1-2*(i+.5)/count,r=Math.sqrt(1-y*y),lon=i*Math.PI*(3-Math.sqrt(5)),s=Math.sin(lon),c=Math.cos(lon);return {x:r*s,y,z:-r*c,ux:c,uy:0,uz:s,vx:-y*s,vy:r,vz:y*c}});
+const createShell=count=>Array.from({length:count},(_,i)=>{const y=2*(i+.5)/count-1,r=Math.sqrt(1-y*y),lon=i*Math.PI*(3-Math.sqrt(5)),s=Math.sin(lon),c=Math.cos(lon);return {x:r*s,y,z:-r*c,ux:c,uy:0,uz:s,vx:-y*s,vy:r,vz:y*c}});
 function quaternion(u,v,n,out){
  const m00=u.x,m01=v.x,m02=-n.x,m10=u.y,m11=v.y,m12=-n.y,m20=u.z,m21=v.z,m22=-n.z,t=m00+m11+m22;let x,y,z,w,s;
  if(t>0){s=Math.sqrt(t+1)*2;w=.25*s;x=(m21-m12)/s;y=(m02-m20)/s;z=(m10-m01)/s}
@@ -34,7 +34,7 @@ export function createCardModel(){
  function setNames(names){
   model.names=names;model.cards=[];model.extras=[];model.order=[];model.drawing=false;
   if(!names.includes(model.winner)){model.winner='';model.selected=null}
-  const count=names.length?Math.max(36,Math.min(128,names.length)):0,baseCount=count,shellCount=Math.max(64,count),shell=createShell(shellCount),occupied=new Set();
+  const count=names.length?Math.min(128,names.length):0,baseCount=count,shellCount=Math.max(64,count),shell=createShell(shellCount),occupied=new Set();
   for(let i=0;i<count;i++){
    // Stratified paths cross the whole screen, including the central reading lanes.
    const seed=i<baseCount?i:IDLE_INTERLEAVE[i-baseCount],region=seed%9,slot=Math.floor(seed/9),members=Math.floor((baseCount+8-region)/9),col=region%3,row=Math.floor(region/3),angle=(region===4?1.13:Math.atan2(row-1,col-1))+(hash(seed+311)-.5)*.70,mobile=(region===4?1.13:Math.atan2(row-1,col-1))+(hash(region+311)-.5)*.38,index=Math.floor(i*shellCount/count);
@@ -44,19 +44,28 @@ export function createCardModel(){
   model.allCards=model.cards.concat(model.extras);
  }
  function idle(c,now){
-  const {aspect,width,height,focal}=model,elapsed=model.reducedMotion?model.frozenElapsed:Math.max(0,now-(model.epoch??now)),cycle=c.phase+elapsed/CARD.idlePeriod,depth=fract(cycle);
-  const normalSize=aspect>1.78?Math.min(1.35,aspect/1.78):clamp(aspect/.95,.72,1),base=normalSize*CARD.scale;
-  c.size=base*mix(.82,1,smooth((aspect-.80)/.6))*CARD.idleScale*Math.pow(3.6,-.24*smooth((depth-.5)/.5));
-  const pathHalfW=.9*base,pathHalfH=pathHalfW*168/384,halfW=.9*c.size,halfH=halfW*168/384,near=c.nearZ*(aspect<.95?.68:1);
-  c.z=near*Math.pow(3.6,1-depth);c.idleCycle=Math.floor(cycle);c.idleDepth=depth;
-  const s=2*depth-1,travel=s-.78*Math.sin(Math.PI*s)/Math.PI,spread=smooth((aspect-.8)/.6),ax=mix(c.regionX*.55+(c.anchorX-c.regionX*.64)*.43,c.anchorX,spread),ay=mix(c.regionY*.64+(c.anchorY-c.regionY*.64)*.43,c.anchorY,spread),u=mix(c.mobileU,c.u,spread),v=mix(c.mobileV,c.v,spread);
-  const reach=Math.min((1+Math.abs(ax)+2*pathHalfW*1.26/(near*aspect)+.10)/Math.max(.0001,Math.abs(u)),(1.02+Math.abs(ay)+2*pathHalfH*1.26/near+.10)/Math.max(.0001,Math.abs(v)))*1.05;
-  c.x=(ax+u*reach*travel)*aspect*c.z/2.52;c.y=(ay+v*reach*travel)*c.z/2.52;c.idleOpacity=1;c.distanceShade=.30*(1-smooth(depth));
-  const scale=focal/c.z,x=width*.5+c.x*scale,y=height*.49+c.y*scale,back=focal/(c.z+CARD.thickness*c.size),bx=width*.5+c.x*back,by=height*.49+c.y*back,bw=halfW*(1-26/384)*back,bh=halfH*(1-26/168)*back;
-  c.idleInView=Math.max(x+halfW*scale,bx+bw)>=0&&Math.min(x-halfW*scale,bx-bw)<=width&&Math.max(y+halfH*scale,by+bh)>=0&&Math.min(y-halfH*scale,by-bh)<=height;
-  // Every roster seat has a persistent physical card in this preview. Its identity
-  // does not change at recycle; small classes must never lose a selectable seat.
+  const {width,height,focal,aspect}=model,count=model.cards.length;
+  // Three gently curved, staggered depth bands replace the all-roster grid.
+  // A representative spread of at most 30 cards rests here; every seat keeps
+  // its physical card and joins the spherical draw with the original identity.
+  const limit=Math.min(count,aspect<1?18:30),slot=Math.floor(c.id*limit/count),shown=Math.ceil(slot*count/limit)===c.id;
+  const columns=aspect<1?3:Math.min(5,Math.max(1,Math.ceil(Math.sqrt(limit*aspect/2.6)))),rows=Math.max(1,Math.ceil(limit/columns)),basePerRow=Math.floor(limit/rows),extraRows=limit%rows;
+  let row=0,offset=slot;while(offset>=basePerRow+(row<extraRows?1:0)){offset-=basePerRow+(row<extraRows?1:0);row++}
+  const members=basePerRow+(row<extraRows?1:0),layer=Math.min(2,Math.floor(row*3/rows)),depth=17-layer*3.1;
+  const padX=Math.max(26,Math.min(130,width*.09)),padY=Math.max(24,Math.min(58,height*.09));
+  const pitchX=(width-2*padX)/Math.max(columns+.2,2.8),pitchY=(height-2*padY)/Math.max(rows,3.8);
+  const cardWidth=Math.min(pitchX*.76,pitchY*1.75,190)*(1+(layer-1)*.055),normalized=(offset-(members-1)/2)/Math.max(1,members/2);
+  const stagger=(row%2?.22:-.22)*pitchX;
+  const x=(offset-(members-1)/2)*pitchX*(.94+layer*.025)+stagger;
+  const rowY=(row-(rows-1)/2)*pitchY,arc=(normalized*normalized-.35)*pitchY*.36;
+  const y=rowY+arc;
+  const elapsed=model.reducedMotion?model.frozenElapsed:Math.max(0,now-(model.epoch??now)),breath=Math.sin(elapsed/18000+layer*.7)*.10;
+  c.x=(shown?x:(c.id%2?1:-1)*(width*.58+cardWidth))*depth/focal;c.y=y*depth/focal;c.z=depth-breath;c.size=cardWidth*depth/(focal*1.8);
+  c.idleCycle=0;c.idleDepth=layer/2;c.idleLayer=layer;c.idleOpacity=1;c.idleInView=shown;c.distanceShade=(2-layer)*.08;
+  // Stable identities include offscreen reserve cards, so duplicate names and
+  // arbitrary small classes always have an exact source for result projection.
  }
+
  function projectPoint(c,uv,out,back){
   const dx=(uv.u-.5)*c.worldW,dy=(uv.v-.5)*c.worldH,t=back?CARD.thickness*c.size:0,u=c.uAxis,v=c.vAxis,n=c.normal,z=c.z+u.z*dx+v.z*dy-n.z*t;
   out.x=model.width*.5+(c.x+u.x*dx+v.x*dy-n.x*t)*model.focal/z;out.y=model.height*.49+(c.y+u.y*dx+v.y*dy-n.y*t)*model.focal/z;out.z=z;

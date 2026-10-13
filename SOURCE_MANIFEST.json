@@ -15,8 +15,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 5111,
-      "sha256": "00edc719388153d7f4a0a55e50d2152057f9c341bd296502f17dedf6c7eff571"
+      "bytes": 5418,
+      "sha256": "c460a99e30064c322e8aef3c24c04ba8cbe78cb9d0cb68daa08b1f6a41164107"
     },
     {
       "path": "SNAPSHOT_NOTES.md",
@@ -51,7 +51,7 @@
     {
       "path": "desktop/assets-manifest.json",
       "bytes": 12255,
-      "sha256": "09d513062a08b478fdad69f134974da5f2e63317c2d91acd6c473e1590c10e9c"
+      "sha256": "9ac31681d095830de5506bbeb0e54dfa8358c64975f692b727cd9a20d4148dfd"
     },
     {
       "path": "desktop/build.cjs",
@@ -335,8 +335,8 @@
     },
     {
       "path": "dist/orbit-preview/space-card-art.js",
-      "bytes": 8785,
-      "sha256": "2cb467dd1efd54a150f4739d1afa000a02edef928fbf69b7a0a82f768b4803aa"
+      "bytes": 8784,
+      "sha256": "18edfc1c816b337a67e901f22a7af62a8a6ea285ef7b9bc41b6374602f887394"
     },
     {
       "path": "dist/orbit-preview/space-card-canvas.js",
@@ -345,8 +345,8 @@
     },
     {
       "path": "dist/orbit-preview/space-card-model.js",
-      "bytes": 13355,
-      "sha256": "872770e69ab563ac4b6a3af63d6d9b792b1cc77eb1016e3cf744542679adbd67"
+      "bytes": 13527,
+      "sha256": "120f04c703fb20615f64bae0e79870f8f52ee22d880b0d536812029e3d703635"
     },
     {
       "path": "dist/orbit-preview/space-card-webgl.js",
@@ -365,8 +365,8 @@
     },
     {
       "path": "dist/orbit-preview/space-meteors.js",
-      "bytes": 4235,
-      "sha256": "5f9b05ccba22f151e64b74b38db0a7bfacf9ddfa4dc6bf80e4875534e12f0eba"
+      "bytes": 4228,
+      "sha256": "5fc995d341ab13a0ae577cc696c30bdac79bc94d7e11b791300160767ba711d8"
     },
     {
       "path": "dist/orbit-preview/style.css",
@@ -634,9 +634,14 @@
       "sha256": "47ad8af124b140fadfe4a3c4af5692143990556810da3b8c999e7df7e9ac4a22"
     },
     {
+      "path": "tests/orbit-preview-quiet-idle.mjs",
+      "bytes": 2252,
+      "sha256": "c34c4e7d12c7dda3b9534664208fc243229da8a98cd5111814faabc8228aeb03"
+    },
+    {
       "path": "tests/orbit-preview.mjs",
-      "bytes": 487,
-      "sha256": "c9da4de92b1e54e4a1b8ddd7009073bbdb43b961b856dcf815f196a6d8093775"
+      "bytes": 550,
+      "sha256": "eb3092cdb4300e259bf909e22fadf20239ed917d2ac540e69cb8268106a2f7bd"
     },
     {
       "path": "tests/orbit-preview/helpers/deterministic-dom.mjs",
@@ -670,8 +675,13 @@
     },
     {
       "path": "tests/orbit-preview/orbit-host-flow.mjs",
-      "bytes": 18883,
-      "sha256": "cfa88e10ef4b856ca05cda243b23411cf2626f13a5fafb6efe21aff45ad84a7f"
+      "bytes": 19125,
+      "sha256": "23b101a12f0b498635d4a94c4bc4e0505e33666c0c954b9d99ade3aaa3cf3b27"
+    },
+    {
+      "path": "tests/orbit-preview/orbit-identity-lifecycle.mjs",
+      "bytes": 3760,
+      "sha256": "e83e5fa5ea39cfd7296c75c65528c90a5667d9112425ba35088ef8096d265724"
     },
     {
       "path": "tests/orbit-preview/root-baseline-sha256.json",

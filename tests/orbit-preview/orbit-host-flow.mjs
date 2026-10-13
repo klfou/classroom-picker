@@ -29,7 +29,7 @@ await test('Fresh preview defaults to orbit, preserves original theme preference
 
 for(const reduced of [false,true])for(const size of [1,2,64,128])await test(`${size} students / ${reduced?'reduced':'normal'} motion: real button → sole RAF → one original-index winner`,async()=>{
  await clean();env.setReducedMotion(reduced);assert.equal(app.applyRoster(roster(size)),true);mode(false);await env.step(16);await env.flush();
- const initial=view();assert.equal(initial.cardCount,Math.max(36,size));assert.ok(initial.shellCardCount>=Math.max(initial.cardCount,size)&&initial.shellCardCount<=128);assert.equal(initial.reducedMotion,reduced);
+ const initial=view();assert.equal(initial.cardCount,size,'Ordered preview keeps one physical card per real roster identity');assert.ok(initial.shellCardCount>=Math.max(initial.cardCount,size)&&initial.shellCardCount<=128);assert.equal(initial.reducedMotion,reduced);
  const before=calls.length,spoken=env.speech.spoken.length,used=state().used,start=env.now;env.randomQueue=Array(1000).fill(0);$('pick').click();await env.flush();
  assert.equal(state().busy,true);assert.equal(qa().drawStart,start);assert.equal(state().drawDurationMs,1750);assert.deepEqual(view().timing,{gather:400,rotate:1000,scatter:350,total:1750,turn:Math.PI*1.55});assert.deepEqual(qa().drawCandidates,Array.from({length:size},(_,i)=>i));
  const generation=qa().drawGeneration;
@@ -90,10 +90,10 @@ await test('Real theme buttons preserve origin deadline, winner identity and sha
 await test('Resize/fullscreen fixtures keep one RAF, active draw deadline, timer state and visible selected card',async()=>{
  await clean();assert.equal(app.applyRoster(roster(128)),true);mode(false);env.randomQueue=Array(1000).fill(0);const start=env.now,before=calls.length;$('pick').click();await env.flush();await env.step(200);const generation=qa().drawGeneration;$('fullscreen').click();await env.flush();assert.equal(document.fullscreenElement,document.documentElement);await env.resize(1920,1080);assert.equal(qa().drawGeneration,generation);assert.equal(qa().drawStart,start);assert.equal(state().drawDurationMs,1750);assert.equal(env.frames.size,1);env.randomQueue=[127];await at(start+1750);await env.step(1600);await env.flush();assert.equal(state().selected,127);exactWinner(127);
  const sizes=[[1920,1080],[1366,768],[900,600],[390,844],[320,568]];
- for(const [width,height]of sizes){await env.resize(width,height);await env.step(16);const d=exactWinner(127);assert.equal(d.width,env.viewport.width);assert.equal(d.height,env.viewport.height);assert.ok(d.selectedCard.frontRim.every(p=>p.x>=0&&p.x<=d.width&&p.y>=0&&p.y<=d.height));assert.equal(qa().drawGeneration,generation);assert.equal(env.frames.size,1)}
+ for(const [width,height]of sizes){await env.resize(width,height);await env.step(16);const d=exactWinner(127);assert.equal(d.width,env.viewport.width);assert.equal(d.height,env.viewport.height);if(width<=760&&height>540){assert.equal(env.viewport.bottom,354);assert.equal(env.viewport.top,40,'Current pointer:fine CSS viewport top')}assert.ok(d.selectedCard.frontRim.every(p=>p.x>=0&&p.x<=d.width&&p.y>=0&&p.y<=d.height));assert.equal(qa().drawGeneration,generation);assert.equal(env.frames.size,1)}
  assert.equal(since('sounds.result',before).length,1);$('fullscreen').click();await env.flush();assert.equal(document.fullscreenElement,null);
  select('timer-minutes',2);$('timer-primary').click();const deadline=env.now+120000;$('fullscreen').click();await env.flush();await env.resize(1920,1080);assert.equal(timer().snapshot.remaining,deadline-env.now);assert.equal(view().countdown.state,'running');$('fullscreen').click();await env.flush();window.cancelCountdown();await env.resize(1366,768);
- return {viewportFixtures:sizes,fullscreen:'deterministic Fullscreen API fixture; no real browser display'};
+ return {viewportFixtures:sizes,mobileFixture:{pointer:'fine',top:40,bottom:354},fullscreen:'deterministic Fullscreen API fixture; no real browser display'};
 });
 
 await test('128-student adapter allocation is bounded across frames, repeated draws and countdown updates',async()=>{

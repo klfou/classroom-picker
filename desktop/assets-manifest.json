@@ -246,8 +246,8 @@
   },
   {
     "path": "orbit-preview/space-card-art.js",
-    "size": 8785,
-    "sha256": "2cb467dd1efd54a150f4739d1afa000a02edef928fbf69b7a0a82f768b4803aa"
+    "size": 8784,
+    "sha256": "18edfc1c816b337a67e901f22a7af62a8a6ea285ef7b9bc41b6374602f887394"
   },
   {
     "path": "orbit-preview/space-card-canvas.js",
@@ -256,8 +256,8 @@
   },
   {
     "path": "orbit-preview/space-card-model.js",
-    "size": 13355,
-    "sha256": "872770e69ab563ac4b6a3af63d6d9b792b1cc77eb1016e3cf744542679adbd67"
+    "size": 13527,
+    "sha256": "120f04c703fb20615f64bae0e79870f8f52ee22d880b0d536812029e3d703635"
   },
   {
     "path": "orbit-preview/space-card-webgl.js",
@@ -276,8 +276,8 @@
   },
   {
     "path": "orbit-preview/space-meteors.js",
-    "size": 4235,
-    "sha256": "5f9b05ccba22f151e64b74b38db0a7bfacf9ddfa4dc6bf80e4875534e12f0eba"
+    "size": 4228,
+    "sha256": "5fc995d341ab13a0ae577cc696c30bdac79bc94d7e11b791300160767ba711d8"
   },
   {
     "path": "orbit-preview/style.css",
