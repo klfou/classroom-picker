@@ -125,6 +125,166 @@
     "sha256": "055ca4054d9f723e899e56fae683719a106898409a1e3ab2feac159efa949321"
   },
   {
+    "path": "orbit-preview/avatars.js",
+    "size": 15007,
+    "sha256": "1f67d7f169fe240ebfc8c3fc041b2f9075900cbd9973ad00263a8eddb6a75d77"
+  },
+  {
+    "path": "orbit-preview/board-countdown.js",
+    "size": 5348,
+    "sha256": "0c2ce1e4c2bea9bb53f69b6e81203f7599caf78d5122ecd40161c0ca4021e1b4"
+  },
+  {
+    "path": "orbit-preview/board-glyphs-LICENSE.txt",
+    "size": 14712,
+    "sha256": "849f4ea9c214fa4ac3593b770c699f387534b11ce671264c1b10d85bdcb5997b"
+  },
+  {
+    "path": "orbit-preview/board-glyphs.js",
+    "size": 27530,
+    "sha256": "515845009670ed728a883059b957d2462971bcc23d79493f5374f63f9b9f7b12"
+  },
+  {
+    "path": "orbit-preview/class-transfer.js",
+    "size": 3434,
+    "sha256": "aa9cb7b8316952fea8e944fcc4d6095ef79ec172465ae26d0beb542b6a3d5821"
+  },
+  {
+    "path": "orbit-preview/classes.js",
+    "size": 6875,
+    "sha256": "bdafb559208f04c91bb97e538c410a129ee97eec9574f4211ad7d75569593afd"
+  },
+  {
+    "path": "orbit-preview/countdown-digit-layout.js",
+    "size": 1992,
+    "sha256": "4b13e2cf5c5fc8be58b10768cbae8ee07512ea791db54a552ee7832b65e808ba"
+  },
+  {
+    "path": "orbit-preview/countdown-state.js",
+    "size": 1205,
+    "sha256": "93792a2c4fdf4f84f446f91f828305ae43b9379e0fc23562152f9fc34761562c"
+  },
+  {
+    "path": "orbit-preview/countdown.js",
+    "size": 4134,
+    "sha256": "7c748a8739890d6257679a12c4b79ae6599e8d64bbf0ffab29646063e4b16079"
+  },
+  {
+    "path": "orbit-preview/draw-timing.js",
+    "size": 538,
+    "sha256": "75586162856fddbac09ca5196d0add9f894454d676bf79ad28dc779776fb4c4f"
+  },
+  {
+    "path": "orbit-preview/drumroll.js",
+    "size": 2046,
+    "sha256": "dba6b33f4bf2e6781f3ea2a1ba23b229deee85a50429d36790000b6a0586a11b"
+  },
+  {
+    "path": "orbit-preview/duration-buttons.js",
+    "size": 1268,
+    "sha256": "1c17945a8b5f57921fab6021447b435adf81c1e3b74c17c6739f33fb2887015a"
+  },
+  {
+    "path": "orbit-preview/excel-transfer.js",
+    "size": 32083,
+    "sha256": "679872c0984941797f9c17afdcc7d36e09fa4c62e57a18e97f9bf84851eb6d16"
+  },
+  {
+    "path": "orbit-preview/index.html",
+    "size": 6412,
+    "sha256": "0629c0b84d26a5dbe2d73b1e52388c9ddd6c14caee56be317e98791437d55e60"
+  },
+  {
+    "path": "orbit-preview/name-readout.js",
+    "size": 2818,
+    "sha256": "055ca4054d9f723e899e56fae683719a106898409a1e3ab2feac159efa949321"
+  },
+  {
+    "path": "orbit-preview/paper-cards.js",
+    "size": 40108,
+    "sha256": "9ae0a78ab00a114c917591892dfc55fb2ba5949ce780062bb207dcf82c05fcaa"
+  },
+  {
+    "path": "orbit-preview/render-budget.js",
+    "size": 1539,
+    "sha256": "9ae2e57d53cae97206445b727aeb85bc9b3f1b929feb85aa5f311b7041a32de7"
+  },
+  {
+    "path": "orbit-preview/roster-editor.js",
+    "size": 10233,
+    "sha256": "0d6752bb712235dc5be0f5496c2769ed5ef76f8256b8492e88ace04e48dc60a3"
+  },
+  {
+    "path": "orbit-preview/roster.js",
+    "size": 4559,
+    "sha256": "37b820845a93cb22494df85ac2ba6bee2349712a755933ac24e8fc145ceaebf4"
+  },
+  {
+    "path": "orbit-preview/scene.js",
+    "size": 56542,
+    "sha256": "cf566bb18619f7734349236b7e61d42f50b2494b43f2a298806850aa2b45e7cb"
+  },
+  {
+    "path": "orbit-preview/selection-timing.js",
+    "size": 270,
+    "sha256": "7bbdf83e13ef67121f59e5f738078d9242e4c4e32ba35f4e267751ee79dc7d63"
+  },
+  {
+    "path": "orbit-preview/software-renderer.js",
+    "size": 7776,
+    "sha256": "5b188284b6687cc6a28e70b9cdc524dece821a05212247488153cac8092f9a24"
+  },
+  {
+    "path": "orbit-preview/sound-waveforms.js",
+    "size": 1544,
+    "sha256": "2a8c86d695b0c753cd8fb5e2bb26a127d9ab33c90191936864fd996009e69fdf"
+  },
+  {
+    "path": "orbit-preview/sounds.js",
+    "size": 4700,
+    "sha256": "1b8fc7220b4193f3abcf135adcd689b62eb93b4e59b00316ce97918408039607"
+  },
+  {
+    "path": "orbit-preview/space-card-art.js",
+    "size": 8785,
+    "sha256": "2cb467dd1efd54a150f4739d1afa000a02edef928fbf69b7a0a82f768b4803aa"
+  },
+  {
+    "path": "orbit-preview/space-card-canvas.js",
+    "size": 4957,
+    "sha256": "c621100d72da4cea6a533005924936f0740cfa19de366bc294954b0732d0500f"
+  },
+  {
+    "path": "orbit-preview/space-card-model.js",
+    "size": 13355,
+    "sha256": "872770e69ab563ac4b6a3af63d6d9b792b1cc77eb1016e3cf744542679adbd67"
+  },
+  {
+    "path": "orbit-preview/space-card-webgl.js",
+    "size": 11192,
+    "sha256": "a1d0b7db73717f57ac261e5b57db0aa450a105071754358d9525953e01f13da3"
+  },
+  {
+    "path": "orbit-preview/space-cards.js",
+    "size": 6780,
+    "sha256": "2ccc74242aab6f05497325c4dbf638c60f34480b43823d5be05d2a7196995a39"
+  },
+  {
+    "path": "orbit-preview/space-countdown.js",
+    "size": 11690,
+    "sha256": "fc407ade0e8025d6a9a25f1b614130163c5f3bb2a702f7e60448b63223a4c70e"
+  },
+  {
+    "path": "orbit-preview/space-meteors.js",
+    "size": 4235,
+    "sha256": "5f9b05ccba22f151e64b74b38db0a7bfacf9ddfa4dc6bf80e4875534e12f0eba"
+  },
+  {
+    "path": "orbit-preview/style.css",
+    "size": 52390,
+    "sha256": "3479083948bf2e28176b8f77fea37b6b8132218f5578deb3aa3466ba2854e6d9"
+  },
+  {
     "path": "paper-cards.js",
     "size": 40108,
     "sha256": "9ae0a78ab00a114c917591892dfc55fb2ba5949ce780062bb207dcf82c05fcaa"
