@@ -46,13 +46,13 @@
   },
   {
     "path": "countdown-state.js",
-    "size": 1183,
-    "sha256": "76183d4f371473cfe1e861ea13c433d99551ec2b9629e26ad2ef51caf18f8b4e"
+    "size": 1205,
+    "sha256": "93792a2c4fdf4f84f446f91f828305ae43b9379e0fc23562152f9fc34761562c"
   },
   {
     "path": "countdown.js",
-    "size": 3994,
-    "sha256": "8b6ea93a3067f972c8cf3f42d20b3e5f17faac5209d93afbbe22c446f4541126"
+    "size": 4134,
+    "sha256": "7c748a8739890d6257679a12c4b79ae6599e8d64bbf0ffab29646063e4b16079"
   },
   {
     "path": "draw-timing.js",
@@ -76,8 +76,8 @@
   },
   {
     "path": "index.html",
-    "size": 6256,
-    "sha256": "501cbfc3b7c27b68553262c2154ad75b7958cc021ca80e9f132e9dd09049f791"
+    "size": 6296,
+    "sha256": "1dec460a2167008da46cd344807dfe4cdf2b6a450ec5925c9eaff99577e00250"
   },
   {
     "path": "models/boy-hero.scene.json",
@@ -206,8 +206,8 @@
   },
   {
     "path": "style.css",
-    "size": 49030,
-    "sha256": "edd498be348c116090771690aba83ff7271e09effca114c37b38ca1c6a0c25dc"
+    "size": 49713,
+    "sha256": "58f132f1c1de446e2cb8021fcdd478e3539f9e0593001ce549266ab45b736310"
   },
   {
     "path": "vendor/EXCEL-VENDOR-NOTICE.txt",
