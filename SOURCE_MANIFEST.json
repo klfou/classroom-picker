@@ -51,7 +51,7 @@
     {
       "path": "desktop/assets-manifest.json",
       "bytes": 7334,
-      "sha256": "e3e6c40d74d3ed84c7fcc6b7c411f3a27d8cc4fc4b2dc9008f0e803acbc06280"
+      "sha256": "d8829b53ebced1a896830719270cd3c1dc8fbd1257046c7e49bef61a211cfc5d"
     },
     {
       "path": "desktop/build.cjs",
@@ -295,8 +295,8 @@
     },
     {
       "path": "dist/style.css",
-      "bytes": 49713,
-      "sha256": "58f132f1c1de446e2cb8021fcdd478e3539f9e0593001ce549266ab45b736310"
+      "bytes": 49716,
+      "sha256": "41a3238af5b6bcf5d91dedd16b5236dd73dadabb615c1a1d8168d005741e6fe2"
     },
     {
       "path": "dist/vendor/EXCEL-VENDOR-NOTICE.txt",
@@ -382,6 +382,11 @@
       "path": "scripts/test.mjs",
       "bytes": 586,
       "sha256": "1a9d3a0c5c95619f79aa8602a5a95033b46e1fd1f88ffe1cfb7cf0b41f2e89ab"
+    },
+    {
+      "path": "tests/busy-arrow.mjs",
+      "bytes": 1476,
+      "sha256": "82e2b844e6cc8feed37a2315a4be4308368ac959a101b0941ebebf34f8f2ef6a"
     },
     {
       "path": "tests/class-transfer.mjs",
@@ -485,8 +490,8 @@
     },
     {
       "path": "tests/paper-theme-palette.mjs",
-      "bytes": 8638,
-      "sha256": "5a7512ae8c1a7cd8ae6665a5216a49097d8ff8b46559d0ecaa09a280686f1cc1"
+      "bytes": 8641,
+      "sha256": "ee73a89d664b012900e19bc964bfa3c71cf4ad99b5fe282517dab27237fe03ba"
     },
     {
       "path": "tests/render-budget.mjs",
@@ -510,8 +515,8 @@
     },
     {
       "path": "tests/roster-scene-lifecycle.mjs",
-      "bytes": 10966,
-      "sha256": "45f2e2820f0192a24be4e057694b3cc2e7c77f1233e948c4df739462e16e4cdb"
+      "bytes": 10969,
+      "sha256": "4fae03159cde7e106c2cf18799f4b11b3197979c58ff2d4abd6b1bc0ced56809"
     },
     {
       "path": "tests/seat-editor.mjs",
