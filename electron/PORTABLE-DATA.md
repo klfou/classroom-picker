@@ -1,6 +1,6 @@
 # 程序根目录 Data 与安全迁移
 
-本 PR 基于 GitHub main `ad96c6cb340f14d1d56d798df7566e8c7e868a4a`，仅修改桌面数据路径、迁移保护及对应测试/说明。原有 dist、网页主题、资源清单、应用版本1.8.2与Electron 44.7.0保持不变。不包含更新器或新发行包。
+以下说明记录此前基于 GitHub main `ad96c6cb340f14d1d56d798df7566e8c7e868a4a` 完成的便携数据修复：它修改了桌面数据路径、迁移保护及对应测试/说明，保留原网页主题、资源清单、应用版本1.8.2与Electron 44.7.0。本次 `desktop/` → `electron/` 目录重构不再改变这些数据逻辑；没有更新器或新发行包。
 
 应用身份 SunlitClassroom 和本地源 classroom://app 不变。离线网络限制、sandbox、contextIsolation 继续开启。构建仅额外包含 portable-data.cjs；不打包 Data、AppData、测试或班级导出文件。
 
@@ -35,9 +35,9 @@
 ## 自动验证
 在项目根执行：
 
-    node desktop/tests/portable-data.cjs
-    node desktop/tests/startup.cjs
-    node desktop/build.cjs --verify-only
+    node electron/tests/portable-data.cjs
+    node electron/tests/startup.cjs
+    npm --prefix electron run verify
     node tests/class-transfer.mjs
     node tests/excel-transfer.mjs
     node tests/excel-teacher-view.mjs

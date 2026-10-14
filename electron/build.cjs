@@ -15,7 +15,7 @@ function files(dir, prefix = '') {
     return [prefix + e.name];
   }).sort();
 }
-async function run() {
+function verifyAssets() {
   const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'assets-manifest.json')));
   const expected = manifest.map(x => x.path).sort();
   const actual = files(WEB);
@@ -26,6 +26,21 @@ async function run() {
   }
   const app = JSON.parse(fs.readFileSync(path.join(ROOT, 'app-package.json')));
   if (app.version !== VERSION || app.main !== 'main.cjs') throw new Error('Unexpected application version/main');
+  return actual;
+}
+function stageApplication(work, actual) {
+  for (const relative of actual) {
+    const destination = path.join(work, 'dist', relative);
+    fs.mkdirSync(path.dirname(destination), { recursive: true });
+    fs.copyFileSync(path.join(WEB, relative), destination);
+  }
+  for (const file of ['main.cjs', 'portable-data.cjs']) fs.copyFileSync(path.join(ROOT, file), path.join(work, file));
+  fs.copyFileSync(path.join(ROOT, 'app-package.json'), path.join(work, 'package.json'));
+}
+async function run() {
+  // Packaging always consumes a fresh build. Verification alone checks existing output.
+  if (!process.argv.includes('--verify-only')) (await import('../scripts/build.mjs')).buildWeb();
+  const actual = verifyAssets();
   console.log('Verified ' + actual.length + ' sanitized-source assets; desktop ' + VERSION);
   if (process.argv.includes('--verify-only')) return;
   const output = path.join(ROOT, 'out', VERSION);
@@ -34,13 +49,7 @@ async function run() {
   fs.mkdirSync(workRoot, { recursive: true });
   const work = fs.mkdtempSync(path.join(workRoot, 'stage-'));
   try {
-    for (const relative of actual) {
-      const destination = path.join(work, 'dist', relative);
-      fs.mkdirSync(path.dirname(destination), { recursive: true });
-      fs.copyFileSync(path.join(WEB, relative), destination);
-    }
-    for (const file of ['main.cjs', 'portable-data.cjs']) fs.copyFileSync(path.join(ROOT, file), path.join(work, file));
-    fs.copyFileSync(path.join(ROOT, 'app-package.json'), path.join(work, 'package.json'));
+    stageApplication(work, actual);
     const module = await import('@electron/packager');
     const packager = module.default || module.packager;
     const results = await packager({ dir: work, out: output, name: 'SunlitClassroom',
@@ -55,10 +64,12 @@ async function run() {
       fs.copyFileSync(path.join(ROOT, 'THIRD-PARTY.md'), path.join(folder, 'THIRD-PARTY.md'));
       const asar = fs.readFileSync(path.join(folder, 'resources/app.asar'));
       fs.writeFileSync(path.join(folder, 'build-manifest.json'), JSON.stringify({ version: VERSION, electron: ELECTRON,
-        upstreamCommit: '365796b4493178fdee6cf4b68b60621d1fdef810', sourceSnapshot: 'sanitized-source-handoff; see SNAPSHOT_NOTES.md', assetCount: actual.length,
+        upstreamCommit: '365796b4493178fdee6cf4b68b60621d1fdef810', sourceSnapshot: 'sanitized-source-handoff; see SNAPSHOT_NOTES.md',
+        assetManifestSha256: sha(fs.readFileSync(path.join(ROOT, 'assets-manifest.json'))), assetCount: actual.length,
         asarSha256: sha(asar), exeSha256: sha(exe), signed: false, windowsRunVerified: false }, null, 2));
       console.log('Built: ' + folder);
     }
   } finally { fs.rmSync(work, { recursive: true, force: true }); }
 }
-run().catch(error => { console.error(error.message); process.exitCode = 1; });
+module.exports = { verifyAssets, stageApplication };
+if (require.main === module) run().catch(error => { console.error(error.message); process.exitCode = 1; });
