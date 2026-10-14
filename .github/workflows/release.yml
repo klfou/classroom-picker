@@ -1,0 +1,88 @@
+name: Windows release or preview
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Do not cancel a partially completed release. Re-running an existing release fails closed.
+concurrency:
+  group: windows-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24.19.0
+          package-manager-cache: false
+      - name: Check package versions
+        run: node electron/release-config.cjs
+      - name: Require an exact version tag on a commit already in main
+        if: github.event_name == 'push'
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          node electron/release-config.cjs "$RELEASE_TAG"
+          git merge-base --is-ancestor HEAD origin/main
+
+  build:
+    needs: validate
+    uses: ./.github/workflows/ci.yml
+    permissions:
+      contents: read
+
+  publish:
+    # workflow_dispatch is always artifact-only, even if a tag is selected.
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    needs: [validate, build]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      # No checkout, npm, project code, or untrusted PR code runs with this token.
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: windows-portable
+          path: release
+          digest-mismatch: error
+      - name: Verify assets, then create a new GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BUILD_SHA: ${{ github.sha }}
+          REPOSITORY: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$RELEASE_TAG" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]
+          version="${RELEASE_TAG#v}"
+          archive="SunlitClassroom-${version}-windows-x64.zip"
+          cd release
+          test "$(find . -maxdepth 1 -type f | wc -l)" -eq 5
+          test -f "$archive" && test -f SHA256SUMS.txt && test -f RELEASE-NOTES.md && test -f build-manifest.json && test -f smoke-report.json
+          test "$(jq -r .version build-manifest.json)" = "$version"
+          test "$(wc -l < SHA256SUMS.txt)" -eq 1
+          grep -Eq "^[a-f0-9]{64}  SunlitClassroom-${version//./\\.}-windows-x64\\.zip$" SHA256SUMS.txt
+          sha256sum --check --strict SHA256SUMS.txt
+          test "$(jq -r .zipSha256 smoke-report.json)" = "$(cut -d ' ' -f 1 SHA256SUMS.txt)"
+          test "$(jq -r .passed smoke-report.json)" = "true"
+          test "$(jq -r .sourceCommit build-manifest.json)" = "$BUILD_SHA"
+          test "$(jq -r .commit smoke-report.json)" = "$BUILD_SHA"
+          # Refuse a tag moved while this workflow was running.
+          test "$(gh api "repos/$REPOSITORY/commits/$RELEASE_TAG" --jq .sha)" = "$BUILD_SHA"
+          # gh release create refuses an existing tag release; never overwrite assets.
+          gh release create "$RELEASE_TAG" --repo "$REPOSITORY" --verify-tag \
+            --title "晴窗教室 $RELEASE_TAG" --notes-file RELEASE-NOTES.md \
+            "$archive" SHA256SUMS.txt build-manifest.json smoke-report.json RELEASE-NOTES.md

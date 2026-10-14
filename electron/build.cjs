@@ -5,8 +5,7 @@ const crypto = require('node:crypto');
 const ROOT = __dirname;
 const WEB = path.resolve(ROOT, '../dist');
 const sha = x => crypto.createHash('sha256').update(x).digest('hex');
-const VERSION = '1.8.2';
-const ELECTRON = '44.7.0';
+const VERSION = JSON.parse(fs.readFileSync(path.join(ROOT, 'app-package.json'))).version;
 function files(dir, prefix = '') {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap(e => {
     if (e.isSymbolicLink()) throw new Error('Symbolic links are not packaged: ' + prefix + e.name);
@@ -38,6 +37,8 @@ function stageApplication(work, actual) {
   fs.copyFileSync(path.join(ROOT, 'app-package.json'), path.join(work, 'package.json'));
 }
 async function run() {
+  const {runtime} = require('./release-config.cjs').validateConfig();
+  const ELECTRON = runtime.version;
   // Packaging always consumes a fresh build. Verification alone checks existing output.
   if (!process.argv.includes('--verify-only')) (await import('../scripts/build.mjs')).buildWeb();
   const actual = verifyAssets();
@@ -50,23 +51,34 @@ async function run() {
   const work = fs.mkdtempSync(path.join(workRoot, 'stage-'));
   try {
     stageApplication(work, actual);
+    const electronZipDir = await require('./download-runtime.cjs').downloadRuntime(runtime);
     const module = await import('@electron/packager');
     const packager = module.default || module.packager;
     const results = await packager({ dir: work, out: output, name: 'SunlitClassroom',
       executableName: 'SunlitClassroom', platform: 'win32', arch: 'x64',
       electronVersion: ELECTRON, appVersion: VERSION, asar: true,
-      overwrite: false, prune: false, download: { cacheRoot: path.join(ROOT, '.cache', 'electron') } });
-    for (const folder of results) {
+      overwrite: false, prune: false, electronZipDir });
+    if (results.length !== 1) throw new Error('Expected exactly one Windows x64 package');
+    for (const result of results) {
+      const folder = path.join(output, 'SunlitClassroom');
+      fs.renameSync(result, folder);
       const exe = fs.readFileSync(path.join(folder, 'SunlitClassroom.exe'));
       const pe = exe.readUInt32LE(0x3c);
       if (exe.toString('ascii', pe, pe + 4) !== 'PE\0\0' || exe.readUInt16LE(pe + 4) !== 0x8664) throw new Error('Expected Windows x64 PE');
       fs.copyFileSync(path.join(ROOT, 'README.md'), path.join(folder, 'BUILD-README.md'));
       fs.copyFileSync(path.join(ROOT, 'THIRD-PARTY.md'), path.join(folder, 'THIRD-PARTY.md'));
+      fs.copyFileSync(path.join(ROOT, 'PORTABLE-DATA.md'), path.join(folder, 'PORTABLE-DATA.md'));
+      const packageEntries = files(folder).map(name => {
+        const bytes = fs.readFileSync(path.join(folder, name));
+        return {path: name, size: bytes.length, sha256: sha(bytes)};
+      });
       const asar = fs.readFileSync(path.join(folder, 'resources/app.asar'));
       fs.writeFileSync(path.join(folder, 'build-manifest.json'), JSON.stringify({ version: VERSION, electron: ELECTRON,
-        upstreamCommit: '365796b4493178fdee6cf4b68b60621d1fdef810', sourceSnapshot: 'sanitized-source-handoff; see SNAPSHOT_NOTES.md',
+        sourceCommit: require('node:child_process').execFileSync('git', ['rev-parse', 'HEAD'], {cwd: ROOT, encoding: 'utf8'}).trim(),
+        runtimeArchiveSha256: runtime.sha256, runtimeSource: runtime.source,
         assetManifestSha256: sha(fs.readFileSync(path.join(ROOT, 'assets-manifest.json'))), assetCount: actual.length,
-        asarSha256: sha(asar), exeSha256: sha(exe), signed: false, windowsRunVerified: false }, null, 2));
+        asarSha256: sha(asar), exeSha256: sha(exe), files: packageEntries, signed: false, windowsRunVerified: false }, null, 2));
+      await require('./verify-package.cjs').verifyPackage(folder);
       console.log('Built: ' + folder);
     }
   } finally { fs.rmSync(work, { recursive: true, force: true }); }

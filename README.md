@@ -76,11 +76,12 @@ npm run check
 
 - `npm test`：先构建并校验 51 个运行资源，再运行全部网页回归与构建/本地服务/Electron 暂存测试。测试继续读取实际 `dist/`，覆盖最终交付文件。直接运行单个 `tests/*.mjs` 前需先 `npm run build`。
 - `npm run test:portable`：便携 Data 的合成文件系统与模拟启动检查。
+- `npm run verify:release`：检查应用版本、两份 npm 锁和固定 Electron 运行时配置一致。
 - `npm run verify:sources`：用 Git 跟踪文件逐项核验 `SOURCE_MANIFEST.json`（因此需 Git 克隆或工作树）。
 
 单独校验当前构建产物可运行 `npm run verify:assets`；它会拒绝文件缺失、多余、大小或 SHA-256 不符，不会生成或改写资源清单。`node scripts/test.mjs` 仍可直接使用，会自动先构建。
 
-这些测试覆盖状态、计时、随机候选、数据往返、模型投影与渲染结构，不能替代 Windows / 浏览器 GPU、音频设备和触摸屏实测。目录重构未生成 EXE，未更改已发布预览。仓库当前未配置 CI。
+这些测试覆盖状态、计时、随机候选、数据往返、模型投影与渲染结构，不能替代 Windows / 浏览器 GPU、音频设备和触摸屏实测。CI 在 Ubuntu 和 Windows 上运行全部检查；Windows 额外制作完整便携 ZIP 并启动真实 EXE，以合成数据验证保存、重启和同机目录移动。PR 只产生预览 artifact，手动构建也不发布；正式版本 tag 才进入 GitHub Release 发布路径。详见 [打包与发布指南](docs/RELEASING.md)。
 
 ### 清单维护
 
