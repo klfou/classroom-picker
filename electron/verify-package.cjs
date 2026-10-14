@@ -28,11 +28,13 @@ async function verifyPackage(folder) {
   assert.equal(exe.toString('ascii', pe, pe + 4), 'PE\0\0'); assert.equal(exe.readUInt16LE(pe + 4), 0x8664);
   const archive = path.join(folder, 'resources/app.asar');
   const asar = await import('@electron/asar');
-  const actual = asar.listPackage(archive).map(name => name.replaceAll('\\', '/').replace(/^\//, '')).filter(name => !asar.statFile(archive, name).files).sort();
+  // ASAR's API traverses with path.sep, so use native paths for reads and
+  // POSIX paths only for comparison with the platform-independent manifest.
+  const actual = asar.listPackage(archive).map(name => name.replaceAll('\\', '/').replace(/^\//, '')).filter(name => !asar.statFile(archive, path.normalize(name)).files).sort();
   const assets = read('electron/assets-manifest.json');
   assert.deepEqual(actual, [...assets.map(entry => 'dist/' + entry.path), 'main.cjs', 'portable-data.cjs', 'package.json'].sort(), 'ASAR must contain only approved application files');
   for (const entry of assets) {
-    const bytes = asar.extractFile(archive, 'dist/' + entry.path);
+    const bytes = asar.extractFile(archive, path.join('dist', ...entry.path.split('/')));
     assert.equal(bytes.length, entry.size); assert.equal(sha(bytes), entry.sha256, entry.path);
   }
   for (const [inside, source] of [['main.cjs', 'main.cjs'], ['portable-data.cjs', 'portable-data.cjs']]) assert.deepEqual(asar.extractFile(archive, inside), fs.readFileSync(path.join(__dirname, source)), inside + ' changed while packaging');

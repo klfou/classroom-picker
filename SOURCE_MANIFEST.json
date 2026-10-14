@@ -175,8 +175,8 @@
     },
     {
       "path": "electron/verify-package.cjs",
-      "bytes": 4364,
-      "sha256": "109c1f4bfc52041e551aa9ed8182bdd903c03bb39bec0af0c2675e092d0325cb"
+      "bytes": 4555,
+      "sha256": "4010c5d3b9b872129d5e0f2833b7e3f2108077a9268c07f055073739f638ad5b"
     },
     {
       "path": "electron/zip-portable.ps1",
