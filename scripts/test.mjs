@@ -1,7 +1,12 @@
+import {buildWeb} from './build.mjs';
 import {readdirSync} from 'node:fs';
 import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 const root=fileURLToPath(new URL('../',import.meta.url));
+buildWeb();
+const verified=spawnSync(process.execPath,['electron/build.cjs','--verify-only'],{cwd:root,stdio:'inherit'});
+if(verified.error)throw verified.error;
+if(verified.status!==0)process.exit(verified.status??1);
 const tests=readdirSync(new URL('../tests/',import.meta.url)).filter(name=>name.endsWith('.mjs')).sort();
 for(const name of tests){
  console.log(`\n=== ${name} ===`);

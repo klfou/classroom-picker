@@ -1,0 +1,2 @@
+# Preserve exact reviewed bytes on every checkout, including Windows.
+* -text
