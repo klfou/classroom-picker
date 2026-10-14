@@ -60,6 +60,7 @@ jobs:
       - name: Verify assets, then create a new GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
+          BUILD_SHA: ${{ github.sha }}
           REPOSITORY: ${{ github.repository }}
           RELEASE_TAG: ${{ github.ref_name }}
         shell: bash
@@ -77,6 +78,10 @@ jobs:
           sha256sum --check --strict SHA256SUMS.txt
           test "$(jq -r .zipSha256 smoke-report.json)" = "$(cut -d ' ' -f 1 SHA256SUMS.txt)"
           test "$(jq -r .passed smoke-report.json)" = "true"
+          test "$(jq -r .sourceCommit build-manifest.json)" = "$BUILD_SHA"
+          test "$(jq -r .commit smoke-report.json)" = "$BUILD_SHA"
+          # Refuse a tag moved while this workflow was running.
+          test "$(gh api "repos/$REPOSITORY/commits/$RELEASE_TAG" --jq .sha)" = "$BUILD_SHA"
           # gh release create refuses an existing tag release; never overwrite assets.
           gh release create "$RELEASE_TAG" --repo "$REPOSITORY" --verify-tag \
             --title "晴窗教室 $RELEASE_TAG" --notes-file RELEASE-NOTES.md \

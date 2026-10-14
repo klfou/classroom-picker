@@ -63,7 +63,7 @@ git push origin vX.Y.Z
 
 5. tag push 触发 `Windows release or preview`。它先校验 tag 与全部应用版本完全一致，并确认提交是 main 的祖先，然后重新跑双平台完整 CI 和 Windows 包/烟测。只有全部成功，最后 publish job 才取得 `contents: write`，创建正常 GitHub Release，附版本 ZIP、SHA256SUMS、构建清单、烟测报告与说明。
 
-发布 job 不 checkout 或运行项目代码，只读取同次工作流的已测试 artifact，严格验证 ZIP 校验和、版本与烟测报告。无需添加 PAT、签名密钥或任何持久 secrets。这个 PR 不创建 tag 或 Release，也不更改仓库安全设置。
+发布 job 不 checkout 或运行项目代码，只读取同次工作流的已测试 artifact，严格验证 ZIP 校验和、版本、源码提交与烟测报告，并在发布前再次核对 tag 没有被移动。无需添加 PAT、签名密钥或任何持久 secrets。这个 PR 不创建 tag 或 Release，也不更改仓库安全设置。
 
 失败时查看具体 job 日志。可以在修正临时服务故障后重跑失败的 Actions；已存在的 Release 不会覆盖或替换附件。若已发布内容需变化，应递增版本并经新 PR 发布，不移动旧 tag。若罕见的上传中断留下不完整 Release，先人工审查当前附件状态，不假定重跑会自动修复。
 

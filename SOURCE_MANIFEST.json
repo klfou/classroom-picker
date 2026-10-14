@@ -15,8 +15,8 @@
     },
     {
       "path": ".github/workflows/release.yml",
-      "bytes": 3203,
-      "sha256": "d757d052ed251971e959309969e5d5cc91accd752e5558dc0a55d5c54e093018"
+      "bytes": 3541,
+      "sha256": "011004a8d68c0b472642fda9743932fcde4cfc8b9e60a05155b810fc08014b5e"
     },
     {
       "path": ".gitignore",
@@ -45,8 +45,8 @@
     },
     {
       "path": "docs/RELEASING.md",
-      "bytes": 7983,
-      "sha256": "5c3367bc908eadf1122fa1786e257876577f184221192e7d619ccd8ff6ab527b"
+      "bytes": 8048,
+      "sha256": "617b95dcd6126cbc23e1d1597a84e2b00ed92f8ef7c9ac26196808b64b1d820e"
     },
     {
       "path": "docs/board-glyphs-SOURCE.txt",
@@ -540,8 +540,8 @@
     },
     {
       "path": "tests/helpers/theme-environment.mjs",
-      "bytes": 4080,
-      "sha256": "bba165b27518e39a12f2a79567bca02678b9362dce9dcf9ef94cd673eee8252c"
+      "bytes": 4171,
+      "sha256": "1d2f85cec1ca0b1e36d023c684bffd5113486bd04dc6205b6b5d6c5ee7d034d3"
     },
     {
       "path": "tests/helpers/theme-scene-loader.mjs",

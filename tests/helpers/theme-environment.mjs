@@ -3,9 +3,10 @@ import {fileURLToPath} from 'node:url';
 // Deterministic decoded audio fixture: scheduling tests do not claim acoustic QA.
 const samples=Float32Array.from({length:44100*4},(_,i)=>Math.sin(i*.13)*.08);
 const sample={sampleRate:44100,numberOfChannels:1,length:samples.length,duration:4,getChannelData:()=>samples};
-export const dist=fileURLToPath(new URL('../../dist',import.meta.url));
+// Dynamic ESM imports need a file URL on Windows, not a bare drive-letter path.
+export const dist=new URL('../../dist',import.meta.url).href;
 export async function setup(options={}){
- const env=await setupEnvironment({dist,width:1366,height:768,...options});document.getElementById=id=>document.querySelector('#'+id);
+ const env=await setupEnvironment({dist:fileURLToPath(dist),width:1366,height:768,...options});document.getElementById=id=>document.querySelector('#'+id);
  const proto=Object.getPrototypeOf(document.createElement('div'));proto.closest=function(selector){for(let n=this;n;n=n.parentElement)if(n.matches(selector))return n;return null};proto.contains=function(other){for(let n=other;n;n=n.parentElement)if(n===this)return true;return false};
  const viewport=document.querySelector('#viewport');function dims(){const w=env.width,h=env.height,top=w<=760?34:w>=1700?44:40,bottom=w<=760?(h<=540?210:354):h<=540?(w<=1250?220:180):w<=1100?260:w<=1250?220:w>=1700?230:210;Object.assign(env.viewport,{top,bottom,width:w,height:h-top-bottom});return env.viewport}
  Object.defineProperty(viewport,'clientHeight',{get(){return dims().height}});Object.defineProperty(viewport,'clientWidth',{get(){return env.width}});dims();Date.now=()=>env.now;
