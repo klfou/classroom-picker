@@ -9,6 +9,16 @@
       "sha256": "7e5641858485bceaa438562e9e7318f4c85f2e3f3002285419a97c010d9e8108"
     },
     {
+      "path": ".github/workflows/ci.yml",
+      "bytes": 2247,
+      "sha256": "0a5582eadd53e7f9bc204cea0197d35203daa4ab04a763deb510ed4c687009e4"
+    },
+    {
+      "path": ".github/workflows/release.yml",
+      "bytes": 3203,
+      "sha256": "d757d052ed251971e959309969e5d5cc91accd752e5558dc0a55d5c54e093018"
+    },
+    {
       "path": ".gitignore",
       "bytes": 401,
       "sha256": "15b0594a1c6331f0689596d478a7b6e13a1d0fc5e6c8a1e26cc2e5b9ab5b48ff"
@@ -20,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 7133,
-      "sha256": "02c3607cb9777d204436cdb3757259288a7094c4ca53a9ecc29871f21858cee0"
+      "bytes": 7494,
+      "sha256": "e388ad8336f32c60144d6ed1615cee6fa1bf211d327893862d707e9a7e6efef9"
     },
     {
       "path": "SNAPSHOT_NOTES.md",
@@ -32,6 +42,11 @@
       "path": "docs/DEPLOYMENT.md",
       "bytes": 2242,
       "sha256": "6cf5ee81a85ed9d9737434e2e0df1f8199d08f438f2851ac304ad461beaac5ae"
+    },
+    {
+      "path": "docs/RELEASING.md",
+      "bytes": 7983,
+      "sha256": "5c3367bc908eadf1122fa1786e257876577f184221192e7d619ccd8ff6ab527b"
     },
     {
       "path": "docs/board-glyphs-SOURCE.txt",
@@ -80,8 +95,8 @@
     },
     {
       "path": "electron/README.md",
-      "bytes": 4329,
-      "sha256": "2ac08ee85bf7df0bfe4f4d9af463fd06faf8913fd2427a8cdfc21fef8b3a47d4"
+      "bytes": 5476,
+      "sha256": "06461563afc57b69da3c6472e25c9c8f386b54aa0427bba3154159bc4839f5b7"
     },
     {
       "path": "electron/THIRD-PARTY.md",
@@ -100,8 +115,13 @@
     },
     {
       "path": "electron/build.cjs",
-      "bytes": 4559,
-      "sha256": "3b51d2dab9fc4c5cf2f923f2a3a89dd0383806ee7c69aae35090c75d1644193c"
+      "bytes": 5400,
+      "sha256": "88f6cad0bd8fb463c7e815a3a204f94cc4e446c54ec098f8df841686c8ab13a8"
+    },
+    {
+      "path": "electron/download-runtime.cjs",
+      "bytes": 1909,
+      "sha256": "252718bdcf254b04318038e22f01257678257256fb745e3ceb91fe42b936ffaf"
     },
     {
       "path": "electron/main.cjs",
@@ -110,18 +130,33 @@
     },
     {
       "path": "electron/package-lock.json",
-      "bytes": 23023,
-      "sha256": "c3c056e9fbc163e145c00ac1025c8aa063d14e09f514a3f1413c06ed51464604"
+      "bytes": 23058,
+      "sha256": "4bbe843168239fa2423f5d283f29c73727debfc54fb9c669c2ce00a12234b9f8"
+    },
+    {
+      "path": "electron/package-portable.cjs",
+      "bytes": 2785,
+      "sha256": "0925ab1e4769d64cb7eb76b2173f2c6781f98add8b0ceb8202deef18b072ddc1"
     },
     {
       "path": "electron/package.json",
-      "bytes": 458,
-      "sha256": "cd03eaccea655b736f96ed3fd33931e6458a3d6e74b27a8d9349d2e6d9fc0e9b"
+      "bytes": 615,
+      "sha256": "d444890dd31b003d56bf8a0abd63864ef913235b8b822f2a4931f5fe1b784314"
     },
     {
       "path": "electron/portable-data.cjs",
       "bytes": 4414,
       "sha256": "5baff9e02aa1dce96967c06c69d941f402e20f3aad62e31039cf4161cafc8e0d"
+    },
+    {
+      "path": "electron/release-config.cjs",
+      "bytes": 1924,
+      "sha256": "d6a83dc1b61103fac7acda38786d7ad0768d22772407493216245f1df8dda13b"
+    },
+    {
+      "path": "electron/runtime-lock.json",
+      "bytes": 303,
+      "sha256": "e96520f639e8655157a1a3b8dba27f7b2530ed0bbc20d609c1c0e530dafb97f1"
     },
     {
       "path": "electron/tests/portable-data.cjs",
@@ -134,14 +169,29 @@
       "sha256": "9929936adaee11bbeca2ea86f992a4e30f2bba647ee08a067448cf6eec09ea29"
     },
     {
+      "path": "electron/tests/windows-smoke.cjs",
+      "bytes": 25402,
+      "sha256": "f9fd4fc52376456516bcaa1a00184e5a3d624099e78ec615eb00fc1954606657"
+    },
+    {
+      "path": "electron/verify-package.cjs",
+      "bytes": 4364,
+      "sha256": "109c1f4bfc52041e551aa9ed8182bdd903c03bb39bec0af0c2675e092d0325cb"
+    },
+    {
+      "path": "electron/zip-portable.ps1",
+      "bytes": 1155,
+      "sha256": "5e2d8f5179ccdf8073cede7b6c9e29ed7fc5fc4ee205e12b2b05d7d6ae4cf7ef"
+    },
+    {
       "path": "package-lock.json",
       "bytes": 254,
       "sha256": "15f9c11cb4eec527ffaeedbc15651fc3c56df091eff4bdf33f73197de95f04f4"
     },
     {
       "path": "package.json",
-      "bytes": 683,
-      "sha256": "796e89002ee01f840d75ea8e7ed7053e024543894c5facd6e5f7acad9598bc43"
+      "bytes": 773,
+      "sha256": "a19f893518107d922060aa48c2db5a89368405ac8a84f99777d781f23e3d88da"
     },
     {
       "path": "public/audio/LICENSE.txt",
@@ -532,6 +582,11 @@
       "path": "tests/paper-theme-palette.mjs",
       "bytes": 8641,
       "sha256": "ee73a89d664b012900e19bc964bfa3c71cf4ad99b5fe282517dab27237fe03ba"
+    },
+    {
+      "path": "tests/release-safety.mjs",
+      "bytes": 3338,
+      "sha256": "5b4183915496bf649f9c57ac289f544f3bb1a66692a6fb7e26691c723e4fdcba"
     },
     {
       "path": "tests/render-budget.mjs",
