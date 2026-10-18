@@ -35,6 +35,9 @@ jobs:
         run: |
           npm ci --ignore-scripts --no-audit --no-fund
           npm --prefix electron ci --ignore-scripts --no-audit --no-fund
+      - name: Test release gate against synthetic valid and tampered deliveries
+        if: runner.os == 'Linux'
+        run: python3 tests/release-gate.py
       - name: Build and run all regression, portable-data and manifest checks
         run: |
           npm run build
@@ -42,6 +45,7 @@ jobs:
           npm run build:sites
           npm --prefix electron run verify
           git diff --exit-code
+          node -e "const p=require('./scripts/build-info.cjs'), i=p.requireClean(p.verifyGenerated(process.cwd())); require('node:assert/strict').equal(i.sourceCommit,process.env.GITHUB_SHA);"
       - name: Build and verify Windows x64 portable ZIP
         id: package
         if: runner.os == 'Windows'
@@ -52,6 +56,11 @@ jobs:
       - name: Run actual packaged EXE with synthetic data on a disposable Windows runner
         if: runner.os == 'Windows'
         run: npm --prefix electron run test:windows
+      - name: Verify real desktop/web archives and release notes with the same publish gate
+        if: runner.os == 'Windows'
+        env:
+          DELIVERY_PATH: ${{ steps.package.outputs.release_path }}
+        run: python tests/release-gate.py --verify-delivery "$DELIVERY_PATH"
       - name: Upload tested portable preview (never a GitHub Release from this workflow)
         if: runner.os == 'Windows'
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2

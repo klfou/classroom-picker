@@ -4,6 +4,8 @@ const path = require('node:path');
 const assert = require('node:assert/strict');
 const crypto = require('node:crypto');
 const {validateConfig, read} = require('./release-config.cjs');
+const provenance = require('../scripts/build-info.cjs');
+const REPO = path.resolve(__dirname, '..');
 const sha = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 function packageFiles(root, prefix = '') {
   return fs.readdirSync(root, {withFileTypes: true}).flatMap(entry => {
@@ -32,7 +34,9 @@ async function verifyPackage(folder) {
   // POSIX paths only for comparison with the platform-independent manifest.
   const actual = asar.listPackage(archive).map(name => name.replaceAll('\\', '/').replace(/^\//, '')).filter(name => !asar.statFile(archive, path.normalize(name)).files).sort();
   const assets = read('electron/assets-manifest.json');
-  assert.deepEqual(actual, [...assets.map(entry => 'dist/' + entry.path), 'main.cjs', 'portable-data.cjs', 'package.json'].sort(), 'ASAR must contain only approved application files');
+  assert.deepEqual(actual, [...assets.map(entry => 'dist/' + entry.path), ...provenance.GENERATED.map(name => 'dist/' + name), 'main.cjs', 'portable-data.cjs', 'package.json'].sort(), 'ASAR must contain only approved application files and exact generated provenance');
+  const info = provenance.requireClean(provenance.verifyGenerated(REPO, name => asar.extractFile(archive, path.join('dist', name))));
+  assert.deepEqual(fs.readFileSync(path.join(folder, 'build-info.json')), asar.extractFile(archive, path.join('dist', 'build-info.json')));
   for (const entry of assets) {
     const bytes = asar.extractFile(archive, path.join('dist', ...entry.path.split('/')));
     assert.equal(bytes.length, entry.size); assert.equal(sha(bytes), entry.sha256, entry.path);
@@ -44,6 +48,12 @@ async function verifyPackage(folder) {
   delete expectedPackage.private;
   assert.deepEqual(JSON.parse(asar.extractFile(archive, 'package.json').toString('utf8')), expectedPackage, 'Packaged application metadata differs');
   const manifest = JSON.parse(fs.readFileSync(path.join(folder, 'build-manifest.json')));
+  assert.deepEqual(manifest.buildInfo, info); assert.equal(manifest.sourceCommit, info.sourceCommit);
+  const webFiles = [...assets.map(entry => entry.path), ...provenance.GENERATED].sort().map(name => {
+    const bytes = asar.extractFile(archive, path.join('dist', ...name.split('/')));
+    return {path: name, size: bytes.length, sha256: sha(bytes)};
+  });
+  assert.deepEqual(manifest.webFiles, webFiles, 'Desktop/web provenance and runtime bytes must match');
   const recorded = all.filter(name => name !== 'build-manifest.json').map(name => {
     const bytes = fs.readFileSync(path.join(folder, name));
     return {path: name, size: bytes.length, sha256: sha(bytes)};

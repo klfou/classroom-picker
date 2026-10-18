@@ -348,6 +348,14 @@ async function run() {
     assert.ok(!exists(legacy), 'Existing Windows SunlitClassroom profile detected; refused to start or delete it');
     packageFiles(builtFolder); // Fail if the publishable output contains a profile.
     const archiveHash = await sha256(archive, context.signal);
+    const webArchive = `SunlitClassroom-${version}-web.zip`;
+    const webZip = path.join(releaseFolder, webArchive);
+    const webZipSha256 = await sha256(webZip, context.signal);
+    const infoBytes = fs.readFileSync(path.join(builtFolder, 'build-info.json'));
+    const buildInfo = JSON.parse(infoBytes);
+    assert.equal(buildInfo.dirty, false);
+    assert.equal(buildInfo.sourceCommit, process.env.GITHUB_SHA, 'Packaged provenance must identify the actual workflow checkout');
+    const buildInfoSha256 = crypto.createHash('sha256').update(infoBytes).digest('hex');
     context.root = fs.mkdtempSync(path.join(os.tmpdir(), 'sunlit-release-smoke-'));
     const extracted = path.join(context.root, '首次 解压');
     await extractRelease(context, archive, extracted);
@@ -362,6 +370,8 @@ async function run() {
     };
 
     const first = launch(context, folder, 'first-start'); await attach(context, first);
+    assert.equal(await first.page.evaluate("fetch('/build-info.json').then(r => {if (!r.ok) throw Error('No provenance'); return r.text()})"), infoBytes.toString('utf8'), 'Running EXE provenance differs');
+    assert.equal(await first.page.evaluate("fetch('/version.html').then(r => r.text()).then(text => text.includes(" + JSON.stringify(buildInfo.buildId) + "))"), true, 'Running EXE version page differs');
     await createSyntheticRoster(first.page);
     const expected = await snapshot(first.page); await closeNormally(context, first);
     assert.ok(fs.statSync(path.join(folder, 'Data', 'Local Storage', 'leveldb')).isDirectory(), 'Chromium storage was not created beside the EXE');
@@ -386,6 +396,7 @@ async function run() {
     assert.ok(!exists(path.join(legacy, 'Local Storage')), 'Roster storage escaped the temporary portable profile');
     packageFiles(builtFolder);
     assert.equal(await sha256(archive, context.signal), archiveHash, 'Final ZIP changed during smoke test');
+    assert.equal(await sha256(webZip, context.signal), webZipSha256, 'Web ZIP changed during smoke test');
     for (const [relative, expectedHash] of [['SunlitClassroom.exe', packageHashes.exeSha256], ['resources/app.asar', packageHashes.asarSha256]]) {
       assert.equal(await sha256(path.join(moved, relative), context.signal), expectedHash, 'Application bytes changed during smoke: ' + relative);
       assert.equal(await sha256(path.join(builtFolder, relative), context.signal), expectedHash, 'Publishable application bytes changed during smoke: ' + relative);
@@ -393,6 +404,7 @@ async function run() {
     report = {
       format: 1, passed: true, status: 'passed', version, electron: runtime.version, platform: 'win32', arch: 'x64',
       archive: path.basename(archive), zipSha256: archiveHash, ...packageHashes,
+      webArchive, webZipSha256, buildId: buildInfo.buildId, buildInfoSha256,
       runId: process.env.GITHUB_RUN_ID || null, runAttempt: process.env.GITHUB_RUN_ATTEMPT || null,
       commit: process.env.GITHUB_SHA || null, completedAt: new Date().toISOString(),
       checks: ['final ZIP extraction', 'actual packaged EXE', 'classroom://app renderer ready', 'sandboxed renderer without require',

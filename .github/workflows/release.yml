@@ -61,6 +61,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           BUILD_SHA: ${{ github.sha }}
+          BUILD_RUN_ID: ${{ github.run_id }}
+          BUILD_RUN_ATTEMPT: ${{ github.run_attempt }}
           REPOSITORY: ${{ github.repository }}
           RELEASE_TAG: ${{ github.ref_name }}
         shell: bash
@@ -69,20 +71,212 @@ jobs:
           [[ "$RELEASE_TAG" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]
           version="${RELEASE_TAG#v}"
           archive="SunlitClassroom-${version}-windows-x64.zip"
+          web_archive="SunlitClassroom-${version}-web.zip"
           cd release
-          test "$(find . -maxdepth 1 -type f | wc -l)" -eq 5
-          test -f "$archive" && test -f SHA256SUMS.txt && test -f RELEASE-NOTES.md && test -f build-manifest.json && test -f smoke-report.json
-          test "$(jq -r .version build-manifest.json)" = "$version"
-          test "$(wc -l < SHA256SUMS.txt)" -eq 1
-          grep -Eq "^[a-f0-9]{64}  SunlitClassroom-${version//./\\.}-windows-x64\\.zip$" SHA256SUMS.txt
+          # Require precisely the delivery contract, including no directories or links.
+          test "$(find . -mindepth 1 -maxdepth 1 | wc -l)" -eq 6
+          test "$(find . -mindepth 1 -maxdepth 1 ! -type f | wc -l)" -eq 0
+          for file in "$archive" "$web_archive" SHA256SUMS.txt build-manifest.json smoke-report.json RELEASE-NOTES.md; do
+            test -f "$file" && test ! -L "$file"
+          done
+          test "$(wc -l < SHA256SUMS.txt)" -eq 2
+          grep -Eq "^[a-f0-9]{64}  SunlitClassroom-${version//./\\.}-windows-x64\.zip$" SHA256SUMS.txt
+          grep -Eq "^[a-f0-9]{64}  SunlitClassroom-${version//./\\.}-web\.zip$" SHA256SUMS.txt
           sha256sum --check --strict SHA256SUMS.txt
-          test "$(jq -r .zipSha256 smoke-report.json)" = "$(cut -d ' ' -f 1 SHA256SUMS.txt)"
-          test "$(jq -r .passed smoke-report.json)" = "true"
-          test "$(jq -r .sourceCommit build-manifest.json)" = "$BUILD_SHA"
-          test "$(jq -r .commit smoke-report.json)" = "$BUILD_SHA"
+          # Trusted workflow code only: isolated Python stdlib, no checkout, imports
+          # from the delivery, extraction, or execution of delivered application code.
+          python3 -I -S - <<'PY'
+          # BEGIN INLINE RELEASE GATE
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import re
+          import stat
+          import zipfile
+
+          def require(condition, message):
+              if not condition:
+                  raise SystemExit("Release gate: " + message)
+
+          def sha256(data):
+              return hashlib.sha256(data).hexdigest()
+
+          def stream_hash(stream):
+              digest = hashlib.sha256()
+              for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+                  digest.update(chunk)
+              return digest.hexdigest()
+
+          def is_hash(value, length=64):
+              return isinstance(value, str) and re.fullmatch(r"[a-f0-9]{%d}" % length, value) is not None
+
+          def unique_object(pairs):
+              result = {}
+              for key, value in pairs:
+                  require(key not in result, "duplicate JSON key: " + key)
+                  result[key] = value
+              return result
+
+          def read_json(name):
+              raw = Path(name).read_bytes()
+              require(len(raw) <= 4 * 1024 * 1024, "oversized JSON: " + name)
+              value = json.loads(raw.decode("utf-8"), object_pairs_hook=unique_object,
+                                 parse_constant=lambda value: require(False, "non-finite JSON number"))
+              require(isinstance(value, dict), "expected JSON object: " + name)
+              return value, raw
+
+          def canonical(value):
+              return (json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + "\n").encode("utf-8")
+
+          def safe_path(name):
+              require(isinstance(name, str) and name and "\\" not in name,
+                      "invalid archive path")
+              parts = name.split("/")
+              require(all(part and part not in (".", "..") and not part.endswith((" ", "."))
+                          and not re.search(r'[\x00-\x1f\x7f<>:"|?*]', part) for part in parts),
+                      "unsafe archive path: " + name)
+              for part in parts:
+                  require(not part.startswith("."), "hidden archive path: " + name)
+                  require(not re.fullmatch(r"(?:data(?:-recovery-.*)?|appdata|userdata|local storage|node_modules|\.git|\.env.*|\.data-migration-.*)", part, re.I),
+                          "private/build path: " + name)
+                  require(not re.search(r"\.(?:xlsx|csv)$", part, re.I)
+                          and not re.fullmatch(r"sunlit-(?:classes|backup)-.*\.json", part, re.I),
+                          "class export path: " + name)
+                  require(not re.fullmatch(r"(?:con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\..*)?", part, re.I),
+                          "reserved device path: " + name)
+              return name
+
+          def file_manifest(entries, label):
+              require(isinstance(entries, list) and entries, "missing " + label)
+              result = {}
+              folded = set()
+              for entry in entries:
+                  require(isinstance(entry, dict) and set(entry) == {"path", "size", "sha256"},
+                          "invalid " + label + " entry")
+                  name = safe_path(entry["path"])
+                  require(name.casefold() not in folded, "duplicate " + label + " path: " + name)
+                  folded.add(name.casefold())
+                  require(type(entry["size"]) is int and 0 <= entry["size"] <= 512 * 1024 * 1024,
+                          "invalid file size: " + name)
+                  require(is_hash(entry["sha256"]), "invalid file digest: " + name)
+                  result[name] = entry
+              require(list(result) == sorted(result), label + " must be sorted by path")
+              return result
+
+          def archive_entries(archive, expected, allow_directories=False):
+              result = {}
+              seen = set()
+              ancestors = {name[:i] for name in expected for i, char in enumerate(name) if char == "/"}
+              for entry in archive.infolist():
+                  # zipfile truncates NUL-containing names; reject that alias as well.
+                  require(entry.orig_filename == entry.filename, "truncated ZIP filename")
+                  directory = entry.is_dir()
+                  name = safe_path(entry.filename[:-1] if directory else entry.filename)
+                  require(name.casefold() not in seen, "duplicate ZIP path: " + name)
+                  seen.add(name.casefold())
+                  kind = stat.S_IFMT(entry.external_attr >> 16)
+                  require(kind in (0, stat.S_IFDIR if directory else stat.S_IFREG),
+                          "non-regular ZIP member: " + name)
+                  require(not entry.flag_bits & 1, "encrypted ZIP member: " + name)
+                  if directory:
+                      require(allow_directories and name in ancestors, "unexpected ZIP directory: " + name)
+                  else:
+                      require(name in expected, "unexpected ZIP member: " + name)
+                      result[name] = entry
+              require(set(result) == set(expected), "ZIP file list differs from manifest")
+              return result
+
+          def verify_files(archive, actual, expected):
+              for name, record in expected.items():
+                  entry = actual[name]
+                  require(entry.file_size == record["size"], "ZIP size mismatch: " + name)
+                  with archive.open(entry) as stream:
+                      require(stream_hash(stream) == record["sha256"], "ZIP digest mismatch: " + name)
+
+          tag = os.environ["RELEASE_TAG"]
+          commit = os.environ["BUILD_SHA"]
+          require(re.fullmatch(r"v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)", tag), "invalid release tag")
+          require(is_hash(commit, 40), "invalid workflow commit")
+          version = tag[1:]
+          windows_name = "SunlitClassroom-" + version + "-windows-x64.zip"
+          web_name = "SunlitClassroom-" + version + "-web.zip"
+          expected_delivery = {windows_name, web_name, "SHA256SUMS.txt", "build-manifest.json", "smoke-report.json", "RELEASE-NOTES.md"}
+          require({p.name for p in Path(".").iterdir()} == expected_delivery, "expected exactly six delivery files")
+          require(all(stat.S_ISREG(p.lstat().st_mode) for p in Path(".").iterdir()), "delivery contains a directory or link")
+          archive_hashes = {}
+          for name in (windows_name, web_name):
+              with open(name, "rb") as stream:
+                  archive_hashes[name] = stream_hash(stream)
+          expected_sums = "".join(archive_hashes[name] + "  " + name + "\n" for name in (windows_name, web_name))
+          require(Path("SHA256SUMS.txt").read_bytes() == expected_sums.encode("ascii"), "invalid checksums or archive digest")
+
+          manifest, manifest_bytes = read_json("build-manifest.json")
+          smoke, _ = read_json("smoke-report.json")
+          require(manifest.get("version") == version and smoke.get("version") == version, "version mismatch")
+          require(manifest.get("sourceCommit") == commit and smoke.get("commit") == commit, "workflow commit mismatch")
+          require(smoke.get("runId") == os.environ["BUILD_RUN_ID"]
+                  and smoke.get("runAttempt") == os.environ["BUILD_RUN_ATTEMPT"], "smoke workflow run mismatch")
+          require(manifest.get("signed") is False and manifest.get("windowsRunVerified") is False,
+                  "unexpected package verification/signing claim")
+          require(smoke.get("passed") is True and smoke.get("status") == "passed", "Windows smoke did not pass")
+          require(type(smoke.get("format")) is int and smoke["format"] == 1
+                  and smoke.get("platform") == "win32" and smoke.get("arch") == "x64", "unexpected smoke format/platform")
+          require(smoke.get("electron") == manifest.get("electron") and isinstance(manifest.get("electron"), str), "runtime version mismatch")
+          require(smoke.get("archive") == windows_name and smoke.get("webArchive") == web_name, "smoke archive mismatch")
+          require(smoke.get("zipSha256") == archive_hashes[windows_name]
+                  and smoke.get("webZipSha256") == archive_hashes[web_name], "smoke archive digest mismatch")
+
+          info = manifest.get("buildInfo")
+          info_keys = ["format", "version", "sourceCommit", "sourceTree", "baseCommit", "dirty", "assetManifestSha256", "sourceManifestSha256", "buildId"]
+          require(isinstance(info, dict) and list(info) == info_keys, "unexpected buildInfo schema/order")
+          require(type(info["format"]) is int and info["format"] == 1, "unexpected buildInfo format")
+          require(info["version"] == version and info["sourceCommit"] == commit and info["baseCommit"] == commit,
+                  "buildInfo identity mismatch")
+          require(info["dirty"] is False and is_hash(info["sourceTree"], 40), "unclean or invalid source tree")
+          require(all(is_hash(info[name]) for name in ("assetManifestSha256", "sourceManifestSha256", "buildId")), "invalid buildInfo digest")
+          identity = {key: info[key] for key in info_keys if key != "buildId"}
+          require(info["buildId"] == sha256(canonical(identity)), "build ID mismatch")
+          info_bytes = canonical(info)
+          info_hash = sha256(info_bytes)
+          require(manifest.get("assetManifestSha256") == info["assetManifestSha256"], "asset manifest identity mismatch")
+          require(type(manifest.get("assetCount")) is int and manifest["assetCount"] > 0, "invalid approved asset count")
+          require(smoke.get("buildId") == info["buildId"] and smoke.get("buildInfoSha256") == info_hash, "smoke build identity mismatch")
+
+          web_files = file_manifest(manifest.get("webFiles"), "webFiles")
+          require(len(web_files) == manifest["assetCount"] + 2
+                  and {"index.html", "orbit-preview/index.html", "build-info.json", "version.html"} <= set(web_files),
+                  "expected approved assets plus both generated provenance files")
+          with zipfile.ZipFile(web_name) as archive:
+              actual = archive_entries(archive, web_files)
+              verify_files(archive, actual, web_files)
+              require(archive.read("build-info.json") == info_bytes, "web build-info bytes mismatch")
+
+          package_files = file_manifest(manifest.get("files"), "package files")
+          require({"SunlitClassroom.exe", "resources/app.asar", "build-info.json"} <= set(package_files), "missing Windows application/provenance")
+          require("build-manifest.json" not in package_files, "self-referential package manifest")
+          windows_files = {"SunlitClassroom/" + name: record for name, record in package_files.items()}
+          windows_files["SunlitClassroom/build-manifest.json"] = {"size": len(manifest_bytes), "sha256": sha256(manifest_bytes)}
+          with zipfile.ZipFile(windows_name) as archive:
+              actual = archive_entries(archive, windows_files, allow_directories=True)
+              verify_files(archive, actual, windows_files)
+              require(archive.read("SunlitClassroom/build-info.json") == info_bytes, "Windows build-info bytes mismatch")
+          for name, key in (("SunlitClassroom.exe", "exeSha256"), ("resources/app.asar", "asarSha256")):
+              require(package_files[name]["sha256"] == manifest.get(key) == smoke.get(key), "Windows application digest mismatch: " + name)
+
+          notes = Path("RELEASE-NOTES.md").read_text(encoding="utf-8").splitlines()
+          require(next((line for line in notes if line.startswith("#")), None) == "# 晴窗教室 " + version,
+                  "release notes version heading mismatch")
+          for label, value in (("Source commit", commit), ("Build ID", info["buildId"]),
+                               ("Build info SHA-256", info_hash), ("Web archive", web_name)):
+              require([line for line in notes if line.startswith(label + ":")] == [label + ": " + value],
+                      "release notes identity mismatch: " + label)
+          print("Verified both archives, clean build provenance, Windows smoke and release notes.")
+          # END INLINE RELEASE GATE
+          PY
           # Refuse a tag moved while this workflow was running.
           test "$(gh api "repos/$REPOSITORY/commits/$RELEASE_TAG" --jq .sha)" = "$BUILD_SHA"
           # gh release create refuses an existing tag release; never overwrite assets.
           gh release create "$RELEASE_TAG" --repo "$REPOSITORY" --verify-tag \
             --title "晴窗教室 $RELEASE_TAG" --notes-file RELEASE-NOTES.md \
-            "$archive" SHA256SUMS.txt build-manifest.json smoke-report.json RELEASE-NOTES.md
+            "$archive" "$web_archive" SHA256SUMS.txt build-manifest.json smoke-report.json RELEASE-NOTES.md

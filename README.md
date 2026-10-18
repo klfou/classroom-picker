@@ -42,7 +42,7 @@
 
 ## 运行网页
 
-使用 Node.js 24.x 与 npm。网页仍为原生 HTML / CSS / JavaScript ES modules，没有引入框架、打包器或转译器。`src/` 保存可编辑页面代码，`public/` 保存模型、音效、离线 vendor 和许可证；构建只将两者原字节复制到 `dist/`。运行时依赖已随包提供，根项目没有 npm 依赖。
+使用 Node.js 24.x 与 npm。网页仍为原生 HTML / CSS / JavaScript ES modules，没有引入框架、打包器或转译器。`src/` 保存可编辑页面代码，`public/` 保存模型、音效、离线 vendor 和许可证；构建将两者原字节复制到 `dist/`，另生成 `build-info.json` 和静态 `version.html` 记录版本与来源。运行时依赖已随包提供，根项目没有 npm 依赖。
 
 从干净克隆开始，在项目根目录执行：
 
@@ -74,14 +74,14 @@ npm run check
 
 `check` 顺序执行：
 
-- `npm test`：先构建并校验 83 个运行资源（51 个原站资源和 32 个独立预览资源），再运行全部网页回归与构建/本地服务/Electron 暂存测试。测试继续读取实际 `dist/`，覆盖最终交付文件。直接运行单个 `tests/*.mjs` 前需先 `npm run build`。
+- `npm test`：先构建并校验 83 个运行资源（51 个原站资源和 32 个独立预览资源），另严格校验两份生成的来源信息，再运行全部网页回归与构建/本地服务/Electron 暂存测试。测试继续读取实际 `dist/`，覆盖最终交付文件。直接运行单个 `tests/*.mjs` 前需先 `npm run build`。
 - `npm run test:portable`：便携 Data 的合成文件系统与模拟启动检查。
 - `npm run verify:release`：检查应用版本、两份 npm 锁和固定 Electron 运行时配置一致。
 - `npm run verify:sources`：用 Git 跟踪文件逐项核验 `SOURCE_MANIFEST.json`（因此需 Git 克隆或工作树）。
 
 单独校验当前构建产物可运行 `npm run verify:assets`；它会拒绝文件缺失、多余、大小或 SHA-256 不符，不会生成或改写资源清单。`node scripts/test.mjs` 仍可直接使用，会自动先构建。
 
-这些测试覆盖状态、计时、随机候选、数据往返、模型投影与渲染结构，不能替代 Windows / 浏览器 GPU、音频设备和触摸屏实测。CI 在 Ubuntu 和 Windows 上运行全部检查；Windows 额外制作完整便携 ZIP 并启动真实 EXE，以合成数据验证保存、重启和同机目录移动。PR 只产生预览 artifact，手动构建也不发布；正式版本 tag 才进入 GitHub Release 发布路径。详见 [打包与发布指南](docs/RELEASING.md)。
+这些测试覆盖状态、计时、随机候选、数据往返、模型投影与渲染结构，不能替代 Windows / 浏览器 GPU、音频设备和触摸屏实测。CI 在 Ubuntu 和 Windows 上运行全部检查；Windows 额外制作同源的完整便携 ZIP 与网页 ZIP，并启动真实 EXE，以合成数据验证保存、重启和同机目录移动。PR 只产生预览 artifact，手动构建也不发布；正式版本 tag 才进入 GitHub Release 发布路径。详见 [打包与发布指南](docs/RELEASING.md)。
 
 ### 清单维护
 
@@ -96,7 +96,7 @@ git add SOURCE_MANIFEST.json
 npm run check
 ```
 
-`.gitattributes` 禁止自动换行转换，使 Windows 克隆也保留清单所校验的原始字节。源码包不含 Git 时仍可构建、运行网页和校验运行资源；仅源码清单的跟踪文件集合校验依赖 Git。
+`.gitattributes` 禁止自动换行转换，使 Windows 克隆也保留清单所校验的原始字节。源码包不含 Git 时仍可构建、运行网页和校验运行资源，但来源信息明确标记为不可归属单一提交；源码清单的跟踪集合校验和可交付桌面包要求真实 Git 克隆。只有干净工作树可打包交付。网页访问 `/version.html`，桌面查看 EXE 同级 `build-info.json`；同时比较版本、源码提交和 buildId，不能只看版本号。网页更新不会自动替换旧 EXE。
 
 ## 数据与行为
 
