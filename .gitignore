@@ -30,3 +30,6 @@ Data-recovery-*/
 .build/
 sunlit-classes-*.json
 sunlit-backup-*.json
+
+# Generated browser output (recreated from src/ + public/)
+/dist/

@@ -1,0 +1,18 @@
+{
+  "name": "sunlit-classroom",
+  "version": "1.8.2",
+  "private": true,
+  "type": "module",
+  "description": "Native browser source and reproducible static build for Sunlit Classroom",
+  "engines": { "node": ">=24.0.0 <25" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "build:sites": "npm run build && npm run verify:assets",
+    "serve": "node scripts/serve.mjs",
+    "test": "node scripts/test.mjs",
+    "test:portable": "npm --prefix electron run test:portable",
+    "verify:assets": "node electron/build.cjs --verify-only",
+    "verify:sources": "node scripts/source-manifest.mjs",
+    "check": "npm test && npm run test:portable && npm run verify:sources"
+  }
+}

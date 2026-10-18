@@ -1,507 +1,37 @@
 {
   "upstream_commit": "365796b4493178fdee6cf4b68b60621d1fdef810",
   "source_version": 96,
-  "snapshot": "sanitized; see SNAPSHOT_NOTES.md",
+  "snapshot": "sanitized source; current tracked files, excluding this manifest and generated dist; see SNAPSHOT_NOTES.md",
   "files": [
     {
+      "path": ".gitattributes",
+      "bytes": 78,
+      "sha256": "7e5641858485bceaa438562e9e7318f4c85f2e3f3002285419a97c010d9e8108"
+    },
+    {
       "path": ".gitignore",
-      "bytes": 334,
-      "sha256": "3b1d463ca968defa45d12565448f7202d65aa2c18485a86a0866b75239c94b82"
+      "bytes": 401,
+      "sha256": "15b0594a1c6331f0689596d478a7b6e13a1d0fc5e6c8a1e26cc2e5b9ab5b48ff"
     },
     {
       "path": "ASSET_SOURCES.md",
-      "bytes": 3997,
-      "sha256": "8140eb7a98625aaa5553ffa6568f5dc6c391e60bb6de580a6ce6fb9784dc00ee"
+      "bytes": 4174,
+      "sha256": "f692459fb78e6e3a7d83c937ee771d39e38cd5a900a42881aeb7465aa9c64ac7"
     },
     {
       "path": "README.md",
-      "bytes": 5418,
-      "sha256": "c460a99e30064c322e8aef3c24c04ba8cbe78cb9d0cb68daa08b1f6a41164107"
+      "bytes": 8525,
+      "sha256": "124084f19d23d5f3e288ffa25f43880e214843f7f549b54bd12081d714f27a5a"
     },
     {
       "path": "SNAPSHOT_NOTES.md",
-      "bytes": 1084,
-      "sha256": "def012cb7ee07489c402972479bfd5aa52438f6de4c87dee2f9a1f1f56ef24f0"
+      "bytes": 1249,
+      "sha256": "940d5da0b6622b3bea728ca77173d7a9f0aad7f9e17783b4a0e3826a31cd5629"
     },
     {
-      "path": "desktop/.gitignore",
-      "bytes": 53,
-      "sha256": "307128fcc69de76ccd06b63697fa79e8d60a7d978207e9d55c86f4f389cd9486"
-    },
-    {
-      "path": "desktop/PORTABLE-DATA.md",
-      "bytes": 5799,
-      "sha256": "d220ec661bb74f39a0af64587524832f173ccd0c35f3b307ac6b3dd59933b864"
-    },
-    {
-      "path": "desktop/README.md",
-      "bytes": 3644,
-      "sha256": "083281f3f441ac616209850a77d175a343b2c0eb43ef3cc7db33644d4a7240a7"
-    },
-    {
-      "path": "desktop/THIRD-PARTY.md",
-      "bytes": 1092,
-      "sha256": "26ec432a7c8251a5d52a116b4292457a97a4d87ad4eeecf706f36d4ee8903270"
-    },
-    {
-      "path": "desktop/app-package.json",
-      "bytes": 211,
-      "sha256": "c2b8c7891586d8e81e72d008fe6538042f14735db98611e00814dbad98616fbd"
-    },
-    {
-      "path": "desktop/assets-manifest.json",
-      "bytes": 12255,
-      "sha256": "9ac31681d095830de5506bbeb0e54dfa8358c64975f692b727cd9a20d4148dfd"
-    },
-    {
-      "path": "desktop/build.cjs",
-      "bytes": 4054,
-      "sha256": "74a632ea37d55eaba8d366bf6559d0de7d50d608270c71a88e5ae9b2f897c2b4"
-    },
-    {
-      "path": "desktop/main.cjs",
-      "bytes": 9057,
-      "sha256": "4ec1520ad1c10ef0ccbe6f1261837acb54a89139e2640e972329bf7ccca9451b"
-    },
-    {
-      "path": "desktop/package-lock.json",
-      "bytes": 23023,
-      "sha256": "c3c056e9fbc163e145c00ac1025c8aa063d14e09f514a3f1413c06ed51464604"
-    },
-    {
-      "path": "desktop/package.json",
-      "bytes": 429,
-      "sha256": "ef213333447bb8f7be154ceb69684c78792e622905c643eb53e6cccde9a5c299"
-    },
-    {
-      "path": "desktop/portable-data.cjs",
-      "bytes": 4414,
-      "sha256": "5baff9e02aa1dce96967c06c69d941f402e20f3aad62e31039cf4161cafc8e0d"
-    },
-    {
-      "path": "desktop/tests/portable-data.cjs",
-      "bytes": 8535,
-      "sha256": "9ca84687ef4680ed912ced5c39d777b16f176b48471db89312c730649d7baf51"
-    },
-    {
-      "path": "desktop/tests/startup.cjs",
-      "bytes": 3517,
-      "sha256": "9929936adaee11bbeca2ea86f992a4e30f2bba647ee08a067448cf6eec09ea29"
-    },
-    {
-      "path": "dist/audio/LICENSE.txt",
-      "bytes": 474,
-      "sha256": "78cf2fbe01f241fb39ae60b9a40b2c6283410c7d11c5d0e6cd93450a8b0a2f7b"
-    },
-    {
-      "path": "dist/audio/rollcall-drum.mp3",
-      "bytes": 187740,
-      "sha256": "e6fd796d8d041903c7de709f68b68b5e0dbc89369677162460751d1c84abc8a9"
-    },
-    {
-      "path": "dist/avatars.js",
-      "bytes": 15005,
-      "sha256": "f2d5f224f61621b474a0084555737305a1e71f7483f4bcf7a316e9f425bedd9d"
-    },
-    {
-      "path": "dist/board-countdown.js",
-      "bytes": 5348,
-      "sha256": "0c2ce1e4c2bea9bb53f69b6e81203f7599caf78d5122ecd40161c0ca4021e1b4"
-    },
-    {
-      "path": "dist/board-glyphs-LICENSE.txt",
-      "bytes": 14712,
-      "sha256": "849f4ea9c214fa4ac3593b770c699f387534b11ce671264c1b10d85bdcb5997b"
-    },
-    {
-      "path": "dist/board-glyphs.js",
-      "bytes": 27530,
-      "sha256": "515845009670ed728a883059b957d2462971bcc23d79493f5374f63f9b9f7b12"
-    },
-    {
-      "path": "dist/class-transfer.js",
-      "bytes": 3434,
-      "sha256": "aa9cb7b8316952fea8e944fcc4d6095ef79ec172465ae26d0beb542b6a3d5821"
-    },
-    {
-      "path": "dist/classes.js",
-      "bytes": 6875,
-      "sha256": "bdafb559208f04c91bb97e538c410a129ee97eec9574f4211ad7d75569593afd"
-    },
-    {
-      "path": "dist/countdown-digit-layout.js",
-      "bytes": 1992,
-      "sha256": "4b13e2cf5c5fc8be58b10768cbae8ee07512ea791db54a552ee7832b65e808ba"
-    },
-    {
-      "path": "dist/countdown-state.js",
-      "bytes": 1205,
-      "sha256": "93792a2c4fdf4f84f446f91f828305ae43b9379e0fc23562152f9fc34761562c"
-    },
-    {
-      "path": "dist/countdown.js",
-      "bytes": 4134,
-      "sha256": "7c748a8739890d6257679a12c4b79ae6599e8d64bbf0ffab29646063e4b16079"
-    },
-    {
-      "path": "dist/draw-timing.js",
-      "bytes": 538,
-      "sha256": "75586162856fddbac09ca5196d0add9f894454d676bf79ad28dc779776fb4c4f"
-    },
-    {
-      "path": "dist/drumroll.js",
-      "bytes": 2046,
-      "sha256": "dba6b33f4bf2e6781f3ea2a1ba23b229deee85a50429d36790000b6a0586a11b"
-    },
-    {
-      "path": "dist/duration-buttons.js",
-      "bytes": 1268,
-      "sha256": "1c17945a8b5f57921fab6021447b435adf81c1e3b74c17c6739f33fb2887015a"
-    },
-    {
-      "path": "dist/excel-transfer.js",
-      "bytes": 32081,
-      "sha256": "571f3f1a4da0c9fe7642c4c58ad210d06ab1a3e4d97cb71d6e26fa1db89d6411"
-    },
-    {
-      "path": "dist/index.html",
-      "bytes": 6296,
-      "sha256": "1dec460a2167008da46cd344807dfe4cdf2b6a450ec5925c9eaff99577e00250"
-    },
-    {
-      "path": "dist/models/boy-hero.scene.json",
-      "bytes": 3660935,
-      "sha256": "33652d445855a9081ba2a569d274542c9ef2c3c7ee9948b7c1a06ce334073fdd"
-    },
-    {
-      "path": "dist/models/boy-software.scene.json",
-      "bytes": 481975,
-      "sha256": "ce4ccbc35509709bb68c688e68cc56bbcb7faa1f32ede3d19c03be95ac8559ea"
-    },
-    {
-      "path": "dist/models/boy.scene.json",
-      "bytes": 1007943,
-      "sha256": "45cf2209f6c8f80d5cbc175badd5db82e4dedda3ae11096da20b3f7beab2954a"
-    },
-    {
-      "path": "dist/models/girl-hero.scene.json",
-      "bytes": 3450727,
-      "sha256": "f99371f7563e6360101c625ec82378f0ef0a0b4e2a0f669b6b23ebe58793437c"
-    },
-    {
-      "path": "dist/models/girl-software.scene.json",
-      "bytes": 493152,
-      "sha256": "52d5ae7866da6dccbd0aa00c99c98664ec35d136b42ae2e76d64f2d0e107d5cf"
-    },
-    {
-      "path": "dist/models/girl.scene.json",
-      "bytes": 1026680,
-      "sha256": "769a574ea930d54cede9706c3e7db5b49209013f7cb92459355b91ba3cac1544"
-    },
-    {
-      "path": "dist/models/relaxed-hand-morphs.json",
-      "bytes": 3128611,
-      "sha256": "bfdd7d4de10a7d1a9119f81dc569a93bfa6771a8e20097969fac66c7a35dcbb2"
-    },
-    {
-      "path": "dist/models/teacher.scene.json",
-      "bytes": 1843705,
-      "sha256": "7c6ab58d12aad304eb60a5033298812ea5f0d1f025f0148d1a862d153f6e7bce"
-    },
-    {
-      "path": "dist/name-readout.js",
-      "bytes": 2818,
-      "sha256": "055ca4054d9f723e899e56fae683719a106898409a1e3ab2feac159efa949321"
-    },
-    {
-      "path": "dist/orbit-preview/avatars.js",
-      "bytes": 15007,
-      "sha256": "1f67d7f169fe240ebfc8c3fc041b2f9075900cbd9973ad00263a8eddb6a75d77"
-    },
-    {
-      "path": "dist/orbit-preview/board-countdown.js",
-      "bytes": 5348,
-      "sha256": "0c2ce1e4c2bea9bb53f69b6e81203f7599caf78d5122ecd40161c0ca4021e1b4"
-    },
-    {
-      "path": "dist/orbit-preview/board-glyphs-LICENSE.txt",
-      "bytes": 14712,
-      "sha256": "849f4ea9c214fa4ac3593b770c699f387534b11ce671264c1b10d85bdcb5997b"
-    },
-    {
-      "path": "dist/orbit-preview/board-glyphs.js",
-      "bytes": 27530,
-      "sha256": "515845009670ed728a883059b957d2462971bcc23d79493f5374f63f9b9f7b12"
-    },
-    {
-      "path": "dist/orbit-preview/class-transfer.js",
-      "bytes": 3434,
-      "sha256": "aa9cb7b8316952fea8e944fcc4d6095ef79ec172465ae26d0beb542b6a3d5821"
-    },
-    {
-      "path": "dist/orbit-preview/classes.js",
-      "bytes": 6875,
-      "sha256": "bdafb559208f04c91bb97e538c410a129ee97eec9574f4211ad7d75569593afd"
-    },
-    {
-      "path": "dist/orbit-preview/countdown-digit-layout.js",
-      "bytes": 1992,
-      "sha256": "4b13e2cf5c5fc8be58b10768cbae8ee07512ea791db54a552ee7832b65e808ba"
-    },
-    {
-      "path": "dist/orbit-preview/countdown-state.js",
-      "bytes": 1205,
-      "sha256": "93792a2c4fdf4f84f446f91f828305ae43b9379e0fc23562152f9fc34761562c"
-    },
-    {
-      "path": "dist/orbit-preview/countdown.js",
-      "bytes": 4134,
-      "sha256": "7c748a8739890d6257679a12c4b79ae6599e8d64bbf0ffab29646063e4b16079"
-    },
-    {
-      "path": "dist/orbit-preview/draw-timing.js",
-      "bytes": 538,
-      "sha256": "75586162856fddbac09ca5196d0add9f894454d676bf79ad28dc779776fb4c4f"
-    },
-    {
-      "path": "dist/orbit-preview/drumroll.js",
-      "bytes": 2046,
-      "sha256": "dba6b33f4bf2e6781f3ea2a1ba23b229deee85a50429d36790000b6a0586a11b"
-    },
-    {
-      "path": "dist/orbit-preview/duration-buttons.js",
-      "bytes": 1268,
-      "sha256": "1c17945a8b5f57921fab6021447b435adf81c1e3b74c17c6739f33fb2887015a"
-    },
-    {
-      "path": "dist/orbit-preview/excel-transfer.js",
-      "bytes": 32083,
-      "sha256": "679872c0984941797f9c17afdcc7d36e09fa4c62e57a18e97f9bf84851eb6d16"
-    },
-    {
-      "path": "dist/orbit-preview/index.html",
-      "bytes": 6412,
-      "sha256": "0629c0b84d26a5dbe2d73b1e52388c9ddd6c14caee56be317e98791437d55e60"
-    },
-    {
-      "path": "dist/orbit-preview/name-readout.js",
-      "bytes": 2818,
-      "sha256": "055ca4054d9f723e899e56fae683719a106898409a1e3ab2feac159efa949321"
-    },
-    {
-      "path": "dist/orbit-preview/paper-cards.js",
-      "bytes": 40108,
-      "sha256": "9ae0a78ab00a114c917591892dfc55fb2ba5949ce780062bb207dcf82c05fcaa"
-    },
-    {
-      "path": "dist/orbit-preview/render-budget.js",
-      "bytes": 1539,
-      "sha256": "9ae2e57d53cae97206445b727aeb85bc9b3f1b929feb85aa5f311b7041a32de7"
-    },
-    {
-      "path": "dist/orbit-preview/roster-editor.js",
-      "bytes": 10233,
-      "sha256": "0d6752bb712235dc5be0f5496c2769ed5ef76f8256b8492e88ace04e48dc60a3"
-    },
-    {
-      "path": "dist/orbit-preview/roster.js",
-      "bytes": 4559,
-      "sha256": "37b820845a93cb22494df85ac2ba6bee2349712a755933ac24e8fc145ceaebf4"
-    },
-    {
-      "path": "dist/orbit-preview/scene.js",
-      "bytes": 56542,
-      "sha256": "cf566bb18619f7734349236b7e61d42f50b2494b43f2a298806850aa2b45e7cb"
-    },
-    {
-      "path": "dist/orbit-preview/selection-timing.js",
-      "bytes": 270,
-      "sha256": "7bbdf83e13ef67121f59e5f738078d9242e4c4e32ba35f4e267751ee79dc7d63"
-    },
-    {
-      "path": "dist/orbit-preview/software-renderer.js",
-      "bytes": 7776,
-      "sha256": "5b188284b6687cc6a28e70b9cdc524dece821a05212247488153cac8092f9a24"
-    },
-    {
-      "path": "dist/orbit-preview/sound-waveforms.js",
-      "bytes": 1544,
-      "sha256": "2a8c86d695b0c753cd8fb5e2bb26a127d9ab33c90191936864fd996009e69fdf"
-    },
-    {
-      "path": "dist/orbit-preview/sounds.js",
-      "bytes": 4700,
-      "sha256": "1b8fc7220b4193f3abcf135adcd689b62eb93b4e59b00316ce97918408039607"
-    },
-    {
-      "path": "dist/orbit-preview/space-card-art.js",
-      "bytes": 8784,
-      "sha256": "18edfc1c816b337a67e901f22a7af62a8a6ea285ef7b9bc41b6374602f887394"
-    },
-    {
-      "path": "dist/orbit-preview/space-card-canvas.js",
-      "bytes": 4957,
-      "sha256": "c621100d72da4cea6a533005924936f0740cfa19de366bc294954b0732d0500f"
-    },
-    {
-      "path": "dist/orbit-preview/space-card-model.js",
-      "bytes": 13527,
-      "sha256": "120f04c703fb20615f64bae0e79870f8f52ee22d880b0d536812029e3d703635"
-    },
-    {
-      "path": "dist/orbit-preview/space-card-webgl.js",
-      "bytes": 11192,
-      "sha256": "a1d0b7db73717f57ac261e5b57db0aa450a105071754358d9525953e01f13da3"
-    },
-    {
-      "path": "dist/orbit-preview/space-cards.js",
-      "bytes": 6780,
-      "sha256": "2ccc74242aab6f05497325c4dbf638c60f34480b43823d5be05d2a7196995a39"
-    },
-    {
-      "path": "dist/orbit-preview/space-countdown.js",
-      "bytes": 11690,
-      "sha256": "fc407ade0e8025d6a9a25f1b614130163c5f3bb2a702f7e60448b63223a4c70e"
-    },
-    {
-      "path": "dist/orbit-preview/space-meteors.js",
-      "bytes": 4228,
-      "sha256": "5fc995d341ab13a0ae577cc696c30bdac79bc94d7e11b791300160767ba711d8"
-    },
-    {
-      "path": "dist/orbit-preview/style.css",
-      "bytes": 52390,
-      "sha256": "3479083948bf2e28176b8f77fea37b6b8132218f5578deb3aa3466ba2854e6d9"
-    },
-    {
-      "path": "dist/paper-cards.js",
-      "bytes": 40108,
-      "sha256": "9ae0a78ab00a114c917591892dfc55fb2ba5949ce780062bb207dcf82c05fcaa"
-    },
-    {
-      "path": "dist/render-budget.js",
-      "bytes": 1539,
-      "sha256": "9ae2e57d53cae97206445b727aeb85bc9b3f1b929feb85aa5f311b7041a32de7"
-    },
-    {
-      "path": "dist/roster-editor.js",
-      "bytes": 10233,
-      "sha256": "0d6752bb712235dc5be0f5496c2769ed5ef76f8256b8492e88ace04e48dc60a3"
-    },
-    {
-      "path": "dist/roster.js",
-      "bytes": 4559,
-      "sha256": "37b820845a93cb22494df85ac2ba6bee2349712a755933ac24e8fc145ceaebf4"
-    },
-    {
-      "path": "dist/scene.js",
-      "bytes": 56513,
-      "sha256": "2bfd2befcb48911526d07e1badef281df3b62e0100dfc075ef27e2a9bce41bde"
-    },
-    {
-      "path": "dist/selection-timing.js",
-      "bytes": 270,
-      "sha256": "7bbdf83e13ef67121f59e5f738078d9242e4c4e32ba35f4e267751ee79dc7d63"
-    },
-    {
-      "path": "dist/software-renderer.js",
-      "bytes": 7776,
-      "sha256": "5b188284b6687cc6a28e70b9cdc524dece821a05212247488153cac8092f9a24"
-    },
-    {
-      "path": "dist/sound-waveforms.js",
-      "bytes": 1544,
-      "sha256": "2a8c86d695b0c753cd8fb5e2bb26a127d9ab33c90191936864fd996009e69fdf"
-    },
-    {
-      "path": "dist/sounds.js",
-      "bytes": 4699,
-      "sha256": "2de5deabed8d1e325c86b2ff55324f665bb84c2b73aead2698dd18e4e8019b77"
-    },
-    {
-      "path": "dist/space-card-art.js",
-      "bytes": 8454,
-      "sha256": "3e43ea1df045f81b1207679b32fff9ff15f46cb8c2e980cf20fea6977f88789d"
-    },
-    {
-      "path": "dist/space-card-canvas.js",
-      "bytes": 4957,
-      "sha256": "c621100d72da4cea6a533005924936f0740cfa19de366bc294954b0732d0500f"
-    },
-    {
-      "path": "dist/space-card-model.js",
-      "bytes": 11632,
-      "sha256": "353ffe07feaf732264f91fa7e5f60b8354e90fcbf1a22ecfb609a019d8f07fae"
-    },
-    {
-      "path": "dist/space-card-webgl.js",
-      "bytes": 11189,
-      "sha256": "9ec9dc24ee13799e71184d3d1b34597c237bde176a77cd00ce53167aece46b28"
-    },
-    {
-      "path": "dist/space-cards.js",
-      "bytes": 6700,
-      "sha256": "75d6561342b6b119b6d2c5b71d2611da253de715b946b7d7d9e82c828c4afd1b"
-    },
-    {
-      "path": "dist/space-countdown.js",
-      "bytes": 11689,
-      "sha256": "9d1446d6245e2750a027544e37071a685f6d73382f8b5aaff9049522c596b847"
-    },
-    {
-      "path": "dist/space-meteors.js",
-      "bytes": 4235,
-      "sha256": "5f9b05ccba22f151e64b74b38db0a7bfacf9ddfa4dc6bf80e4875534e12f0eba"
-    },
-    {
-      "path": "dist/style.css",
-      "bytes": 49716,
-      "sha256": "41a3238af5b6bcf5d91dedd16b5236dd73dadabb615c1a1d8168d005741e6fe2"
-    },
-    {
-      "path": "dist/vendor/EXCEL-VENDOR-NOTICE.txt",
-      "bytes": 1545,
-      "sha256": "0a0b3265db4cfa89871e8ca76c8f0eb004d99273da9ade16eb2c3776dbb9c467"
-    },
-    {
-      "path": "dist/vendor/FFLATE-LICENSE.txt",
-      "bytes": 1069,
-      "sha256": "0a1df3a083d0c010560aa342e87959c8c1070e6fd54545741f083f22d0c8b551"
-    },
-    {
-      "path": "dist/vendor/OrbitControls.js",
-      "bytes": 38703,
-      "sha256": "b97879c748170baadeb3fb84cea1ffdf4674e283dc06042f34e2acb95a76042c"
-    },
-    {
-      "path": "dist/vendor/SHEETJS-LICENSE.txt",
-      "bytes": 11355,
-      "sha256": "4d2a38ac35cda06a555c84074a819d413339cd3691b822cae50f8f322fe01f64"
-    },
-    {
-      "path": "dist/vendor/THREE-LICENSE.txt",
-      "bytes": 1081,
-      "sha256": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601"
-    },
-    {
-      "path": "dist/vendor/fflate-0.8.3.mjs",
-      "bytes": 90922,
-      "sha256": "b7ca4450b19559a1d50eb381adcee94b82449674be4cd17789d9beba7e6122a1"
-    },
-    {
-      "path": "dist/vendor/three.core.js",
-      "bytes": 1403455,
-      "sha256": "eb077d2417f61d3e6d9264c317cabc4ea35769ed6b0ab533067292a550784c20"
-    },
-    {
-      "path": "dist/vendor/three.module.js",
-      "bytes": 603113,
-      "sha256": "c8211c69345d2e9949dc7a8ac969380497aa0600a5a8ac6a459c8cd02dd9cb8a"
-    },
-    {
-      "path": "dist/vendor/xlsx-0.20.3.mjs",
-      "bytes": 1008308,
-      "sha256": "1a0fb062ee9781b13f6687371b202aaefc53b6ce55b530c027e01f9c087b77db"
+      "path": "docs/DEPLOYMENT.md",
+      "bytes": 2322,
+      "sha256": "4e9a3a268fa6edafca0edbbd2f09a6ce348dc2012f3246aa685b863b2778d657"
     },
     {
       "path": "docs/board-glyphs-SOURCE.txt",
@@ -539,9 +69,519 @@
       "sha256": "da494cacae34f215c28eaaeaca812590dfee09b3c24c41b1c47900db7ea3ebb3"
     },
     {
+      "path": "electron/.gitignore",
+      "bytes": 53,
+      "sha256": "307128fcc69de76ccd06b63697fa79e8d60a7d978207e9d55c86f4f389cd9486"
+    },
+    {
+      "path": "electron/PORTABLE-DATA.md",
+      "bytes": 5904,
+      "sha256": "bae8feb2e3090dc13283b0a18d8e3cbf4bd950a2ee6e0d167da00ce72071ab26"
+    },
+    {
+      "path": "electron/README.md",
+      "bytes": 4329,
+      "sha256": "2ac08ee85bf7df0bfe4f4d9af463fd06faf8913fd2427a8cdfc21fef8b3a47d4"
+    },
+    {
+      "path": "electron/THIRD-PARTY.md",
+      "bytes": 1092,
+      "sha256": "26ec432a7c8251a5d52a116b4292457a97a4d87ad4eeecf706f36d4ee8903270"
+    },
+    {
+      "path": "electron/app-package.json",
+      "bytes": 211,
+      "sha256": "c2b8c7891586d8e81e72d008fe6538042f14735db98611e00814dbad98616fbd"
+    },
+    {
+      "path": "electron/assets-manifest.json",
+      "bytes": 12255,
+      "sha256": "9ac31681d095830de5506bbeb0e54dfa8358c64975f692b727cd9a20d4148dfd"
+    },
+    {
+      "path": "electron/build.cjs",
+      "bytes": 4559,
+      "sha256": "3b51d2dab9fc4c5cf2f923f2a3a89dd0383806ee7c69aae35090c75d1644193c"
+    },
+    {
+      "path": "electron/main.cjs",
+      "bytes": 9057,
+      "sha256": "4ec1520ad1c10ef0ccbe6f1261837acb54a89139e2640e972329bf7ccca9451b"
+    },
+    {
+      "path": "electron/package-lock.json",
+      "bytes": 23023,
+      "sha256": "c3c056e9fbc163e145c00ac1025c8aa063d14e09f514a3f1413c06ed51464604"
+    },
+    {
+      "path": "electron/package.json",
+      "bytes": 458,
+      "sha256": "cd03eaccea655b736f96ed3fd33931e6458a3d6e74b27a8d9349d2e6d9fc0e9b"
+    },
+    {
+      "path": "electron/portable-data.cjs",
+      "bytes": 4414,
+      "sha256": "5baff9e02aa1dce96967c06c69d941f402e20f3aad62e31039cf4161cafc8e0d"
+    },
+    {
+      "path": "electron/tests/portable-data.cjs",
+      "bytes": 8535,
+      "sha256": "9ca84687ef4680ed912ced5c39d777b16f176b48471db89312c730649d7baf51"
+    },
+    {
+      "path": "electron/tests/startup.cjs",
+      "bytes": 3517,
+      "sha256": "9929936adaee11bbeca2ea86f992a4e30f2bba647ee08a067448cf6eec09ea29"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 254,
+      "sha256": "15f9c11cb4eec527ffaeedbc15651fc3c56df091eff4bdf33f73197de95f04f4"
+    },
+    {
+      "path": "package.json",
+      "bytes": 683,
+      "sha256": "796e89002ee01f840d75ea8e7ed7053e024543894c5facd6e5f7acad9598bc43"
+    },
+    {
+      "path": "public/audio/LICENSE.txt",
+      "bytes": 474,
+      "sha256": "78cf2fbe01f241fb39ae60b9a40b2c6283410c7d11c5d0e6cd93450a8b0a2f7b"
+    },
+    {
+      "path": "public/audio/rollcall-drum.mp3",
+      "bytes": 187740,
+      "sha256": "e6fd796d8d041903c7de709f68b68b5e0dbc89369677162460751d1c84abc8a9"
+    },
+    {
+      "path": "public/board-glyphs-LICENSE.txt",
+      "bytes": 14712,
+      "sha256": "849f4ea9c214fa4ac3593b770c699f387534b11ce671264c1b10d85bdcb5997b"
+    },
+    {
+      "path": "public/models/boy-hero.scene.json",
+      "bytes": 3660935,
+      "sha256": "33652d445855a9081ba2a569d274542c9ef2c3c7ee9948b7c1a06ce334073fdd"
+    },
+    {
+      "path": "public/models/boy-software.scene.json",
+      "bytes": 481975,
+      "sha256": "ce4ccbc35509709bb68c688e68cc56bbcb7faa1f32ede3d19c03be95ac8559ea"
+    },
+    {
+      "path": "public/models/boy.scene.json",
+      "bytes": 1007943,
+      "sha256": "45cf2209f6c8f80d5cbc175badd5db82e4dedda3ae11096da20b3f7beab2954a"
+    },
+    {
+      "path": "public/models/girl-hero.scene.json",
+      "bytes": 3450727,
+      "sha256": "f99371f7563e6360101c625ec82378f0ef0a0b4e2a0f669b6b23ebe58793437c"
+    },
+    {
+      "path": "public/models/girl-software.scene.json",
+      "bytes": 493152,
+      "sha256": "52d5ae7866da6dccbd0aa00c99c98664ec35d136b42ae2e76d64f2d0e107d5cf"
+    },
+    {
+      "path": "public/models/girl.scene.json",
+      "bytes": 1026680,
+      "sha256": "769a574ea930d54cede9706c3e7db5b49209013f7cb92459355b91ba3cac1544"
+    },
+    {
+      "path": "public/models/relaxed-hand-morphs.json",
+      "bytes": 3128611,
+      "sha256": "bfdd7d4de10a7d1a9119f81dc569a93bfa6771a8e20097969fac66c7a35dcbb2"
+    },
+    {
+      "path": "public/models/teacher.scene.json",
+      "bytes": 1843705,
+      "sha256": "7c6ab58d12aad304eb60a5033298812ea5f0d1f025f0148d1a862d153f6e7bce"
+    },
+    {
+      "path": "public/orbit-preview/board-glyphs-LICENSE.txt",
+      "bytes": 14712,
+      "sha256": "849f4ea9c214fa4ac3593b770c699f387534b11ce671264c1b10d85bdcb5997b"
+    },
+    {
+      "path": "public/vendor/EXCEL-VENDOR-NOTICE.txt",
+      "bytes": 1545,
+      "sha256": "0a0b3265db4cfa89871e8ca76c8f0eb004d99273da9ade16eb2c3776dbb9c467"
+    },
+    {
+      "path": "public/vendor/FFLATE-LICENSE.txt",
+      "bytes": 1069,
+      "sha256": "0a1df3a083d0c010560aa342e87959c8c1070e6fd54545741f083f22d0c8b551"
+    },
+    {
+      "path": "public/vendor/OrbitControls.js",
+      "bytes": 38703,
+      "sha256": "b97879c748170baadeb3fb84cea1ffdf4674e283dc06042f34e2acb95a76042c"
+    },
+    {
+      "path": "public/vendor/SHEETJS-LICENSE.txt",
+      "bytes": 11355,
+      "sha256": "4d2a38ac35cda06a555c84074a819d413339cd3691b822cae50f8f322fe01f64"
+    },
+    {
+      "path": "public/vendor/THREE-LICENSE.txt",
+      "bytes": 1081,
+      "sha256": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601"
+    },
+    {
+      "path": "public/vendor/fflate-0.8.3.mjs",
+      "bytes": 90922,
+      "sha256": "b7ca4450b19559a1d50eb381adcee94b82449674be4cd17789d9beba7e6122a1"
+    },
+    {
+      "path": "public/vendor/three.core.js",
+      "bytes": 1403455,
+      "sha256": "eb077d2417f61d3e6d9264c317cabc4ea35769ed6b0ab533067292a550784c20"
+    },
+    {
+      "path": "public/vendor/three.module.js",
+      "bytes": 603113,
+      "sha256": "c8211c69345d2e9949dc7a8ac969380497aa0600a5a8ac6a459c8cd02dd9cb8a"
+    },
+    {
+      "path": "public/vendor/xlsx-0.20.3.mjs",
+      "bytes": 1008308,
+      "sha256": "1a0fb062ee9781b13f6687371b202aaefc53b6ce55b530c027e01f9c087b77db"
+    },
+    {
+      "path": "scripts/build.mjs",
+      "bytes": 2505,
+      "sha256": "ded18f3bc1c7ab0c73d7f91a4730c08a11940dfbed9dac06498ecda2f42ba31e"
+    },
+    {
+      "path": "scripts/serve.mjs",
+      "bytes": 2568,
+      "sha256": "989306d22a054e3cd020dd145b4971b1aebda0ccfad47800f5c77475b8329743"
+    },
+    {
+      "path": "scripts/source-manifest.mjs",
+      "bytes": 1460,
+      "sha256": "89d3a6d22d1f3a564a04e3cd4fa0a97bb2246878838018e7786684f767b59c1e"
+    },
+    {
       "path": "scripts/test.mjs",
-      "bytes": 586,
-      "sha256": "1a9d3a0c5c95619f79aa8602a5a95033b46e1fd1f88ffe1cfb7cf0b41f2e89ab"
+      "bytes": 843,
+      "sha256": "7d40133801a82b79bd544e95e0e8cd6c6270994a3bcfb713bfe5e16d5d0ec060"
+    },
+    {
+      "path": "src/avatars.js",
+      "bytes": 15005,
+      "sha256": "f2d5f224f61621b474a0084555737305a1e71f7483f4bcf7a316e9f425bedd9d"
+    },
+    {
+      "path": "src/board-countdown.js",
+      "bytes": 5348,
+      "sha256": "0c2ce1e4c2bea9bb53f69b6e81203f7599caf78d5122ecd40161c0ca4021e1b4"
+    },
+    {
+      "path": "src/board-glyphs.js",
+      "bytes": 27530,
+      "sha256": "515845009670ed728a883059b957d2462971bcc23d79493f5374f63f9b9f7b12"
+    },
+    {
+      "path": "src/class-transfer.js",
+      "bytes": 3434,
+      "sha256": "aa9cb7b8316952fea8e944fcc4d6095ef79ec172465ae26d0beb542b6a3d5821"
+    },
+    {
+      "path": "src/classes.js",
+      "bytes": 6875,
+      "sha256": "bdafb559208f04c91bb97e538c410a129ee97eec9574f4211ad7d75569593afd"
+    },
+    {
+      "path": "src/countdown-digit-layout.js",
+      "bytes": 1992,
+      "sha256": "4b13e2cf5c5fc8be58b10768cbae8ee07512ea791db54a552ee7832b65e808ba"
+    },
+    {
+      "path": "src/countdown-state.js",
+      "bytes": 1205,
+      "sha256": "93792a2c4fdf4f84f446f91f828305ae43b9379e0fc23562152f9fc34761562c"
+    },
+    {
+      "path": "src/countdown.js",
+      "bytes": 4134,
+      "sha256": "7c748a8739890d6257679a12c4b79ae6599e8d64bbf0ffab29646063e4b16079"
+    },
+    {
+      "path": "src/draw-timing.js",
+      "bytes": 538,
+      "sha256": "75586162856fddbac09ca5196d0add9f894454d676bf79ad28dc779776fb4c4f"
+    },
+    {
+      "path": "src/drumroll.js",
+      "bytes": 2046,
+      "sha256": "dba6b33f4bf2e6781f3ea2a1ba23b229deee85a50429d36790000b6a0586a11b"
+    },
+    {
+      "path": "src/duration-buttons.js",
+      "bytes": 1268,
+      "sha256": "1c17945a8b5f57921fab6021447b435adf81c1e3b74c17c6739f33fb2887015a"
+    },
+    {
+      "path": "src/excel-transfer.js",
+      "bytes": 32081,
+      "sha256": "571f3f1a4da0c9fe7642c4c58ad210d06ab1a3e4d97cb71d6e26fa1db89d6411"
+    },
+    {
+      "path": "src/index.html",
+      "bytes": 6296,
+      "sha256": "1dec460a2167008da46cd344807dfe4cdf2b6a450ec5925c9eaff99577e00250"
+    },
+    {
+      "path": "src/name-readout.js",
+      "bytes": 2818,
+      "sha256": "055ca4054d9f723e899e56fae683719a106898409a1e3ab2feac159efa949321"
+    },
+    {
+      "path": "src/orbit-preview/avatars.js",
+      "bytes": 15007,
+      "sha256": "1f67d7f169fe240ebfc8c3fc041b2f9075900cbd9973ad00263a8eddb6a75d77"
+    },
+    {
+      "path": "src/orbit-preview/board-countdown.js",
+      "bytes": 5348,
+      "sha256": "0c2ce1e4c2bea9bb53f69b6e81203f7599caf78d5122ecd40161c0ca4021e1b4"
+    },
+    {
+      "path": "src/orbit-preview/board-glyphs.js",
+      "bytes": 27530,
+      "sha256": "515845009670ed728a883059b957d2462971bcc23d79493f5374f63f9b9f7b12"
+    },
+    {
+      "path": "src/orbit-preview/class-transfer.js",
+      "bytes": 3434,
+      "sha256": "aa9cb7b8316952fea8e944fcc4d6095ef79ec172465ae26d0beb542b6a3d5821"
+    },
+    {
+      "path": "src/orbit-preview/classes.js",
+      "bytes": 6875,
+      "sha256": "bdafb559208f04c91bb97e538c410a129ee97eec9574f4211ad7d75569593afd"
+    },
+    {
+      "path": "src/orbit-preview/countdown-digit-layout.js",
+      "bytes": 1992,
+      "sha256": "4b13e2cf5c5fc8be58b10768cbae8ee07512ea791db54a552ee7832b65e808ba"
+    },
+    {
+      "path": "src/orbit-preview/countdown-state.js",
+      "bytes": 1205,
+      "sha256": "93792a2c4fdf4f84f446f91f828305ae43b9379e0fc23562152f9fc34761562c"
+    },
+    {
+      "path": "src/orbit-preview/countdown.js",
+      "bytes": 4134,
+      "sha256": "7c748a8739890d6257679a12c4b79ae6599e8d64bbf0ffab29646063e4b16079"
+    },
+    {
+      "path": "src/orbit-preview/draw-timing.js",
+      "bytes": 538,
+      "sha256": "75586162856fddbac09ca5196d0add9f894454d676bf79ad28dc779776fb4c4f"
+    },
+    {
+      "path": "src/orbit-preview/drumroll.js",
+      "bytes": 2046,
+      "sha256": "dba6b33f4bf2e6781f3ea2a1ba23b229deee85a50429d36790000b6a0586a11b"
+    },
+    {
+      "path": "src/orbit-preview/duration-buttons.js",
+      "bytes": 1268,
+      "sha256": "1c17945a8b5f57921fab6021447b435adf81c1e3b74c17c6739f33fb2887015a"
+    },
+    {
+      "path": "src/orbit-preview/excel-transfer.js",
+      "bytes": 32083,
+      "sha256": "679872c0984941797f9c17afdcc7d36e09fa4c62e57a18e97f9bf84851eb6d16"
+    },
+    {
+      "path": "src/orbit-preview/index.html",
+      "bytes": 6412,
+      "sha256": "0629c0b84d26a5dbe2d73b1e52388c9ddd6c14caee56be317e98791437d55e60"
+    },
+    {
+      "path": "src/orbit-preview/name-readout.js",
+      "bytes": 2818,
+      "sha256": "055ca4054d9f723e899e56fae683719a106898409a1e3ab2feac159efa949321"
+    },
+    {
+      "path": "src/orbit-preview/paper-cards.js",
+      "bytes": 40108,
+      "sha256": "9ae0a78ab00a114c917591892dfc55fb2ba5949ce780062bb207dcf82c05fcaa"
+    },
+    {
+      "path": "src/orbit-preview/render-budget.js",
+      "bytes": 1539,
+      "sha256": "9ae2e57d53cae97206445b727aeb85bc9b3f1b929feb85aa5f311b7041a32de7"
+    },
+    {
+      "path": "src/orbit-preview/roster-editor.js",
+      "bytes": 10233,
+      "sha256": "0d6752bb712235dc5be0f5496c2769ed5ef76f8256b8492e88ace04e48dc60a3"
+    },
+    {
+      "path": "src/orbit-preview/roster.js",
+      "bytes": 4559,
+      "sha256": "37b820845a93cb22494df85ac2ba6bee2349712a755933ac24e8fc145ceaebf4"
+    },
+    {
+      "path": "src/orbit-preview/scene.js",
+      "bytes": 56542,
+      "sha256": "cf566bb18619f7734349236b7e61d42f50b2494b43f2a298806850aa2b45e7cb"
+    },
+    {
+      "path": "src/orbit-preview/selection-timing.js",
+      "bytes": 270,
+      "sha256": "7bbdf83e13ef67121f59e5f738078d9242e4c4e32ba35f4e267751ee79dc7d63"
+    },
+    {
+      "path": "src/orbit-preview/software-renderer.js",
+      "bytes": 7776,
+      "sha256": "5b188284b6687cc6a28e70b9cdc524dece821a05212247488153cac8092f9a24"
+    },
+    {
+      "path": "src/orbit-preview/sound-waveforms.js",
+      "bytes": 1544,
+      "sha256": "2a8c86d695b0c753cd8fb5e2bb26a127d9ab33c90191936864fd996009e69fdf"
+    },
+    {
+      "path": "src/orbit-preview/sounds.js",
+      "bytes": 4700,
+      "sha256": "1b8fc7220b4193f3abcf135adcd689b62eb93b4e59b00316ce97918408039607"
+    },
+    {
+      "path": "src/orbit-preview/space-card-art.js",
+      "bytes": 8784,
+      "sha256": "18edfc1c816b337a67e901f22a7af62a8a6ea285ef7b9bc41b6374602f887394"
+    },
+    {
+      "path": "src/orbit-preview/space-card-canvas.js",
+      "bytes": 4957,
+      "sha256": "c621100d72da4cea6a533005924936f0740cfa19de366bc294954b0732d0500f"
+    },
+    {
+      "path": "src/orbit-preview/space-card-model.js",
+      "bytes": 13527,
+      "sha256": "120f04c703fb20615f64bae0e79870f8f52ee22d880b0d536812029e3d703635"
+    },
+    {
+      "path": "src/orbit-preview/space-card-webgl.js",
+      "bytes": 11192,
+      "sha256": "a1d0b7db73717f57ac261e5b57db0aa450a105071754358d9525953e01f13da3"
+    },
+    {
+      "path": "src/orbit-preview/space-cards.js",
+      "bytes": 6780,
+      "sha256": "2ccc74242aab6f05497325c4dbf638c60f34480b43823d5be05d2a7196995a39"
+    },
+    {
+      "path": "src/orbit-preview/space-countdown.js",
+      "bytes": 11690,
+      "sha256": "fc407ade0e8025d6a9a25f1b614130163c5f3bb2a702f7e60448b63223a4c70e"
+    },
+    {
+      "path": "src/orbit-preview/space-meteors.js",
+      "bytes": 4228,
+      "sha256": "5fc995d341ab13a0ae577cc696c30bdac79bc94d7e11b791300160767ba711d8"
+    },
+    {
+      "path": "src/orbit-preview/style.css",
+      "bytes": 52390,
+      "sha256": "3479083948bf2e28176b8f77fea37b6b8132218f5578deb3aa3466ba2854e6d9"
+    },
+    {
+      "path": "src/paper-cards.js",
+      "bytes": 40108,
+      "sha256": "9ae0a78ab00a114c917591892dfc55fb2ba5949ce780062bb207dcf82c05fcaa"
+    },
+    {
+      "path": "src/render-budget.js",
+      "bytes": 1539,
+      "sha256": "9ae2e57d53cae97206445b727aeb85bc9b3f1b929feb85aa5f311b7041a32de7"
+    },
+    {
+      "path": "src/roster-editor.js",
+      "bytes": 10233,
+      "sha256": "0d6752bb712235dc5be0f5496c2769ed5ef76f8256b8492e88ace04e48dc60a3"
+    },
+    {
+      "path": "src/roster.js",
+      "bytes": 4559,
+      "sha256": "37b820845a93cb22494df85ac2ba6bee2349712a755933ac24e8fc145ceaebf4"
+    },
+    {
+      "path": "src/scene.js",
+      "bytes": 56513,
+      "sha256": "2bfd2befcb48911526d07e1badef281df3b62e0100dfc075ef27e2a9bce41bde"
+    },
+    {
+      "path": "src/selection-timing.js",
+      "bytes": 270,
+      "sha256": "7bbdf83e13ef67121f59e5f738078d9242e4c4e32ba35f4e267751ee79dc7d63"
+    },
+    {
+      "path": "src/software-renderer.js",
+      "bytes": 7776,
+      "sha256": "5b188284b6687cc6a28e70b9cdc524dece821a05212247488153cac8092f9a24"
+    },
+    {
+      "path": "src/sound-waveforms.js",
+      "bytes": 1544,
+      "sha256": "2a8c86d695b0c753cd8fb5e2bb26a127d9ab33c90191936864fd996009e69fdf"
+    },
+    {
+      "path": "src/sounds.js",
+      "bytes": 4699,
+      "sha256": "2de5deabed8d1e325c86b2ff55324f665bb84c2b73aead2698dd18e4e8019b77"
+    },
+    {
+      "path": "src/space-card-art.js",
+      "bytes": 8454,
+      "sha256": "3e43ea1df045f81b1207679b32fff9ff15f46cb8c2e980cf20fea6977f88789d"
+    },
+    {
+      "path": "src/space-card-canvas.js",
+      "bytes": 4957,
+      "sha256": "c621100d72da4cea6a533005924936f0740cfa19de366bc294954b0732d0500f"
+    },
+    {
+      "path": "src/space-card-model.js",
+      "bytes": 11632,
+      "sha256": "353ffe07feaf732264f91fa7e5f60b8354e90fcbf1a22ecfb609a019d8f07fae"
+    },
+    {
+      "path": "src/space-card-webgl.js",
+      "bytes": 11189,
+      "sha256": "9ec9dc24ee13799e71184d3d1b34597c237bde176a77cd00ce53167aece46b28"
+    },
+    {
+      "path": "src/space-cards.js",
+      "bytes": 6700,
+      "sha256": "75d6561342b6b119b6d2c5b71d2611da253de715b946b7d7d9e82c828c4afd1b"
+    },
+    {
+      "path": "src/space-countdown.js",
+      "bytes": 11689,
+      "sha256": "9d1446d6245e2750a027544e37071a685f6d73382f8b5aaff9049522c596b847"
+    },
+    {
+      "path": "src/space-meteors.js",
+      "bytes": 4235,
+      "sha256": "5f9b05ccba22f151e64b74b38db0a7bfacf9ddfa4dc6bf80e4875534e12f0eba"
+    },
+    {
+      "path": "src/style.css",
+      "bytes": 49716,
+      "sha256": "41a3238af5b6bcf5d91dedd16b5236dd73dadabb615c1a1d8168d005741e6fe2"
+    },
+    {
+      "path": "tests/build-layout.mjs",
+      "bytes": 8185,
+      "sha256": "2d73be15c974a3bd1b5ce32fdc1eadd230557bc0fc6eafd328aca75f9596a7f2"
     },
     {
       "path": "tests/busy-arrow.mjs",
@@ -818,5 +858,6 @@
       "bytes": 9440,
       "sha256": "132b1d116375e7c61955ad8f3324023e0034ff5d5fbbb42c5fc94bcab961ed78"
     }
-  ]
+  ],
+  "layout_base_commit": "01355fdd43b16797f605f7a83359a89a998f838c"
 }
