@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "description": "Native browser source and reproducible static build for Sunlit Classroom",
-  "engines": { "node": ">=24.0.0 <25" },
+  "engines": {
+    "node": ">=24.0.0 <25"
+  },
   "scripts": {
     "build": "node scripts/build.mjs",
     "build:sites": "npm run build && npm run verify:assets",
@@ -13,6 +15,7 @@
     "test:portable": "npm --prefix electron run test:portable",
     "verify:assets": "node electron/build.cjs --verify-only",
     "verify:sources": "node scripts/source-manifest.mjs",
-    "check": "npm test && npm run test:portable && npm run verify:sources"
+    "check": "npm test && npm run test:portable && npm run verify:sources && npm run verify:release",
+    "verify:release": "node electron/release-config.cjs"
   }
 }

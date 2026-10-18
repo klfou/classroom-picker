@@ -1,9 +1,10 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
 const baseline=JSON.parse(await fs.readFile(new URL('./root-baseline-sha256.json',import.meta.url),'utf8'));
-const sourceRoot=path.resolve(new URL('../../',import.meta.url).pathname,baseline.root);
+const sourceRoot=path.resolve(fileURLToPath(new URL('../../',import.meta.url)),baseline.root);
 const roots=[...new Set([sourceRoot,...(process.env.ORBIT_ASSET_ROOT?[path.resolve(process.env.ORBIT_ASSET_ROOT)]:[])])];
 for(const root of roots){const actual={};
 for(const [file,expected]of Object.entries(baseline.files)){

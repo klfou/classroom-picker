@@ -1,12 +1,12 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import {fileURLToPath} from 'node:url';
+import {fileURLToPath,pathToFileURL} from 'node:url';
 import {createHash} from 'node:crypto';
 import {register} from 'node:module';
 register('./helpers/orbit-scene-loader.mjs',import.meta.url);
 const dist=path.resolve(process.env.ORBIT_DIST||fileURLToPath(new URL('../dist',import.meta.url)));
-const {CARD,createCardModel}=await import(path.join(dist,'space-card-model.js'));
+const {CARD,createCardModel}=await import(pathToFileURL(path.join(dist,'space-card-model.js')).href);
 const sha=()=>fs.readFile(path.join(dist,'space-card-model.js')).then(bytes=>createHash('sha256').update(bytes).digest('hex'));
 const modelSHA=await sha(),counts=[1,2,3,5,7,11,16,23,29,35,36,37,64,96,128],reports=[];
 const elapsedSpan=Math.max(230000,Math.ceil(CARD.idlePeriod*3.2/1000)*1000);

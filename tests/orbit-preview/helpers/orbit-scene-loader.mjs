@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {pathToFileURL,fileURLToPath} from 'node:url';
-const dist=pathToFileURL(path.resolve(process.env.ORBIT_DIST||new URL('../../dist/',import.meta.url).pathname)+'/');
+const dist=pathToFileURL(path.resolve(process.env.ORBIT_DIST||fileURLToPath(new URL('../../dist/',import.meta.url)))+'/');
 const assetRoot=pathToFileURL(path.resolve(process.env.ORBIT_ASSET_ROOT||fileURLToPath(dist))+'/');
 const html=await fs.readFile(new URL('index.html',dist),'utf8');
 const importMap=JSON.parse(html.match(/<script\s+type=["']importmap["'][^>]*>([\s\S]*?)<\/script>/)?.[1]??'{"imports":{}}');

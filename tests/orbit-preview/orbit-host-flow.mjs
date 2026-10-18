@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import {fileURLToPath} from 'node:url';
+import {fileURLToPath,pathToFileURL} from 'node:url';
 import {register} from 'node:module';
 import {createHash} from 'node:crypto';
 register('./helpers/orbit-scene-loader.mjs',import.meta.url);
@@ -10,9 +10,9 @@ const dist=path.resolve(process.env.ORBIT_DIST||fileURLToPath(new URL('../dist',
 const roster=count=>Array.from({length:count},(_,i)=>({id:`qa-${count}-${i}`,name:i<2?'同名同学':`轨道同学${i+1}`,row:Math.floor(i/8)+1,col:i%8+1,gender:i%2?'male':'female'}));
 const classSeed={version:3,activeId:'qa',classes:[{id:'qa',name:'轨道独立验证班',seats:roster(64),sample:false,noRepeat:false,used:[]}],deleted:[]};
 const env=await setup({dist,assetRoot:process.env.ORBIT_ASSET_ROOT||dist,baseURL:process.env.ORBIT_BASE_URL||'http://classroom.test/',storage:{'sunlit-classes-v3':JSON.stringify(classSeed),'sunlit-classes-v3-backup':JSON.stringify(classSeed),'sunlit-theme':'paper'}});
-await import(path.join(dist,'scene.js'));
+await import(pathToFileURL(path.join(dist,'scene.js')).href);
 const app=window.classroom;await env.awaitReady(app.ready);env.bindRenderer(app.renderer);
-await import(path.join(dist,'countdown.js'));await env.step(1600);await env.flush();
+await import(pathToFileURL(path.join(dist,'countdown.js')).href);await env.step(1600);await env.flush();
 const state=()=>app.getState(),qa=()=>__orbitHostQA(),timer=()=>__orbitCountdownQA(),view=()=>app.spaceCards.debug(true);
 const calls=[];for(const [label,object,methods]of [['space',app.spaceCards,['start','reveal','cancel']],['sounds',qa().sounds,['begin','result','stop']]])for(const method of methods){const original=object[method].bind(object);object[method]=(...args)=>{calls.push({kind:label+'.'+method,args,at:env.now});return original(...args)}}
 const since=(kind,offset)=>calls.slice(offset).filter(c=>c.kind===kind);
