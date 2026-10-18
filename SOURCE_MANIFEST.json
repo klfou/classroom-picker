@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 7494,
-      "sha256": "e388ad8336f32c60144d6ed1615cee6fa1bf211d327893862d707e9a7e6efef9"
+      "bytes": 8886,
+      "sha256": "b3d7ee61a2337c22b6535005a3fa1e1af8c1a5e5d58b45597070d87b0df110d2"
     },
     {
       "path": "SNAPSHOT_NOTES.md",
@@ -40,8 +40,8 @@
     },
     {
       "path": "docs/DEPLOYMENT.md",
-      "bytes": 2242,
-      "sha256": "6cf5ee81a85ed9d9737434e2e0df1f8199d08f438f2851ac304ad461beaac5ae"
+      "bytes": 2322,
+      "sha256": "4e9a3a268fa6edafca0edbbd2f09a6ce348dc2012f3246aa685b863b2778d657"
     },
     {
       "path": "docs/RELEASING.md",
@@ -110,8 +110,8 @@
     },
     {
       "path": "electron/assets-manifest.json",
-      "bytes": 7334,
-      "sha256": "d8829b53ebced1a896830719270cd3c1dc8fbd1257046c7e49bef61a211cfc5d"
+      "bytes": 12255,
+      "sha256": "9ac31681d095830de5506bbeb0e54dfa8358c64975f692b727cd9a20d4148dfd"
     },
     {
       "path": "electron/build.cjs",
@@ -249,6 +249,11 @@
       "sha256": "7c6ab58d12aad304eb60a5033298812ea5f0d1f025f0148d1a862d153f6e7bce"
     },
     {
+      "path": "public/orbit-preview/board-glyphs-LICENSE.txt",
+      "bytes": 14712,
+      "sha256": "849f4ea9c214fa4ac3593b770c699f387534b11ce671264c1b10d85bdcb5997b"
+    },
+    {
       "path": "public/vendor/EXCEL-VENDOR-NOTICE.txt",
       "bytes": 1545,
       "sha256": "0a0b3265db4cfa89871e8ca76c8f0eb004d99273da9ade16eb2c3776dbb9c467"
@@ -384,6 +389,161 @@
       "sha256": "055ca4054d9f723e899e56fae683719a106898409a1e3ab2feac159efa949321"
     },
     {
+      "path": "src/orbit-preview/avatars.js",
+      "bytes": 15007,
+      "sha256": "1f67d7f169fe240ebfc8c3fc041b2f9075900cbd9973ad00263a8eddb6a75d77"
+    },
+    {
+      "path": "src/orbit-preview/board-countdown.js",
+      "bytes": 5348,
+      "sha256": "0c2ce1e4c2bea9bb53f69b6e81203f7599caf78d5122ecd40161c0ca4021e1b4"
+    },
+    {
+      "path": "src/orbit-preview/board-glyphs.js",
+      "bytes": 27530,
+      "sha256": "515845009670ed728a883059b957d2462971bcc23d79493f5374f63f9b9f7b12"
+    },
+    {
+      "path": "src/orbit-preview/class-transfer.js",
+      "bytes": 3434,
+      "sha256": "aa9cb7b8316952fea8e944fcc4d6095ef79ec172465ae26d0beb542b6a3d5821"
+    },
+    {
+      "path": "src/orbit-preview/classes.js",
+      "bytes": 6875,
+      "sha256": "bdafb559208f04c91bb97e538c410a129ee97eec9574f4211ad7d75569593afd"
+    },
+    {
+      "path": "src/orbit-preview/countdown-digit-layout.js",
+      "bytes": 1992,
+      "sha256": "4b13e2cf5c5fc8be58b10768cbae8ee07512ea791db54a552ee7832b65e808ba"
+    },
+    {
+      "path": "src/orbit-preview/countdown-state.js",
+      "bytes": 1205,
+      "sha256": "93792a2c4fdf4f84f446f91f828305ae43b9379e0fc23562152f9fc34761562c"
+    },
+    {
+      "path": "src/orbit-preview/countdown.js",
+      "bytes": 4134,
+      "sha256": "7c748a8739890d6257679a12c4b79ae6599e8d64bbf0ffab29646063e4b16079"
+    },
+    {
+      "path": "src/orbit-preview/draw-timing.js",
+      "bytes": 538,
+      "sha256": "75586162856fddbac09ca5196d0add9f894454d676bf79ad28dc779776fb4c4f"
+    },
+    {
+      "path": "src/orbit-preview/drumroll.js",
+      "bytes": 2046,
+      "sha256": "dba6b33f4bf2e6781f3ea2a1ba23b229deee85a50429d36790000b6a0586a11b"
+    },
+    {
+      "path": "src/orbit-preview/duration-buttons.js",
+      "bytes": 1268,
+      "sha256": "1c17945a8b5f57921fab6021447b435adf81c1e3b74c17c6739f33fb2887015a"
+    },
+    {
+      "path": "src/orbit-preview/excel-transfer.js",
+      "bytes": 32083,
+      "sha256": "679872c0984941797f9c17afdcc7d36e09fa4c62e57a18e97f9bf84851eb6d16"
+    },
+    {
+      "path": "src/orbit-preview/index.html",
+      "bytes": 6412,
+      "sha256": "0629c0b84d26a5dbe2d73b1e52388c9ddd6c14caee56be317e98791437d55e60"
+    },
+    {
+      "path": "src/orbit-preview/name-readout.js",
+      "bytes": 2818,
+      "sha256": "055ca4054d9f723e899e56fae683719a106898409a1e3ab2feac159efa949321"
+    },
+    {
+      "path": "src/orbit-preview/paper-cards.js",
+      "bytes": 40108,
+      "sha256": "9ae0a78ab00a114c917591892dfc55fb2ba5949ce780062bb207dcf82c05fcaa"
+    },
+    {
+      "path": "src/orbit-preview/render-budget.js",
+      "bytes": 1539,
+      "sha256": "9ae2e57d53cae97206445b727aeb85bc9b3f1b929feb85aa5f311b7041a32de7"
+    },
+    {
+      "path": "src/orbit-preview/roster-editor.js",
+      "bytes": 10233,
+      "sha256": "0d6752bb712235dc5be0f5496c2769ed5ef76f8256b8492e88ace04e48dc60a3"
+    },
+    {
+      "path": "src/orbit-preview/roster.js",
+      "bytes": 4559,
+      "sha256": "37b820845a93cb22494df85ac2ba6bee2349712a755933ac24e8fc145ceaebf4"
+    },
+    {
+      "path": "src/orbit-preview/scene.js",
+      "bytes": 56542,
+      "sha256": "cf566bb18619f7734349236b7e61d42f50b2494b43f2a298806850aa2b45e7cb"
+    },
+    {
+      "path": "src/orbit-preview/selection-timing.js",
+      "bytes": 270,
+      "sha256": "7bbdf83e13ef67121f59e5f738078d9242e4c4e32ba35f4e267751ee79dc7d63"
+    },
+    {
+      "path": "src/orbit-preview/software-renderer.js",
+      "bytes": 7776,
+      "sha256": "5b188284b6687cc6a28e70b9cdc524dece821a05212247488153cac8092f9a24"
+    },
+    {
+      "path": "src/orbit-preview/sound-waveforms.js",
+      "bytes": 1544,
+      "sha256": "2a8c86d695b0c753cd8fb5e2bb26a127d9ab33c90191936864fd996009e69fdf"
+    },
+    {
+      "path": "src/orbit-preview/sounds.js",
+      "bytes": 4700,
+      "sha256": "1b8fc7220b4193f3abcf135adcd689b62eb93b4e59b00316ce97918408039607"
+    },
+    {
+      "path": "src/orbit-preview/space-card-art.js",
+      "bytes": 8784,
+      "sha256": "18edfc1c816b337a67e901f22a7af62a8a6ea285ef7b9bc41b6374602f887394"
+    },
+    {
+      "path": "src/orbit-preview/space-card-canvas.js",
+      "bytes": 4957,
+      "sha256": "c621100d72da4cea6a533005924936f0740cfa19de366bc294954b0732d0500f"
+    },
+    {
+      "path": "src/orbit-preview/space-card-model.js",
+      "bytes": 13527,
+      "sha256": "120f04c703fb20615f64bae0e79870f8f52ee22d880b0d536812029e3d703635"
+    },
+    {
+      "path": "src/orbit-preview/space-card-webgl.js",
+      "bytes": 11192,
+      "sha256": "a1d0b7db73717f57ac261e5b57db0aa450a105071754358d9525953e01f13da3"
+    },
+    {
+      "path": "src/orbit-preview/space-cards.js",
+      "bytes": 6780,
+      "sha256": "2ccc74242aab6f05497325c4dbf638c60f34480b43823d5be05d2a7196995a39"
+    },
+    {
+      "path": "src/orbit-preview/space-countdown.js",
+      "bytes": 11690,
+      "sha256": "fc407ade0e8025d6a9a25f1b614130163c5f3bb2a702f7e60448b63223a4c70e"
+    },
+    {
+      "path": "src/orbit-preview/space-meteors.js",
+      "bytes": 4228,
+      "sha256": "5fc995d341ab13a0ae577cc696c30bdac79bc94d7e11b791300160767ba711d8"
+    },
+    {
+      "path": "src/orbit-preview/style.css",
+      "bytes": 52390,
+      "sha256": "3479083948bf2e28176b8f77fea37b6b8132218f5578deb3aa3466ba2854e6d9"
+    },
+    {
       "path": "src/paper-cards.js",
       "bytes": 40108,
       "sha256": "9ae0a78ab00a114c917591892dfc55fb2ba5949ce780062bb207dcf82c05fcaa"
@@ -470,8 +630,8 @@
     },
     {
       "path": "tests/build-layout.mjs",
-      "bytes": 7635,
-      "sha256": "83a0753680db08ee44e2ab374f744a52ba3833a06885c7a33d9ec07fa77715e0"
+      "bytes": 8185,
+      "sha256": "2d73be15c974a3bd1b5ce32fdc1eadd230557bc0fc6eafd328aca75f9596a7f2"
     },
     {
       "path": "tests/busy-arrow.mjs",
@@ -552,6 +712,76 @@
       "path": "tests/name-readout.mjs",
       "bytes": 4368,
       "sha256": "05eeb618e08315e73643acadc2ef2d320796deaf0b076180ad4fe5412478cecc"
+    },
+    {
+      "path": "tests/orbit-preview-geometry.mjs",
+      "bytes": 2549,
+      "sha256": "62cfa0063babc844428d2a9310d1d12d76ee54eeb85dde1f928719e2646c0880"
+    },
+    {
+      "path": "tests/orbit-preview-identities.mjs",
+      "bytes": 1792,
+      "sha256": "47ad8af124b140fadfe4a3c4af5692143990556810da3b8c999e7df7e9ac4a22"
+    },
+    {
+      "path": "tests/orbit-preview-quiet-idle.mjs",
+      "bytes": 2252,
+      "sha256": "c34c4e7d12c7dda3b9534664208fc243229da8a98cd5111814faabc8228aeb03"
+    },
+    {
+      "path": "tests/orbit-preview.mjs",
+      "bytes": 550,
+      "sha256": "eb3092cdb4300e259bf909e22fadf20239ed917d2ac540e69cb8268106a2f7bd"
+    },
+    {
+      "path": "tests/orbit-preview/helpers/deterministic-dom.mjs",
+      "bytes": 17311,
+      "sha256": "cd3a288aa62e78652dace8e4ce805a9c35ec18413f4b12987ff6037be1e38d7d"
+    },
+    {
+      "path": "tests/orbit-preview/helpers/orbit-environment.mjs",
+      "bytes": 1795,
+      "sha256": "ecff7182ccbbdabf1182f4916416bfd496b4c7103b2a888d40956988351998a2"
+    },
+    {
+      "path": "tests/orbit-preview/helpers/orbit-scene-loader.mjs",
+      "bytes": 1484,
+      "sha256": "48cb5d8f6bbbf5a7750dfe0be55f09b979fb9eb8af7dcdcf9bb4153fe9ebf573"
+    },
+    {
+      "path": "tests/orbit-preview/helpers/paper-canvas-recorder.mjs",
+      "bytes": 5691,
+      "sha256": "4a71b7f7dd30b85923de7628d30af66b6ff34055fce2ea437b2c3ccf9aef35fe"
+    },
+    {
+      "path": "tests/orbit-preview/helpers/theme-environment.mjs",
+      "bytes": 4080,
+      "sha256": "dbd3ffbe2d5bb9d42e676614a4c96395cce8d0b357cbc8df248c39bda818df84"
+    },
+    {
+      "path": "tests/orbit-preview/helpers/theme-scene-loader.mjs",
+      "bytes": 1035,
+      "sha256": "b95d9d11522021808e75872d16b4b28126d10f85d83a9416c7a7d5ae6a859cf2"
+    },
+    {
+      "path": "tests/orbit-preview/orbit-host-flow.mjs",
+      "bytes": 19179,
+      "sha256": "0fc38f7ff8c78ae831a3ca3825366eb046e1d3a555f8681eb1dbd3681a78a712"
+    },
+    {
+      "path": "tests/orbit-preview/orbit-identity-lifecycle.mjs",
+      "bytes": 3794,
+      "sha256": "b9ae50dcfbfeb34473fd18c5e191ad03fe9c91c6b00a28ea9d1fcccdbb43a5eb"
+    },
+    {
+      "path": "tests/orbit-preview/root-baseline-sha256.json",
+      "bytes": 5019,
+      "sha256": "624f95958e86447dd4bf2a2f512c9c4c84f56b3817ea9f9aa13b6e6eb97ca5aa"
+    },
+    {
+      "path": "tests/orbit-preview/verify-root-baseline.mjs",
+      "bytes": 1119,
+      "sha256": "60c6772842df4afdf8781488bab053f90fd527f042403bb2266381b0d7e72a1d"
     },
     {
       "path": "tests/paper-card-corners.mjs",
