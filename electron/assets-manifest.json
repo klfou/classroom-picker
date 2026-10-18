@@ -11,8 +11,8 @@
   },
   {
     "path": "avatars.js",
-    "size": 15005,
-    "sha256": "f2d5f224f61621b474a0084555737305a1e71f7483f4bcf7a316e9f425bedd9d"
+    "size": 17260,
+    "sha256": "e052ef621be45e4a701f2ec6b4fb938372a8085cb8a715d8acbabcea14c680c1"
   },
   {
     "path": "board-countdown.js",
@@ -53,6 +53,11 @@
     "path": "countdown.js",
     "size": 4134,
     "sha256": "7c748a8739890d6257679a12c4b79ae6599e8d64bbf0ffab29646063e4b16079"
+  },
+  {
+    "path": "draw-preparation.js",
+    "size": 2089,
+    "sha256": "ff666b370212de4d3ca2fb695347bf99b8f92dee8f515f16a79a19142c1aea5e"
   },
   {
     "path": "draw-timing.js",
@@ -286,8 +291,8 @@
   },
   {
     "path": "paper-cards.js",
-    "size": 40143,
-    "sha256": "26d83263dc0dd787da805b18576b7627ea15dfa6c93b37a4a34582ea6b73193b"
+    "size": 40407,
+    "sha256": "7cfb6a5fec4223e97c65f85913c2031951bd85693e38c88282abebc147e50875"
   },
   {
     "path": "render-budget.js",
@@ -306,8 +311,8 @@
   },
   {
     "path": "scene.js",
-    "size": 56513,
-    "sha256": "2bfd2befcb48911526d07e1badef281df3b62e0100dfc075ef27e2a9bce41bde"
+    "size": 57486,
+    "sha256": "004a2dd8bbc2038c593fe883fae871fd27bc66f59975048932c19dff22c2c730"
   },
   {
     "path": "selection-timing.js",

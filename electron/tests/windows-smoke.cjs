@@ -404,8 +404,11 @@ async function run() {
     };
     console.log('PASS moved-directory persistence; publishable package remains profile-free and the final ZIP is unchanged.');
   } catch (error) {
+    // A later Windows profile-cleanup failure must not hide the initiating error.
+    console.error('Windows smoke primary failure:', error);
     for (const instance of context.instances) {
       console.error('Smoke diagnostics (' + instance.label + '):\n' + instance.output);
+      if (instance.page?.jsErrors.length) console.error('Renderer errors:', JSON.stringify(instance.page.jsErrors));
       const log = context.root && path.join(context.root, instance.label + '-chromium.log');
       if (log && exists(log)) console.error(fs.readFileSync(log, 'utf8').slice(-16_000));
     }

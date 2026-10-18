@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {createDrawPreparation,prepareDrawFonts} from '../dist/draw-preparation.js';
+let allowed=true,id=0;const tasks=new Map(),calls=[];
+const queue=createDrawPreparation({canRun:()=>allowed,requestIdle:fn=>{tasks.set(++id,fn);return id},cancelIdle:id=>tasks.delete(id),schedule:(fn,ms)=>{assert.equal(ms,80);tasks.set(++id,fn);return id},cancel:id=>tasks.delete(id)});
+const flush=async()=>{for(let i=0;i<20;i++)await Promise.resolve()};
+const tick=async budget=>{const [id,fn]=tasks.entries().next().value;tasks.delete(id);fn({didTimeout:false,timeRemaining:()=>budget});await flush()};
+queue.replace([()=>calls.push(1),()=>calls.push(2)]);assert.equal(calls.length,0);
+await tick(1);assert.deepEqual(calls,[]);allowed=false;await tick(20);assert.deepEqual(calls,[]);allowed=true;
+await tick(20);assert.deepEqual(calls,[1]);assert.equal(tasks.size,1);await tick(20);assert.deepEqual(calls,[1,2]);assert.equal(queue.debug().pending,false);
+let resolve;queue.replace([()=>new Promise(r=>{resolve=r}),()=>calls.push('stale')]);await tick(20);
+queue.replace([()=>calls.push('fresh')]);resolve();await flush();await tick(20);assert.deepEqual(calls,[1,2,'fresh']);
+let finish;queue.replace([()=>new Promise(r=>{finish=r}),()=>calls.push('after-busy')]);await tick(20);allowed=false;finish();await flush();await tick(20);assert.notEqual(calls.at(-1),'after-busy','Promise completion cannot recursively run heavy work during a draw');assert.equal(queue.debug().remaining,1);allowed=true;await tick(20);assert.equal(calls.at(-1),'after-busy');
+queue.replace([()=>{throw Error('optional failure')},()=>calls.push('fallback')]);await tick(20);await tick(20);assert.equal(queue.debug().errors,1);assert.equal(calls.at(-1),'fallback');
+queue.replace([()=>calls.push('disposed')]);queue.dispose();assert.equal(tasks.size,0);
+const fonts=[];await prepareDrawFonts({fonts:{load(font,text){fonts.push({font,text});return Promise.reject(Error('unavailable local font'))}}},['测试','测试','长姓名']);assert.equal(fonts.length,3);assert.ok(fonts.every(f=>f.text.includes('测')&&f.text.includes('♠')));
+await prepareDrawFonts({},[]);
+console.log('PASS one-resource idle slices, low idle budget, paused input/hidden guard, generation replacement across async work, recoverable failures, disposal and local font fallback.');

@@ -24,7 +24,7 @@ assert.equal((html.match(/data-theme-choice="paper"/g)||[]).length,1);
 let assertions=0;
 for(const storageFails of [false,true])for(const boardMode of [false,true])for(const drawDurationMs of [600,1000,1750]){
  const events=[],used=new Set([0,2]),names=['林予安','陈星禾','许知夏'];
- const context={activeTheme:'classroom',boardMode,lastBoardState:{text:'00:51',hundredths:'30',state:'running'},viewportWidth:1366,lastRenderKey:'previous',used,names,chosen:2,busy:true,drawStart:1000,drawGeneration:5,drawDurationMs,deadline:61000,
+ const context={prepareCount:0,prepareDrawResources(){context.prepareCount++},activeTheme:'classroom',boardMode,lastBoardState:{text:'00:51',hundredths:'30',state:'running'},viewportWidth:1366,lastRenderKey:'previous',used,names,chosen:2,busy:true,drawStart:1000,drawGeneration:5,drawDurationMs,deadline:61000,
   localStorage:{setItem(key,value){events.push(['save',key,value]);if(storageFails)throw Error('denied')}},
   performance:{now:()=>1400},dimensions:()=>[1366,520],
   renderBudgets:{classroom:{resetSamples(){}},space:{resetSamples(){}},paper:{resetSamples(){}}},applyRenderQuality(){},syncClassroomMotion(){},
@@ -38,7 +38,7 @@ for(const storageFails of [false,true])for(const boardMode of [false,true])for(c
  const before=shared();
  for(let i=0;i<20;i++){
   const theme=['space','paper','classroom'][i%3],at=events.length;
-  context.setTheme(theme);
+  context.setTheme(theme);assert.equal(context.prepareCount,i+1,'Theme changes replace preparation without affecting draw state');
   assert.equal(context.activeTheme,theme);assertions++;
   assert.deepEqual(shared(),before);assertions++;
   assert.equal(context.used,used);assert.equal(context.names,names);assertions+=2;
