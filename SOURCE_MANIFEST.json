@@ -20,8 +20,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 7133,
-      "sha256": "02c3607cb9777d204436cdb3757259288a7094c4ca53a9ecc29871f21858cee0"
+      "bytes": 7465,
+      "sha256": "9b5a2f7916ee064618a6fd3d6f5cfdfb8f07caf326f2cad94b104e4fa384c020"
     },
     {
       "path": "SNAPSHOT_NOTES.md",
@@ -96,7 +96,7 @@
     {
       "path": "electron/assets-manifest.json",
       "bytes": 7334,
-      "sha256": "d8829b53ebced1a896830719270cd3c1dc8fbd1257046c7e49bef61a211cfc5d"
+      "sha256": "9c8fe84d12de326a4fc42f4226d50785c87f13aaf454f37d81a9f0faaac6f068"
     },
     {
       "path": "electron/build.cjs",
@@ -335,8 +335,8 @@
     },
     {
       "path": "src/paper-cards.js",
-      "bytes": 40108,
-      "sha256": "9ae0a78ab00a114c917591892dfc55fb2ba5949ce780062bb207dcf82c05fcaa"
+      "bytes": 40143,
+      "sha256": "26d83263dc0dd787da805b18576b7627ea15dfa6c93b37a4a34582ea6b73193b"
     },
     {
       "path": "src/render-budget.js",
@@ -390,8 +390,8 @@
     },
     {
       "path": "src/space-card-model.js",
-      "bytes": 11632,
-      "sha256": "353ffe07feaf732264f91fa7e5f60b8354e90fcbf1a22ecfb609a019d8f07fae"
+      "bytes": 11622,
+      "sha256": "1014abb8990d84e015fced8bbd0712cc0aa658bc595faed626476500ed0cc088"
     },
     {
       "path": "src/space-card-webgl.js",
@@ -432,6 +432,11 @@
       "path": "tests/class-transfer.mjs",
       "bytes": 4152,
       "sha256": "81428f51f2e0aece3f7f9f8709bc4c4372e885ee0df359dadb0162154990a0ec"
+    },
+    {
+      "path": "tests/core-draw-motion.mjs",
+      "bytes": 8127,
+      "sha256": "c61fd498722238262ae2c8cb9fd6dc1569f36ce4da693feb4b58c9ac431fcc35"
     },
     {
       "path": "tests/countdown-all-minutes.mjs",
@@ -510,8 +515,8 @@
     },
     {
       "path": "tests/paper-cards.mjs",
-      "bytes": 20564,
-      "sha256": "71ef1af4c8e21af0b8f1697ddadcaa6ac500dfbfbffce0c78c1767e82fa39061"
+      "bytes": 21365,
+      "sha256": "67a9c95e3292d4bebc6fd246f23d497fd1c756f9e817c38b10c9cad0a1b1c0ed"
     },
     {
       "path": "tests/paper-countdown-cards.mjs",
@@ -525,8 +530,8 @@
     },
     {
       "path": "tests/paper-theme-integration.mjs",
-      "bytes": 46118,
-      "sha256": "60068904c300d17c8cf32bbd57b4cf6c3c1da1e9b22325c9c68ea64fbdfc982d"
+      "bytes": 46277,
+      "sha256": "48c2418a7bc93d56964000bcce540766310c8e05fa02f1ad269dece09d5f9f06"
     },
     {
       "path": "tests/paper-theme-palette.mjs",
@@ -595,8 +600,8 @@
     },
     {
       "path": "tests/space-cards.mjs",
-      "bytes": 8943,
-      "sha256": "24a6105b028725f9201990077e420146981f84d8d846682dc75b7005baa21a61"
+      "bytes": 9714,
+      "sha256": "82020c441bbd7f721d71da1402734c381bfb73ec427b335669ba29b5350eed42"
     },
     {
       "path": "tests/space-meteors.mjs",

@@ -126,8 +126,8 @@
   },
   {
     "path": "paper-cards.js",
-    "size": 40108,
-    "sha256": "9ae0a78ab00a114c917591892dfc55fb2ba5949ce780062bb207dcf82c05fcaa"
+    "size": 40143,
+    "sha256": "26d83263dc0dd787da805b18576b7627ea15dfa6c93b37a4a34582ea6b73193b"
   },
   {
     "path": "render-budget.js",
@@ -181,8 +181,8 @@
   },
   {
     "path": "space-card-model.js",
-    "size": 11632,
-    "sha256": "353ffe07feaf732264f91fa7e5f60b8354e90fcbf1a22ecfb609a019d8f07fae"
+    "size": 11622,
+    "sha256": "1014abb8990d84e015fced8bbd0712cc0aa658bc595faed626476500ed0cc088"
   },
   {
     "path": "space-card-webgl.js",

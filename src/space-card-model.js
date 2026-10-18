@@ -74,7 +74,8 @@ export function createCardModel(){
 
  function sample(now=model.now){
   model.now=Number.isFinite(now)?now:model.now;if(model.epoch==null)model.epoch=model.now;
-  const elapsed=Math.max(0,model.now-model.startedAt),t=model.timing,gather=smooth(elapsed/t.gather),disperse=smooth((elapsed-t.gather-t.rotate)/t.scatter),shellMix=model.drawing&&!model.reducedMotion&&elapsed<t.total?gather*(1-disperse):0;
+  // The requested draw is essential feedback; reduced motion only pauses ambience.
+  const elapsed=Math.max(0,model.now-model.startedAt),t=model.timing,gather=smooth(elapsed/t.gather),disperse=smooth((elapsed-t.gather-t.rotate)/t.scatter),shellMix=model.drawing&&elapsed<t.total?gather*(1-disperse):0;
   model.stage=model.drawing?(elapsed<t.gather?'gather':elapsed<t.gather+t.rotate?'rotate':elapsed<t.total?'disperse':'awaiting-reveal'):(model.winner?'selected':'idle');
   const angle=.22+elapsed/t.total*t.turn,cs=Math.cos(angle),sn=Math.sin(angle),ct=Math.cos(-.18),st=Math.sin(-.18),sphereScale=Math.min(1,model.aspect/.95),radius=3.06*sphereScale;
   // Keep absolute-time idle lives/names current behind result/timer views.
@@ -94,11 +95,11 @@ export function createCardModel(){
     // Supplementary shell cards grow from their source, never cross-fade names.
     if(c.extra)c.size*=Math.max(.00001,shellMix);orient(c,u,v,n,shellMix);
    }
-   project(c);c.shade=mix(1-c.distanceShade,.80+.20*Math.pow(clamp(c.facing),.45),shellMix);if(model.drawing&&model.reducedMotion)c.shade*=.6;if(!hideBackground){model.order.push(c);if(c.inView&&c.size>.001)model.visibleCardCount++;}
+   project(c);c.shade=mix(1-c.distanceShade,.80+.20*Math.pow(clamp(c.facing),.45),shellMix);if(!hideBackground){model.order.push(c);if(c.inView&&c.size>.001)model.visibleCardCount++;}
   }
   if(model.order.length>1)model.order.sort((a,b)=>b.z-a.z||a.id-b.id);
   if(model.winner&&!model.drawing&&!model.countdown){
-   const c=model.selected,p=model.reducedMotion?1:smooth((model.now-model.revealedAt)/360),w=Math.min(560,model.height*.85,model.width*.76)*(.94+.06*p);c.x=0;c.y=0;c.z=3;c.size=w*c.z/(model.focal*1.8);c.shade=1;c.opacity=1;project(c);model.order.push(c);if(c.inView&&c.size>.001)model.visibleCardCount++;
+   const c=model.selected,p=smooth((model.now-model.revealedAt)/360),w=Math.min(560,model.height*.85,model.width*.76)*(.94+.06*p);c.x=0;c.y=0;c.z=3;c.size=w*c.z/(model.focal*1.8);c.shade=1;c.opacity=1;project(c);model.order.push(c);if(c.inView&&c.size>.001)model.visibleCardCount++;
   }
   return model;
  }

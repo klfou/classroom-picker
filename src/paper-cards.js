@@ -178,7 +178,8 @@ export function createPaperCards(canvas,options={}){
   }
   layoutKey=key;return layoutCache={...best,left:width*.045,heroW};
  }
- function transitionPhase(){return winner||pendingName?(reducedMotion?(winner?1:0):clamp((now-transitionAt)/transitionDuration)):0}
+ // Keep the user-triggered flip visible under either system motion preference.
+ function transitionPhase(){return winner||pendingName?clamp((now-transitionAt)/transitionDuration):0}
  function sample(){
   const l=layout(),elapsed=Math.max(0,now-startedAt),displayName=winner||pendingName,displayIndex=winner?selectedIndex:pendingIndex,resultPhase=transitionPhase(),result=ease(resultPhase);
   stage=drawing?(elapsed>=timing.total?'awaiting-reveal':pendingName?'flip':'waiting'):(winner?(resultPhase<1?'result-settle':'selected'):'idle');cards=[];selectedSlot=displayName&&entries.length?displayIndex%l.count:-1;if(!entries.length)return;
@@ -200,7 +201,7 @@ export function createPaperCards(canvas,options={}){
   // to one upright card; hundredths never animate or allocate artwork.
   g.fillStyle='#ded3d5';if(l.colon){const {x,y,radius}=l.colon;for(const offset of [-.11,.11]){g.beginPath();g.arc(x,y+l.mainWidth*offset,radius,0,TAU);g.fill()}}if(l.decimal){g.beginPath();g.arc(l.decimal.x,l.decimal.y,l.decimal.radius,0,TAU);g.fill()}
  }
- function render(time=now){if(disposed)return;now=finite(time,now);if(!active)return;const display=countdownDisplay(countdown),keyState=[width,height,dpr,entries.length,winner,selectedIndex,pendingName,pendingIndex,display?.main??'',display?.minor??'',display?.finished??false,!display&&(winner||pendingName)&&!reducedMotion?(transitionPhase()<1?now:'result-done'):'static'].join('|');if(keyState===paintKey)return;if(!display)sample();if(names.length||display)ensureArt();const key=width+':'+height+':'+dpr;if(!background||backgroundKey!==key){background=makeBackground(surface,width,height,dpr);backgroundKey=key;backgroundBuilds++}g.setTransform(dpr,0,0,dpr,0,0);g.globalAlpha=1;g.imageSmoothingEnabled=true;g.imageSmoothingQuality='medium';g.drawImage(background,0,0,width,height);
+ function render(time=now){if(disposed)return;now=finite(time,now);if(!active)return;const display=countdownDisplay(countdown),keyState=[width,height,dpr,entries.length,winner,selectedIndex,pendingName,pendingIndex,display?.main??'',display?.minor??'',display?.finished??false,!display&&(winner||pendingName)?(transitionPhase()<1?now:'result-done'):'static'].join('|');if(keyState===paintKey)return;if(!display)sample();if(names.length||display)ensureArt();const key=width+':'+height+':'+dpr;if(!background||backgroundKey!==key){background=makeBackground(surface,width,height,dpr);backgroundKey=key;backgroundBuilds++}g.setTransform(dpr,0,0,dpr,0,0);g.globalAlpha=1;g.imageSmoothingEnabled=true;g.imageSmoothingQuality='medium';g.drawImage(background,0,0,width,height);
   if(display){// The shared timer fully takes over: no names or moving cards behind it.
    paintCountdown(display);
   }else{for(const c of cards){if(c.selected){g.fillStyle=`rgba(29,10,21,${.63*smooth(transitionPhase())})`;g.fillRect(0,0,width,height)}paintCard(g,c,c.facing<0?back:c.showName?selected:front,shadow)}if(!names.length){g.fillStyle='#e7dcdf';g.textAlign='center';g.textBaseline='middle';g.font=`500 ${Math.max(17,Math.min(24,width*.054))}px ${FONT}`;g.fillText('添加学生，翻开新的期待',width/2,height*.46);g.fillStyle='#baa6ae';g.font=`400 ${Math.max(12,Math.min(15,width*.035))}px ${FONT}`;g.fillText('在「班级与座位」中添加或导入名单',width/2,height*.46+34)}}paintKey=keyState;frames++
