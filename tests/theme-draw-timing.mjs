@@ -24,7 +24,7 @@ const qa=()=>globalThis.__sharedThemeQA(),timer=()=>globalThis.__sharedCountdown
 const shared=()=>{const {theme,software,...snapshot}=state();return snapshot};
 const events=[];
 for(const method of ['start','reveal','cancel']){const original=app.spaceCards[method].bind(app.spaceCards);app.spaceCards[method]=(...args)=>{events.push({kind:method,args,at:env.now});return original(...args)}}
-for(const method of ['start','reveal','cancel']){const original=app.paperCards[method].bind(app.paperCards);app.paperCards[method]=(...args)=>{events.push({kind:'paper.'+method,args,at:env.now});return original(...args)}}
+for(const method of ['start','prepare','reveal','cancel']){const original=app.paperCards[method].bind(app.paperCards);app.paperCards[method]=(...args)=>{events.push({kind:'paper.'+method,args,at:env.now});return original(...args)}}
 for(const method of ['begin','result','stop']){const original=qa().sounds[method];qa().sounds[method]=(...args)=>{events.push({kind:'sounds.'+method,args,at:env.now});return original(...args)}}
 let checks=0;
 async function test(name,fn){await fn();checks++;console.log('PASS',name)}
@@ -56,7 +56,7 @@ for(const theme of ['space','classroom','paper']){
  await test(`${theme}: accepted start snapshots exact renderer, suspense and winner deadline`,()=>{
   assert.equal(qa().drawStart,start);assert.equal(state().drawDurationMs,timing.total);assert.equal(state().selected,-1);assert.equal(state().busy,true);
   assert.deepEqual(eventsAfter('sounds.begin',before).map(e=>e.args),[[timing.total,start]]);
-  assert.equal(eventsAfter('start',before).length,1);assert.equal(eventsAfter('start',before)[0].args[1],timing);assert.deepEqual(eventsAfter('paper.start',before).map(e=>e.args),eventsAfter('start',before).map(e=>e.args));
+  assert.equal(eventsAfter('start',before).length,1);assert.equal(eventsAfter('start',before)[0].args[1],timing);if(theme==='paper'){const prepared=eventsAfter('paper.prepare',before);assert.equal(eventsAfter('paper.start',before).length,0);assert.equal(prepared.length,1);assert.deepEqual(prepared[0].args,[state().names[app.paperCards.debug().pendingIndex],start,app.paperCards.debug().pendingIndex,timing])}else{assert.deepEqual(eventsAfter('paper.start',before).map(e=>e.args),eventsAfter('start',before).map(e=>e.args));assert.equal(eventsAfter('paper.prepare',before).length,0)}
   assert.deepEqual(debug().timing,timing);assert.equal(debug().startedAt,start);assert.equal(env.audio.voices.length,audioBefore+1);assert.equal(env.audio.voices.at(-1).buffer.duration,timing.total/1000);
   assert.equal(qa().drawTimeline.length,Math.round(timing.total/1000*18));assert.ok(qa().drawTimeline.every(t=>t>=0&&t<timing.total));
  });

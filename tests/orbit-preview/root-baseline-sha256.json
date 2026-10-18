@@ -1,11 +1,11 @@
 {
   "root": "dist",
-  "main_commit": "be1074a37f96c0f1510c239c62998e3e197f9c0b",
-  "sha256": "10c44d66bdead2d882d8f4163afc113a1688ad5f731324b790eb2131d0efc9ea",
+  "main_commit": "6575f42cda114bdff6fae9318b5260efdb1a05d0",
+  "sha256": "d479351ebe71e8660be1d40d9cfa98e230d2116f8b25c02c53e1ede8b5b58e5b",
   "files": {
     "audio/LICENSE.txt": "78cf2fbe01f241fb39ae60b9a40b2c6283410c7d11c5d0e6cd93450a8b0a2f7b",
     "audio/rollcall-drum.mp3": "e6fd796d8d041903c7de709f68b68b5e0dbc89369677162460751d1c84abc8a9",
-    "avatars.js": "f2d5f224f61621b474a0084555737305a1e71f7483f4bcf7a316e9f425bedd9d",
+    "avatars.js": "e052ef621be45e4a701f2ec6b4fb938372a8085cb8a715d8acbabcea14c680c1",
     "board-countdown.js": "0c2ce1e4c2bea9bb53f69b6e81203f7599caf78d5122ecd40161c0ca4021e1b4",
     "board-glyphs-LICENSE.txt": "849f4ea9c214fa4ac3593b770c699f387534b11ce671264c1b10d85bdcb5997b",
     "board-glyphs.js": "515845009670ed728a883059b957d2462971bcc23d79493f5374f63f9b9f7b12",
@@ -14,6 +14,7 @@
     "countdown-digit-layout.js": "4b13e2cf5c5fc8be58b10768cbae8ee07512ea791db54a552ee7832b65e808ba",
     "countdown-state.js": "93792a2c4fdf4f84f446f91f828305ae43b9379e0fc23562152f9fc34761562c",
     "countdown.js": "7c748a8739890d6257679a12c4b79ae6599e8d64bbf0ffab29646063e4b16079",
+    "draw-preparation.js": "ff666b370212de4d3ca2fb695347bf99b8f92dee8f515f16a79a19142c1aea5e",
     "draw-timing.js": "75586162856fddbac09ca5196d0add9f894454d676bf79ad28dc779776fb4c4f",
     "drumroll.js": "dba6b33f4bf2e6781f3ea2a1ba23b229deee85a50429d36790000b6a0586a11b",
     "duration-buttons.js": "1c17945a8b5f57921fab6021447b435adf81c1e3b74c17c6739f33fb2887015a",
@@ -28,11 +29,11 @@
     "models/relaxed-hand-morphs.json": "bfdd7d4de10a7d1a9119f81dc569a93bfa6771a8e20097969fac66c7a35dcbb2",
     "models/teacher.scene.json": "7c6ab58d12aad304eb60a5033298812ea5f0d1f025f0148d1a862d153f6e7bce",
     "name-readout.js": "055ca4054d9f723e899e56fae683719a106898409a1e3ab2feac159efa949321",
-    "paper-cards.js": "26d83263dc0dd787da805b18576b7627ea15dfa6c93b37a4a34582ea6b73193b",
+    "paper-cards.js": "7cfb6a5fec4223e97c65f85913c2031951bd85693e38c88282abebc147e50875",
     "render-budget.js": "9ae2e57d53cae97206445b727aeb85bc9b3f1b929feb85aa5f311b7041a32de7",
     "roster-editor.js": "0d6752bb712235dc5be0f5496c2769ed5ef76f8256b8492e88ace04e48dc60a3",
     "roster.js": "37b820845a93cb22494df85ac2ba6bee2349712a755933ac24e8fc145ceaebf4",
-    "scene.js": "2bfd2befcb48911526d07e1badef281df3b62e0100dfc075ef27e2a9bce41bde",
+    "scene.js": "004a2dd8bbc2038c593fe883fae871fd27bc66f59975048932c19dff22c2c730",
     "selection-timing.js": "7bbdf83e13ef67121f59e5f738078d9242e4c4e32ba35f4e267751ee79dc7d63",
     "software-renderer.js": "5b188284b6687cc6a28e70b9cdc524dece821a05212247488153cac8092f9a24",
     "sound-waveforms.js": "2a8c86d695b0c753cd8fb5e2bb26a127d9ab33c90191936864fd996009e69fdf",
@@ -64,6 +65,17 @@
         "space-card-model.js"
       ],
       "reason": "Restore core rollcall motion; preserve the other 49 live-root files and the independent preview."
+    },
+    {
+      "base_commit": "6575f42cda114bdff6fae9318b5260efdb1a05d0",
+      "branch": "perf/prepare-first-rollcall",
+      "files": [
+        "avatars.js",
+        "draw-preparation.js",
+        "paper-cards.js",
+        "scene.js"
+      ],
+      "reason": "Prepare bounded draw resources in idle slices and remove the duplicate paper start paint; preserve core sphere/flip, exact deadlines, selection and independent preview."
     }
   ]
 }

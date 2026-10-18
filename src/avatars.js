@@ -71,18 +71,43 @@ export async function loadAvatarLibrary({software=false}={}){
   }
   return {batches,meshes,skeletons};
  }
- async function loadDefinition(name,filename=name){
-  const response=await fetch(`./models/${filename}.scene.json?v=natural-skin-32`);
-  if(!response.ok)throw Error(`角色资源加载失败 (${name})`);
-  const root=new THREE.ObjectLoader().parse(await response.json()),mixer=new THREE.AnimationMixer(root);
+ function parseDefinition(name,data){
+  const root=new THREE.ObjectLoader().parse(data),mixer=new THREE.AnimationMixer(root);
   const clip=root.animations.find(c=>c.name==='SitStand')||root.animations[0];if(!clip)throw Error('角色动作缺失');
   const action=mixer.clipAction(clip);action.setLoop(THREE.LoopOnce,1);action.clampWhenFinished=true;action.play();
-  const morphData=await handMorphs,endpoints=morphData.endpoints,morphKey=typeof endpoints[filename]==='string'?endpoints[filename]:filename;
-  const seated=compile(root),standing=name==='teacher'?seated:compile(root,endpoints[morphKey]);
-  return {name,root,mixer,clip,action,cache:new Map(),...seated,standing,endpoints:endpoints[morphKey],poseMeshes:morphData.poses[filename.includes('hero')?'hero':filename.includes('software')?'software':'far']};
+  return {name,root,mixer,clip,action,cache:new Map()};
  }
- const definitions=await Promise.all(['boy','girl','teacher'].map(name=>loadDefinition(name,software&&name!=='teacher'?name+'-software':name)));
- const heroPromises=new Map();
+ function definitionMorphs(filename,morphData){const endpoints=morphData.endpoints,morphKey=typeof endpoints[filename]==='string'?endpoints[filename]:filename;return {endpoints:endpoints[morphKey],poseMeshes:morphData.poses[filename.includes('hero')?'hero':filename.includes('software')?'software':'far']}}
+ async function loadDefinition(name,filename=name,source=null){
+  const response=source?null:await fetch(`./models/${filename}.scene.json?v=natural-skin-32`);
+  if(response&&!response.ok)throw Error(`角色资源加载失败 (${name})`);
+  const def=parseDefinition(name,source?(typeof source==='string'?JSON.parse(source):source):await response.json()),morphs=definitionMorphs(filename,await handMorphs);
+  const seated=compile(def.root),standing=name==='teacher'?seated:compile(def.root,morphs.endpoints);
+  return {...def,...seated,standing,...morphs};
+ }
+ const definitions=await Promise.all(['boy','girl','teacher'].map(name=>loadDefinition(name,software&&name!=='teacher'?name+'-software':name))),morphData=await handMorphs;
+ const heroPromises=new Map(),heroSources=new Map();
+ function heroDefinition(name){if(!heroPromises.has(name))heroPromises.set(name,loadDefinition(name+'-hero',name+'-hero',heroSources.get(name)));return heroPromises.get(name)}
+ // Shared base poses are small; expensive hero intermediates stay demand-driven.
+ // Preparation scales with two model kinds, never the number of pupils.
+ function preparationSteps(kinds){
+  const steps=[];
+  for(const name of [...new Set(kinds)].filter(name=>name==='boy'||name==='girl')){
+   const base=definitions.find(d=>d.name===name);for(let step=1;step<=24;step++)steps.push(()=>bake(base,step/24));
+   if(!software){let hero,parsed,seated,standing;const filename=name+'-hero',morphs=definitionMorphs(filename,morphData);
+    // Fetch completion only saves data. JSON decoding, Three parsing and each
+    // compilation are distinct idle slices, never a late all-in-one draw task.
+    steps.push(async()=>{if(heroPromises.has(name)||heroSources.has(name))return;const response=await fetch(`./models/${filename}.scene.json?v=natural-skin-32`);if(!response.ok)throw Error(`角色资源加载失败 (${name})`);heroSources.set(name,await response.text())});
+    steps.push(()=>{const source=heroSources.get(name);if(!heroPromises.has(name)&&typeof source==='string')heroSources.set(name,JSON.parse(source))});
+    steps.push(()=>{if(!heroPromises.has(name)&&heroSources.has(name))parsed=parseDefinition(filename,heroSources.get(name))});
+    steps.push(()=>{if(parsed&&!heroPromises.has(name))seated=compile(parsed.root)});
+    steps.push(()=>{if(parsed&&!heroPromises.has(name))standing=compile(parsed.root,morphs.endpoints)});
+    steps.push(async()=>{if(!heroPromises.has(name)&&parsed&&seated&&standing)heroPromises.set(name,Promise.resolve({...parsed,...seated,standing,...morphs}));if(heroPromises.has(name))hero=await heroPromises.get(name);heroSources.delete(name);parsed=seated=standing=null});
+    for(const step of [0,24])steps.push(()=>{if(hero)bake(hero,step/24)});
+   }
+  }
+  return steps;
+ }
  const materials=[new THREE.MeshStandardMaterial({color:0xffffff,vertexColors:true,roughness:.86}),new THREE.MeshStandardMaterial({color:0xffffff,vertexColors:true,roughness:.32})];
  function intermediateArms(endpoints,lower){
   const output={};
@@ -204,7 +229,7 @@ export async function loadAvatarLibrary({software=false}={}){
   });
   def.cache.set(step,geometries);return geometries;
  }
- return {materials,definitions,bake,create(name){
+ return {materials,definitions,bake,preparationSteps,create(name){
   let def=definitions.find(d=>d.name===name),currentPose=0,geometryStep=0,geometryDef=def;
   const baseDef=def,group=new THREE.Group(),geometries=bake(def,0);group.position.y=.04;
   for(let j=0;j<2;j++){const mesh=new THREE.Mesh(geometries[j],materials[j]);group.add(mesh);}
@@ -219,8 +244,7 @@ export async function loadAvatarLibrary({software=false}={}){
    async detail(on){
     if(!on){def=baseDef;avatar.setPose(currentPose);return;}
     if(name==='teacher')return;
-    if(!heroPromises.has(name))heroPromises.set(name,loadDefinition(name+'-hero'));
-    try{const hero=await heroPromises.get(name);if(group.userData.wantHero){def=hero;avatar.setPose(currentPose);}}
+    try{const hero=await heroDefinition(name);if(group.userData.wantHero){def=hero;avatar.setPose(currentPose);}}
     catch(error){console.warn('近景模型暂不可用',error);}
    },
    setDetailed(on){group.userData.wantHero=on;return avatar.detail(on);}

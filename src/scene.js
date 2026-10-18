@@ -13,6 +13,7 @@ import {createClassStore} from './classes.js';
 import {drawTimingForTheme} from './draw-timing.js';
 import {selectionTimeline} from './selection-timing.js';
 import {createRenderBudget} from './render-budget.js';
+import {createDrawPreparation,prepareDrawFonts} from './draw-preparation.js';
 const STUDENT_SCALE=.76,STUDENT_STAND_RISE=STANDING_LEG_EXTENSION*STUDENT_SCALE;
 let avatarLibrary;
 let motionUntil=0, sceneRevision=0;
@@ -111,6 +112,20 @@ function sessionUsedFor(item){
 }
 let chosen=-1,used=sessionUsedFor(classStore.current),busy=false,tween=null;
 let drawGeneration=0,revealTimer=null;
+const drawPreparation=createDrawPreparation({canRun:()=>!!avatarLibrary&&!busy&&!boardMode&&!document.hidden,onError:error=>console.warn('点名资源预热未完成，将按需加载',error)});
+function prepareDrawResources(){
+ if(!avatarLibrary)return;
+ // Space already prepares its atlases during ordinary idle rendering. Keep
+ // that path unchanged instead of allocating hidden paper/model resources.
+ if(activeTheme==='space'){drawPreparation.replace([]);return}
+ const kinds=people.map(p=>p.kind);
+ drawPreparation.replace([
+  ()=>prepareDrawFonts(document,names),
+  ...(activeTheme==='paper'?[()=>paperCards.prepareResources()]:[]),
+  ...(activeTheme==='classroom'?avatarLibrary.preparationSteps(kinds):[]),
+  ...(activeTheme==='classroom'?[()=>renderer.compileAsync?.(scene,camera)]:[])
+ ]);
+}
 let noRepeat=classStore.current.noRepeat;
 const repeatModeButtons=[...document.querySelectorAll('[data-no-repeat]')];
 function updateRepeatButtons(){for(const button of repeatModeButtons)button.setAttribute('aria-pressed',String((button.dataset.noRepeat==='true')===noRepeat))}
@@ -180,7 +195,7 @@ function makeDesks(){
  people.sort((a,b)=>a.i-b.i);
  boardBounds.makeEmpty();for(const station of stations){boardBounds.expandByPoint(new THREE.Vector3(station.x-1.2,0,station.z-1.6));boardBounds.expandByPoint(new THREE.Vector3(station.x+1.2,5,station.z+1.6))}
  $('#scene-note').textContent=`${names.length} 位同学 · 8 列 / ${rows} 排 · ${classStore.current.name}`;
- updatePickedLabels();spaceCards.setNames(names);spaceCards.reset();spaceCards.setCountdown(boardMode?lastBoardState:null);paperCards.setNames(names);paperCards.reset();paperCards.setCountdown(boardMode?lastBoardState:null);sceneRevision++;
+ updatePickedLabels();spaceCards.setNames(names);spaceCards.reset();spaceCards.setCountdown(boardMode?lastBoardState:null);paperCards.setNames(names);paperCards.reset();paperCards.setCountdown(boardMode?lastBoardState:null);sceneRevision++;prepareDrawResources();
 }
 function dimensions(){return [viewport.clientWidth,viewport.clientHeight]}
 function classTarget(){const zs=stations.map(p=>p.z);return new THREE.Vector3(0,-.6,(Math.min(...zs)+Math.max(...zs))/2)}
@@ -279,7 +294,7 @@ function pick(){
  window.cancelCountdown?.();if(boardMode)setBoardMode(false);
  drawGeneration++;clearTimeout(revealTimer);revealTimer=null;drawOriginTheme=activeTheme;pendingPick=drawOriginTheme==='paper'?drawCandidates[randomIndex(drawCandidates.length)]:null;flashOrder=drawOriginTheme==='paper'?[]:suspenseOrder(drawCandidates);setBusy(true);chosen=-1;setHighlight(-1);
  for(const p of people){setPoseTarget(p,0);p.avatar.setDetailed(false)}
- const drawTiming=drawTimingForTheme(activeTheme);drawDurationMs=drawTiming.total;drawStart=performance.now();spaceCards.start(drawStart,drawTiming);paperCards.start(drawStart,drawTiming);if(pendingPick)paperCards.prepare(names[pendingPick.i],drawStart,pendingPick.i,drawTiming);home();drawTimeline=selectionTimeline(drawDurationMs);sounds.begin(drawDurationMs,drawStart);flashCount=0;lastFlashSlot=-1;
+ const drawTiming=drawTimingForTheme(activeTheme);drawDurationMs=drawTiming.total;drawStart=performance.now();spaceCards.start(drawStart,drawTiming);if(pendingPick)paperCards.prepare(names[pendingPick.i],drawStart,pendingPick.i,drawTiming);else paperCards.start(drawStart,drawTiming);home();drawTimeline=selectionTimeline(drawDurationMs);sounds.begin(drawDurationMs,drawStart);flashCount=0;lastFlashSlot=-1;
  setResult(activeTheme==='paper'?'翻牌点名':activeTheme==='space'?'星空汇聚 · 旋转 1 秒':`全班跳选 · ${drawSeconds} 秒`,'正在随机点名');$('#pick span').textContent='正在抽选';
 }
 function finishPick(){
@@ -586,11 +601,11 @@ function setTheme(theme){
  if(theme==='space'){spaceCards.setCountdown(boardMode?lastBoardState:null);spaceCards.render(performance.now())}
  else if(theme==='paper'){paperCards.setCountdown(boardMode?lastBoardState:null);paperCards.render(performance.now())}
  else{syncClassroomMotion(performance.now());if(boardMode&&lastBoardState)boardTimer.update(lastBoardState);viewportWidth=0;resize();updateBoardVisibility();updateArchitecture();renderer.render(scene,camera);lastRenderKey=''}
- updateThemeControls();
+ updateThemeControls();prepareDrawResources();
 }
 const themeChoices=[...document.querySelectorAll('[data-theme-choice]')];
 for(const button of themeChoices){button.onclick=()=>setTheme(button.dataset.themeChoice);button.onkeydown=event=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(event.key))return;event.preventDefault();let i=themeChoices.indexOf(button);i=event.key==='Home'?0:event.key==='End'?themeChoices.length-1:(i+(['ArrowLeft','ArrowUp'].includes(event.key)?-1:1)+themeChoices.length)%themeChoices.length;themeChoices[i].click();themeChoices[i].focus()}}
-window.classroom={setTheme,spaceCards,paperCards,renderBudget:()=>({classroom:renderBudgets.classroom.debug(),space:renderBudgets.space.debug(),paper:renderBudgets.paper.debug(),pixelRatio:rendererRatio}),cancelDraw,getSoundVolume:()=>sounds.volume,lectern,setBoardMode,updateBoardCountdown,boardTimer,boardCamera,scene,camera,controls,people:()=>people,stations:()=>stations,pick,classStore,restoreClass,classAction,getState:()=>({theme:activeTheme,classId:classStore.current.id,noRepeat,names:[...names],seats:seats.map(s=>({...s})),selected:chosen,used:[...used],busy,drawSeconds,drawDurationMs,software:!!renderer.isSoftware}),focus,pose,updateArchitecture,studentVisible,home,resize,fittedPosition,classTarget,randomIndex,suspenseOrder,teacher,renderer,finishPick,applyRoster,forceSelect(i){const p=people[i];if(!p)return;cancelDraw();drawOriginTheme=activeTheme;drawCandidates=[p];pendingPick=p;finishPick()}};
+window.classroom={preparation:()=>drawPreparation.debug(),setTheme,spaceCards,paperCards,renderBudget:()=>({classroom:renderBudgets.classroom.debug(),space:renderBudgets.space.debug(),paper:renderBudgets.paper.debug(),pixelRatio:rendererRatio}),cancelDraw,getSoundVolume:()=>sounds.volume,lectern,setBoardMode,updateBoardCountdown,boardTimer,boardCamera,scene,camera,controls,people:()=>people,stations:()=>stations,pick,classStore,restoreClass,classAction,getState:()=>({theme:activeTheme,classId:classStore.current.id,noRepeat,names:[...names],seats:seats.map(s=>({...s})),selected:chosen,used:[...used],busy,drawSeconds,drawDurationMs,software:!!renderer.isSoftware}),focus,pose,updateArchitecture,studentVisible,home,resize,fittedPosition,classTarget,randomIndex,suspenseOrder,teacher,renderer,finishPick,applyRoster,forceSelect(i){const p=people[i];if(!p)return;cancelDraw();drawOriginTheme=activeTheme;drawCandidates=[p];pendingPick=p;finishPick()}};
 window.classroom.ready=(async()=>{
  try{avatarLibrary=await loadAvatarLibrary({software:!!renderer.isSoftware});teacherAvatar=avatarLibrary.create('teacher');teacherAvatar.group.scale.setScalar(.83);teacherAvatar.setPose(1);teacher.add(teacherAvatar.group);makeDesks();resize();setBusy(false);updatePickLabel();if(!names.length)setResult(classStore.current.name,'请先填写名单');requestAnimationFrame(animate);$('#loading').remove();return true}
  catch(error){$('#loading').textContent='角色加载失败，请刷新页面重试';console.error(error);throw error}

@@ -59,7 +59,7 @@ if(reopening){
  console.log('PASS new process/document: every class starts with empty session picks and unchanged durable seats');
 }else{
  const calls=[];
- for(const [label,adapter]of [['space',app.spaceCards],['paper',app.paperCards]])for(const method of ['start','reveal','cancel']){const original=adapter[method].bind(adapter);adapter[method]=(...args)=>{calls.push({kind:`${label}.${method}`,args,at:env.now});return original(...args)}}
+ for(const [label,adapter]of [['space',app.spaceCards],['paper',app.paperCards]])for(const method of ['start','prepare','reveal','cancel'].filter(method=>typeof adapter[method]==='function')){const original=adapter[method].bind(adapter);adapter[method]=(...args)=>{calls.push({kind:`${label}.${method}`,args,at:env.now});return original(...args)}}
  for(const method of ['begin','result','stop']){const original=qa().sounds[method];qa().sounds[method]=(...args)=>{calls.push({kind:`sounds.${method}`,args,at:env.now});return original(...args)}}
  const since=(kind,offset)=>calls.slice(offset).filter(c=>c.kind===kind);
 
@@ -89,7 +89,7 @@ if(reopening){
   assert.equal(env.randomCalls-beforeCommitRng,origin==='paper'?0:1);if(origin==='paper'){assert.equal(env.randomCalls-randomBefore,1);assert.equal(state().busy,false,'Paper has no second reveal/busy tail')}
   for(const adapter of adapters){const d=adapter.debug();assert.equal(d.drawing,false);assert.equal(d.winner,winner);assert.equal(d.startedAt,start);assert.equal(d.timing.total,duration)}
   assert.equal(since('sounds.begin',before).length,1);assert.equal(since('sounds.result',before).length,1);
-  for(const label of ['space','paper']){assert.equal(since(`${label}.start`,before).length,1);assert.equal(since(`${label}.reveal`,before).length,1)}
+  for(const label of ['space','paper']){assert.equal(since(`${label}.start`,before).length,label==='paper'&&origin==='paper'?0:1);if(label==='paper'&&origin==='paper')assert.equal(since('paper.prepare',before).length,1);assert.equal(since(`${label}.reveal`,before).length,1)}
   const committedRandom=env.randomCalls;app.finishPick();app.finishPick();assert.equal(env.randomCalls,committedRandom,'A completed finish is idempotent');assert.equal(since('sounds.result',before).length,1);
   for(let i=0;i<9;i++){app.setTheme(themes[i%3]);await env.step(200)}await env.flush();
   assert.equal(env.speech.spoken.length,spoken+1);assert.equal(env.speech.spoken.at(-1).utterance.text,winner);assert.equal(state().busy,false);

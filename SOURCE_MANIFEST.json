@@ -44,6 +44,11 @@
       "sha256": "4e9a3a268fa6edafca0edbbd2f09a6ce348dc2012f3246aa685b863b2778d657"
     },
     {
+      "path": "docs/FIRST_DRAW_PREPARATION.md",
+      "bytes": 6179,
+      "sha256": "984442738524dc84e67ed57c32fc31eaa52e6a2f3cf181bc5438528476bc1692"
+    },
+    {
       "path": "docs/RELEASING.md",
       "bytes": 8048,
       "sha256": "617b95dcd6126cbc23e1d1597a84e2b00ed92f8ef7c9ac26196808b64b1d820e"
@@ -52,6 +57,11 @@
       "path": "docs/board-glyphs-SOURCE.txt",
       "bytes": 1618,
       "sha256": "60fb4cb16e70e376a0f3e32d5d5cd2e0824859a984b452a0407a5c92ac61711a"
+    },
+    {
+      "path": "docs/first-draw-cpu-samples.json",
+      "bytes": 48877,
+      "sha256": "3bef1d594d5189585a4df9de459929e090d36bd16e672716f5c0ea2fafcd01cc"
     },
     {
       "path": "docs/images/classroom-countdown.png",
@@ -110,8 +120,8 @@
     },
     {
       "path": "electron/assets-manifest.json",
-      "bytes": 12255,
-      "sha256": "6f57ad7ceab7f47efcb27285fe4cdf6919f4b466bd7e656f33ef999d88b390fb"
+      "bytes": 12398,
+      "sha256": "f4074ecc5d3780746e6f2fef6565c5474cbcadf8eee902a7d98d4ceea298ef58"
     },
     {
       "path": "electron/build.cjs",
@@ -320,8 +330,8 @@
     },
     {
       "path": "src/avatars.js",
-      "bytes": 15005,
-      "sha256": "f2d5f224f61621b474a0084555737305a1e71f7483f4bcf7a316e9f425bedd9d"
+      "bytes": 17260,
+      "sha256": "e052ef621be45e4a701f2ec6b4fb938372a8085cb8a715d8acbabcea14c680c1"
     },
     {
       "path": "src/board-countdown.js",
@@ -357,6 +367,11 @@
       "path": "src/countdown.js",
       "bytes": 4134,
       "sha256": "7c748a8739890d6257679a12c4b79ae6599e8d64bbf0ffab29646063e4b16079"
+    },
+    {
+      "path": "src/draw-preparation.js",
+      "bytes": 2089,
+      "sha256": "ff666b370212de4d3ca2fb695347bf99b8f92dee8f515f16a79a19142c1aea5e"
     },
     {
       "path": "src/draw-timing.js",
@@ -545,8 +560,8 @@
     },
     {
       "path": "src/paper-cards.js",
-      "bytes": 40143,
-      "sha256": "26d83263dc0dd787da805b18576b7627ea15dfa6c93b37a4a34582ea6b73193b"
+      "bytes": 40407,
+      "sha256": "7cfb6a5fec4223e97c65f85913c2031951bd85693e38c88282abebc147e50875"
     },
     {
       "path": "src/render-budget.js",
@@ -565,8 +580,8 @@
     },
     {
       "path": "src/scene.js",
-      "bytes": 56513,
-      "sha256": "2bfd2befcb48911526d07e1badef281df3b62e0100dfc075ef27e2a9bce41bde"
+      "bytes": 57486,
+      "sha256": "004a2dd8bbc2038c593fe883fae871fd27bc66f59975048932c19dff22c2c730"
     },
     {
       "path": "src/selection-timing.js",
@@ -629,6 +644,11 @@
       "sha256": "41a3238af5b6bcf5d91dedd16b5236dd73dadabb615c1a1d8168d005741e6fe2"
     },
     {
+      "path": "tests/avatar-preparation.mjs",
+      "bytes": 3481,
+      "sha256": "d18a0b0ffad80912a91de2171131c8a4e84fc7561bfc5caf82ac0b8ed0e18d4f"
+    },
+    {
       "path": "tests/build-layout.mjs",
       "bytes": 8185,
       "sha256": "2d73be15c974a3bd1b5ce32fdc1eadd230557bc0fc6eafd328aca75f9596a7f2"
@@ -669,6 +689,11 @@
       "sha256": "522f79855a2479149e4143f9f4cb3f63f5ef86996cdf6df244deee75a3606671"
     },
     {
+      "path": "tests/draw-preparation.mjs",
+      "bytes": 2356,
+      "sha256": "b388024bd6a709308061a9684ce244bb2c0a89f5ebe7487b193b8c3a5317c701"
+    },
+    {
       "path": "tests/duration-buttons.mjs",
       "bytes": 4120,
       "sha256": "f29fefcfbf3d8574a6469a59ab0fc6c49768334d58b106d5aeda88989bd3abb2"
@@ -684,9 +709,14 @@
       "sha256": "d2fddf00770071be560d05abc9744888a57c9880b6a2fdd167adcbdc2050aa85"
     },
     {
+      "path": "tests/first-draw-resources.mjs",
+      "bytes": 4010,
+      "sha256": "f9fab02fcd7a22b7995377bcb20d34f53cd78fe529a6c57179719761bd841ab5"
+    },
+    {
       "path": "tests/fixed-draw-duration.mjs",
-      "bytes": 5688,
-      "sha256": "2908300e58ef4003f6df32607a66aa3661a3478a2bb23e95d77807ccc543b703"
+      "bytes": 5728,
+      "sha256": "98706ee164f345b48d64223df2f04ad03844a1191461c4f8ae54ea36d7be96de"
     },
     {
       "path": "tests/fixtures/excel-v2-forward.xlsx",
@@ -702,6 +732,11 @@
       "path": "tests/helpers/paper-canvas-recorder.mjs",
       "bytes": 5691,
       "sha256": "4a71b7f7dd30b85923de7628d30af66b6ff34055fce2ea437b2c3ccf9aef35fe"
+    },
+    {
+      "path": "tests/helpers/profile-first-draw.mjs",
+      "bytes": 2904,
+      "sha256": "c2cc0c1b9b1bac95364b00407c06cf911fea1bb517759a7adaa02372d4b62cc3"
     },
     {
       "path": "tests/helpers/theme-environment.mjs",
@@ -780,8 +815,8 @@
     },
     {
       "path": "tests/orbit-preview/root-baseline-sha256.json",
-      "bytes": 5343,
-      "sha256": "2f63d3ced83aa27576bb32702ba8c237e1c1b9d03e8da1dde1f450d116ed838e"
+      "bytes": 5874,
+      "sha256": "760033ba0b56ee87837b77c0ab0383b69fef197e1f193debe68c301d1865354a"
     },
     {
       "path": "tests/orbit-preview/verify-root-baseline.mjs",
@@ -810,8 +845,8 @@
     },
     {
       "path": "tests/paper-theme-integration.mjs",
-      "bytes": 46277,
-      "sha256": "48c2418a7bc93d56964000bcce540766310c8e05fa02f1ad269dece09d5f9f06"
+      "bytes": 46465,
+      "sha256": "12c3760b854315f14cce5eeea7ec070eaeaf4022e0a3e66e86cf76ffdff2d98b"
     },
     {
       "path": "tests/paper-theme-palette.mjs",
@@ -860,8 +895,8 @@
     },
     {
       "path": "tests/shared-theme.mjs",
-      "bytes": 6024,
-      "sha256": "afef10f1d7a56dfef4495563462c296add4d0d6827fe7ecffa454019c3312709"
+      "bytes": 6190,
+      "sha256": "b7fb68602532b682c90d54e3292d2f73d1071c72e4985c8ad2da99671cb18bec"
     },
     {
       "path": "tests/space-card-flow.mjs",
@@ -894,6 +929,11 @@
       "sha256": "47b88bd240b4a5f586ade3d700721ca357787e9b96ab423c2ece575dbe278c7f"
     },
     {
+      "path": "tests/space-preparation-isolation.mjs",
+      "bytes": 1251,
+      "sha256": "12b9ba28f11ca98d9404a42d8527a6f09844585dd6a55dccad3f16d4cbd04dd4"
+    },
+    {
       "path": "tests/space-result-background.mjs",
       "bytes": 8234,
       "sha256": "7194d0a01ec554c6e44eb4eb146ff70d993bd916bb42fa7d42b5c7d0a749d5fd"
@@ -910,8 +950,8 @@
     },
     {
       "path": "tests/theme-draw-timing.mjs",
-      "bytes": 15325,
-      "sha256": "ac689eccac28d3087f7f3bc43e4b4bf490c25bf4e9f25ad3e9a66641b2cff8a3"
+      "bytes": 15696,
+      "sha256": "6be20362960876feb6a6e634efa694b67dfc04cac26882225b98f0ab1fbf819c"
     },
     {
       "path": "tests/timer-camera-takeover.mjs",
