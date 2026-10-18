@@ -326,11 +326,11 @@ if(reopening){
   await env.step(5000);assert.equal(env.speech.spoken.length,spoken+1);assert.equal(state().selected,3);assert.equal(env.frames.size,1);
  });
 
- await test('reduced motion keeps the whole grid still and reveals the same real winner without a settling tail',async()=>{
+ await test('reduced motion preserves the full selected-card flip and the same winner without a second animation',async()=>{
   await clean('paper');mode(false);setReducedMotion(true);app.paperCards.reset();
   try{
    env.randomQueue=[1];const before=calls.length;app.pick();await env.flush();const started=env.now,initial=app.paperCards.debug(),geometry=d=>d.cards.map(c=>({id:c.id,x:c.x,y:c.y,width:c.width,height:c.height,mesh:c.mesh}));
-   for(const offset of [100,300,599]){await advanceTo(started+offset);assert.equal(state().selected,-1);assert.deepEqual(geometry(app.paperCards.debug()),geometry(initial))}
+   for(const offset of [100,300,599]){await advanceTo(started+offset);const d=app.paperCards.debug();assert.equal(state().selected,-1);assert.notDeepEqual(geometry(d),geometry(initial));assert.equal(d.cards.find(c=>c.selected).phase,offset/600);assert.deepEqual(d.cards.filter(c=>!c.selected),initial.cards.filter(c=>!c.selected))}
    env.randomQueue=[5];await advanceTo(started+600);const d=app.paperCards.debug(),chosen=assertPaperWinner(d,1);assert.equal(state().selected,1);assert.ok(chosen.facing>.999);assert.ok(Math.abs(chosen.x-d.width/2)<.001);assert.equal(since('sounds.result',before).length,1);await env.step(500);assert.equal(app.paperCards.debug().frame,d.frame);assert.equal(env.frames.size,1);
   }finally{setReducedMotion(false);app.cancelDraw()}
  });

@@ -1,7 +1,7 @@
 {
   "root": "dist",
-  "main_commit": "01355fdd43b16797f605f7a83359a89a998f838c",
-  "sha256": "d286cb6365d04a2c4eae0ad8ea0a224b9e2c6147b00c7c7ff7e3e0e5a1c1b5c9",
+  "main_commit": "be1074a37f96c0f1510c239c62998e3e197f9c0b",
+  "sha256": "10c44d66bdead2d882d8f4163afc113a1688ad5f731324b790eb2131d0efc9ea",
   "files": {
     "audio/LICENSE.txt": "78cf2fbe01f241fb39ae60b9a40b2c6283410c7d11c5d0e6cd93450a8b0a2f7b",
     "audio/rollcall-drum.mp3": "e6fd796d8d041903c7de709f68b68b5e0dbc89369677162460751d1c84abc8a9",
@@ -28,7 +28,7 @@
     "models/relaxed-hand-morphs.json": "bfdd7d4de10a7d1a9119f81dc569a93bfa6771a8e20097969fac66c7a35dcbb2",
     "models/teacher.scene.json": "7c6ab58d12aad304eb60a5033298812ea5f0d1f025f0148d1a862d153f6e7bce",
     "name-readout.js": "055ca4054d9f723e899e56fae683719a106898409a1e3ab2feac159efa949321",
-    "paper-cards.js": "9ae0a78ab00a114c917591892dfc55fb2ba5949ce780062bb207dcf82c05fcaa",
+    "paper-cards.js": "26d83263dc0dd787da805b18576b7627ea15dfa6c93b37a4a34582ea6b73193b",
     "render-budget.js": "9ae2e57d53cae97206445b727aeb85bc9b3f1b929feb85aa5f311b7041a32de7",
     "roster-editor.js": "0d6752bb712235dc5be0f5496c2769ed5ef76f8256b8492e88ace04e48dc60a3",
     "roster.js": "37b820845a93cb22494df85ac2ba6bee2349712a755933ac24e8fc145ceaebf4",
@@ -39,7 +39,7 @@
     "sounds.js": "2de5deabed8d1e325c86b2ff55324f665bb84c2b73aead2698dd18e4e8019b77",
     "space-card-art.js": "3e43ea1df045f81b1207679b32fff9ff15f46cb8c2e980cf20fea6977f88789d",
     "space-card-canvas.js": "c621100d72da4cea6a533005924936f0740cfa19de366bc294954b0732d0500f",
-    "space-card-model.js": "353ffe07feaf732264f91fa7e5f60b8354e90fcbf1a22ecfb609a019d8f07fae",
+    "space-card-model.js": "1014abb8990d84e015fced8bbd0712cc0aa658bc595faed626476500ed0cc088",
     "space-card-webgl.js": "9ec9dc24ee13799e71184d3d1b34597c237bde176a77cd00ce53167aece46b28",
     "space-cards.js": "75d6561342b6b119b6d2c5b71d2611da253de715b946b7d7d9e82c828c4afd1b",
     "space-countdown.js": "9d1446d6245e2750a027544e37071a685f6d73382f8b5aaff9049522c596b847",
@@ -54,5 +54,16 @@
     "vendor/three.core.js": "eb077d2417f61d3e6d9264c317cabc4ea35769ed6b0ab533067292a550784c20",
     "vendor/three.module.js": "c8211c69345d2e9949dc7a8ac969380497aa0600a5a8ac6a459c8cd02dd9cb8a",
     "vendor/xlsx-0.20.3.mjs": "1a0fb062ee9781b13f6687371b202aaefc53b6ce55b530c027e01f9c087b77db"
-  }
+  },
+  "approved_changes": [
+    {
+      "commit": "841b75499d3bed9b0c4a097dfa71a25c5e3f5673",
+      "pull_request": 10,
+      "files": [
+        "paper-cards.js",
+        "space-card-model.js"
+      ],
+      "reason": "Restore core rollcall motion; preserve the other 49 live-root files and the independent preview."
+    }
+  ]
 }

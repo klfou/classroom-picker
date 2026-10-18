@@ -62,7 +62,12 @@ try {
  globalThis.matchMedia=()=>({matches:true,addEventListener(){},removeEventListener(){}});
  const reduced=createSpaceCards(new Canvas());reduced.setNames(names);reduced.render(0);const initial=reduced.debug().cards.map(c=>[c.x,c.y,c.z]);reduced.render(900000);
  check(()=>assert.deepEqual(reduced.debug().cards.map(c=>[c.x,c.y,c.z]),initial));reduced.start(901000);reduced.render(901450);
- check(()=>assert.deepEqual(reduced.debug().cards.map(c=>[c.x,c.y,c.z]),initial));check(()=>assert.equal(reduced.debug().stage,'rotate'));reduced.reveal(names[2],902000);check(()=>assert.equal(reduced.debug().winner,names[2]));
+ check(()=>assert.notDeepEqual(reduced.debug().cards.map(c=>[c.x,c.y,c.z]),initial));check(()=>assert.equal(reduced.debug().stage,'rotate'));
+ const reducedSphere=reduced.debug();check(()=>assert.equal(reducedSphere.shellCards.length,96));check(()=>assert.ok(reducedSphere.shellCards.every(c=>c.shellMix===1&&c.mesh.length===9)));
+ check(()=>assert.ok(reducedSphere.shellCards.every(c=>Math.abs(Math.hypot(c.x,c.y,c.z-reducedSphere.sphereCenter.z)-reducedSphere.sphereRadius)<1e-8)));
+ reduced.render(901850);check(()=>assert.notDeepEqual(reduced.debug().shellCards,reducedSphere.shellCards));
+ reduced.render(902500);check(()=>assert.equal(reduced.debug().stage,'disperse'));check(()=>assert.ok(reduced.debug().shellCards.every(c=>c.shellMix>0&&c.shellMix<1)));
+ reduced.reveal(names[2],902750);check(()=>assert.equal(reduced.debug().winner,names[2]));const resultWidth=reduced.debug().selectedCard.width;reduced.render(902930);check(()=>assert.ok(reduced.debug().selectedCard.width>resultWidth));
  const large=Array.from({length:128},(_,i)=>'大班'+i);view.setNames(large);const largeSeen=new Set(),cached=surfaces;for(let t=605000;t<605000+view.debug().idlePeriod*4;t+=500){view.render(t);const s=view.debug();for(const c of s.cards)if(c.opacity>=.01&&c.screenX+c.width/2>=0&&c.screenX-c.width/2<=s.width&&c.screenY+c.height/2>=0&&c.screenY-c.height/2<=s.height)largeSeen.add(c.name)}check(()=>assert.equal(largeSeen.size,128));check(()=>assert.equal(surfaces,cached));
  view.setNames(names);view.start(1000000,CLASSROOM_DRAW_TIMING);view.render(1000780);check(()=>assert.equal(view.debug().stage,'disperse'));view.render(1001000);check(()=>assert.equal(view.debug().stage,'awaiting-reveal'));check(()=>assert.equal(randomCalls,0));reduced.dispose();view.dispose();
  console.log(`PASS ${assertions} space-card renderer assertions: 64/128-name visible coverage, center-crossing xyz perspective, 96 equal-area tangent plaques, shared artwork atlases, 400/1000/350ms phases, roster-only reveal, winner persistence, precise timer, time-up-only message, cache stability, synchronous resize, reduced motion, empty roster, zero selection RNG.`);
