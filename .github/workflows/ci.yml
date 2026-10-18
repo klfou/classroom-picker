@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_call:
+
+permissions:
+  contents: read
+
+# bash stops immediately on a failed native npm command on both operating systems.
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  check:
+    name: Check (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2022]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24.19.0
+          package-manager-cache: false
+      - name: Install locked build dependencies (no lifecycle scripts)
+        run: |
+          npm ci --ignore-scripts --no-audit --no-fund
+          npm --prefix electron ci --ignore-scripts --no-audit --no-fund
+      - name: Build and run all regression, portable-data and manifest checks
+        run: |
+          npm run build
+          npm run check
+          npm run build:sites
+          npm --prefix electron run verify
+          git diff --exit-code
+      - name: Build and verify Windows x64 portable ZIP
+        id: package
+        if: runner.os == 'Windows'
+        run: |
+          npm --prefix electron run build:win
+          npm --prefix electron run package:win
+          node -e "const fs=require('node:fs'), v=require('./electron/release-config.cjs').validateConfig().version; fs.appendFileSync(process.env.GITHUB_OUTPUT, 'release_path=electron/out/'+v+'/release/\n');"
+      - name: Run actual packaged EXE with synthetic data on a disposable Windows runner
+        if: runner.os == 'Windows'
+        run: npm --prefix electron run test:windows
+      - name: Upload tested portable preview (never a GitHub Release from this workflow)
+        if: runner.os == 'Windows'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: windows-portable
+          path: ${{ steps.package.outputs.release_path }}
+          if-no-files-found: error
+          include-hidden-files: false
+          compression-level: 0
+          retention-days: 14

@@ -3,7 +3,18 @@
   "version": "1.8.2",
   "private": true,
   "description": "Build-only tools; not included in the desktop application",
-  "engines": { "node": ">=24.0.0 <25" },
-  "scripts": { "verify": "node ../scripts/build.mjs && node build.cjs --verify-only", "build:win": "node build.cjs", "test:portable": "node tests/portable-data.cjs && node tests/startup.cjs" },
-  "devDependencies": { "@electron/packager": "20.3.0" }
+  "engines": {
+    "node": ">=24.0.0 <25"
+  },
+  "scripts": {
+    "verify": "node ../scripts/build.mjs && node build.cjs --verify-only",
+    "build:win": "node build.cjs",
+    "test:portable": "node tests/portable-data.cjs && node tests/startup.cjs",
+    "package:win": "node package-portable.cjs",
+    "test:windows": "node tests/windows-smoke.cjs"
+  },
+  "devDependencies": {
+    "@electron/packager": "20.3.0",
+    "@electron/asar": "4.3.1"
+  }
 }

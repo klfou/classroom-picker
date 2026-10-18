@@ -74,17 +74,18 @@ npm run check
 
 `check` 顺序执行：
 
-- `npm test`：先构建并校验 51 个运行资源，再运行全部网页回归与构建/本地服务/Electron 暂存测试。测试继续读取实际 `dist/`，覆盖最终交付文件。直接运行单个 `tests/*.mjs` 前需先 `npm run build`。
+- `npm test`：先构建并校验 83 个运行资源（51 个原站资源和 32 个独立预览资源），再运行全部网页回归与构建/本地服务/Electron 暂存测试。测试继续读取实际 `dist/`，覆盖最终交付文件。直接运行单个 `tests/*.mjs` 前需先 `npm run build`。
 - `npm run test:portable`：便携 Data 的合成文件系统与模拟启动检查。
+- `npm run verify:release`：检查应用版本、两份 npm 锁和固定 Electron 运行时配置一致。
 - `npm run verify:sources`：用 Git 跟踪文件逐项核验 `SOURCE_MANIFEST.json`（因此需 Git 克隆或工作树）。
 
 单独校验当前构建产物可运行 `npm run verify:assets`；它会拒绝文件缺失、多余、大小或 SHA-256 不符，不会生成或改写资源清单。`node scripts/test.mjs` 仍可直接使用，会自动先构建。
 
-这些测试覆盖状态、计时、随机候选、数据往返、模型投影与渲染结构，不能替代 Windows / 浏览器 GPU、音频设备和触摸屏实测。目录重构未生成 EXE，未更改已发布预览。仓库当前未配置 CI。
+这些测试覆盖状态、计时、随机候选、数据往返、模型投影与渲染结构，不能替代 Windows / 浏览器 GPU、音频设备和触摸屏实测。CI 在 Ubuntu 和 Windows 上运行全部检查；Windows 额外制作完整便携 ZIP 并启动真实 EXE，以合成数据验证保存、重启和同机目录移动。PR 只产生预览 artifact，手动构建也不发布；正式版本 tag 才进入 GitHub Release 发布路径。详见 [打包与发布指南](docs/RELEASING.md)。
 
 ### 清单维护
 
-`electron/assets-manifest.json` 是部署根相对路径的获审资源清单。此次重构完整保留其 51 项路径、大小和 SHA-256，输出与迁移前 main `01355fdd43b16797f605f7a83359a89a998f838c` 逐字节一致。不要因校验失败直接重新生成它；先审查源码/素材变化并完成回归，再有意更新受影响条目。构建与测试不会自动批准新资源。
+`electron/assets-manifest.json` 是部署根相对路径的获审资源清单。清单包含 51 项原站资源和 32 项独立预览资源。本次核心点名动画修复仅更新原站 `paper-cards.js` 与 `space-card-model.js` 的大小和 SHA-256，其余原站资源及独立预览资源保持不变；独立预览的原站保护基线同步记录这两项获审变更。不要因校验失败直接重新生成它；先审查源码/素材变化并完成回归，再有意更新受影响条目。构建与测试不会自动批准新资源。
 
 `SOURCE_MANIFEST.json` 记录当前跟踪源码（排除清单自身与生成输出）。审查修改并暂存所有预期文件后，显式运行以下命令更新它，再审查清单差异：
 
@@ -121,3 +122,13 @@ npm run check
 - `SOURCE_MANIFEST.json`：当前跟踪源码文件大小与 SHA-256 清单
 
 本项目没有新增项目级开源许可证。第三方组件继续适用各自许可证；用户提供素材的使用授权不代表对公众授予额外开放许可证。不要把名单、班级备份、截图、浏览器资料目录或密钥提交到仓库。
+
+## 独立星际轨道预览
+
+先运行 `npm run build`，再在相同本地服务器打开 `/orbit-preview/`，可体验独立的星际姓名轨道方案；首页和现有三个主题保持原样。预览默认打开星空，使用独立主题偏好，点击“返回原版”回到首页。
+
+预览与原版共享班级名单存储。预览里保存、导入或删除班级会改变同一份名单，建议先导出备份。预览不带真实学生数据。倒计时仍为1–10分钟下拉框、默认2分钟。
+
+预览源码位于 `src/orbit-preview/`，许可证位于 `public/orbit-preview/`，构建后生成 `dist/orbit-preview/`；不要编辑或提交 `dist/`。预览复用原有模型、音频及vendor资源，不复制桌面运行时。执行 `node tests/orbit-preview.mjs` 可运行独立宿主回归，`node scripts/test.mjs` 同时运行原站与预览测试。测试使用模拟DOM、时钟和录制Canvas；不等于浏览器GPU、真实鼠标/全屏、声音或Windows验收。
+
+预览待机采用有序三层布局并降低星流背景噪声。桌面最多显示30张、竖屏最多18张代表卡；抽取球阵仍包含全部名单，不按待机展示范围筛选。新增 `node tests/orbit-preview-quiet-idle.mjs` 检查四尺寸下108秒无遮挡、无裁切和结果不中断。

@@ -9,6 +9,16 @@
       "sha256": "7e5641858485bceaa438562e9e7318f4c85f2e3f3002285419a97c010d9e8108"
     },
     {
+      "path": ".github/workflows/ci.yml",
+      "bytes": 2247,
+      "sha256": "0a5582eadd53e7f9bc204cea0197d35203daa4ab04a763deb510ed4c687009e4"
+    },
+    {
+      "path": ".github/workflows/release.yml",
+      "bytes": 3541,
+      "sha256": "011004a8d68c0b472642fda9743932fcde4cfc8b9e60a05155b810fc08014b5e"
+    },
+    {
       "path": ".gitignore",
       "bytes": 401,
       "sha256": "15b0594a1c6331f0689596d478a7b6e13a1d0fc5e6c8a1e26cc2e5b9ab5b48ff"
@@ -20,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 7465,
-      "sha256": "9b5a2f7916ee064618a6fd3d6f5cfdfb8f07caf326f2cad94b104e4fa384c020"
+      "bytes": 9332,
+      "sha256": "385bba60f64121dad7ddc117346de29145635e229e5a7de468ed5657e0a41480"
     },
     {
       "path": "SNAPSHOT_NOTES.md",
@@ -30,8 +40,13 @@
     },
     {
       "path": "docs/DEPLOYMENT.md",
-      "bytes": 2242,
-      "sha256": "6cf5ee81a85ed9d9737434e2e0df1f8199d08f438f2851ac304ad461beaac5ae"
+      "bytes": 2322,
+      "sha256": "4e9a3a268fa6edafca0edbbd2f09a6ce348dc2012f3246aa685b863b2778d657"
+    },
+    {
+      "path": "docs/RELEASING.md",
+      "bytes": 8048,
+      "sha256": "617b95dcd6126cbc23e1d1597a84e2b00ed92f8ef7c9ac26196808b64b1d820e"
     },
     {
       "path": "docs/board-glyphs-SOURCE.txt",
@@ -80,8 +95,8 @@
     },
     {
       "path": "electron/README.md",
-      "bytes": 4329,
-      "sha256": "2ac08ee85bf7df0bfe4f4d9af463fd06faf8913fd2427a8cdfc21fef8b3a47d4"
+      "bytes": 5476,
+      "sha256": "06461563afc57b69da3c6472e25c9c8f386b54aa0427bba3154159bc4839f5b7"
     },
     {
       "path": "electron/THIRD-PARTY.md",
@@ -95,13 +110,18 @@
     },
     {
       "path": "electron/assets-manifest.json",
-      "bytes": 7334,
-      "sha256": "9c8fe84d12de326a4fc42f4226d50785c87f13aaf454f37d81a9f0faaac6f068"
+      "bytes": 12255,
+      "sha256": "6f57ad7ceab7f47efcb27285fe4cdf6919f4b466bd7e656f33ef999d88b390fb"
     },
     {
       "path": "electron/build.cjs",
-      "bytes": 4559,
-      "sha256": "3b51d2dab9fc4c5cf2f923f2a3a89dd0383806ee7c69aae35090c75d1644193c"
+      "bytes": 5400,
+      "sha256": "88f6cad0bd8fb463c7e815a3a204f94cc4e446c54ec098f8df841686c8ab13a8"
+    },
+    {
+      "path": "electron/download-runtime.cjs",
+      "bytes": 1909,
+      "sha256": "252718bdcf254b04318038e22f01257678257256fb745e3ceb91fe42b936ffaf"
     },
     {
       "path": "electron/main.cjs",
@@ -110,18 +130,33 @@
     },
     {
       "path": "electron/package-lock.json",
-      "bytes": 23023,
-      "sha256": "c3c056e9fbc163e145c00ac1025c8aa063d14e09f514a3f1413c06ed51464604"
+      "bytes": 23058,
+      "sha256": "4bbe843168239fa2423f5d283f29c73727debfc54fb9c669c2ce00a12234b9f8"
+    },
+    {
+      "path": "electron/package-portable.cjs",
+      "bytes": 2785,
+      "sha256": "0925ab1e4769d64cb7eb76b2173f2c6781f98add8b0ceb8202deef18b072ddc1"
     },
     {
       "path": "electron/package.json",
-      "bytes": 458,
-      "sha256": "cd03eaccea655b736f96ed3fd33931e6458a3d6e74b27a8d9349d2e6d9fc0e9b"
+      "bytes": 615,
+      "sha256": "d444890dd31b003d56bf8a0abd63864ef913235b8b822f2a4931f5fe1b784314"
     },
     {
       "path": "electron/portable-data.cjs",
       "bytes": 4414,
       "sha256": "5baff9e02aa1dce96967c06c69d941f402e20f3aad62e31039cf4161cafc8e0d"
+    },
+    {
+      "path": "electron/release-config.cjs",
+      "bytes": 1924,
+      "sha256": "d6a83dc1b61103fac7acda38786d7ad0768d22772407493216245f1df8dda13b"
+    },
+    {
+      "path": "electron/runtime-lock.json",
+      "bytes": 303,
+      "sha256": "e96520f639e8655157a1a3b8dba27f7b2530ed0bbc20d609c1c0e530dafb97f1"
     },
     {
       "path": "electron/tests/portable-data.cjs",
@@ -134,14 +169,29 @@
       "sha256": "9929936adaee11bbeca2ea86f992a4e30f2bba647ee08a067448cf6eec09ea29"
     },
     {
+      "path": "electron/tests/windows-smoke.cjs",
+      "bytes": 25402,
+      "sha256": "f9fd4fc52376456516bcaa1a00184e5a3d624099e78ec615eb00fc1954606657"
+    },
+    {
+      "path": "electron/verify-package.cjs",
+      "bytes": 4555,
+      "sha256": "4010c5d3b9b872129d5e0f2833b7e3f2108077a9268c07f055073739f638ad5b"
+    },
+    {
+      "path": "electron/zip-portable.ps1",
+      "bytes": 1155,
+      "sha256": "5e2d8f5179ccdf8073cede7b6c9e29ed7fc5fc4ee205e12b2b05d7d6ae4cf7ef"
+    },
+    {
       "path": "package-lock.json",
       "bytes": 254,
       "sha256": "15f9c11cb4eec527ffaeedbc15651fc3c56df091eff4bdf33f73197de95f04f4"
     },
     {
       "path": "package.json",
-      "bytes": 683,
-      "sha256": "796e89002ee01f840d75ea8e7ed7053e024543894c5facd6e5f7acad9598bc43"
+      "bytes": 773,
+      "sha256": "a19f893518107d922060aa48c2db5a89368405ac8a84f99777d781f23e3d88da"
     },
     {
       "path": "public/audio/LICENSE.txt",
@@ -197,6 +247,11 @@
       "path": "public/models/teacher.scene.json",
       "bytes": 1843705,
       "sha256": "7c6ab58d12aad304eb60a5033298812ea5f0d1f025f0148d1a862d153f6e7bce"
+    },
+    {
+      "path": "public/orbit-preview/board-glyphs-LICENSE.txt",
+      "bytes": 14712,
+      "sha256": "849f4ea9c214fa4ac3593b770c699f387534b11ce671264c1b10d85bdcb5997b"
     },
     {
       "path": "public/vendor/EXCEL-VENDOR-NOTICE.txt",
@@ -334,6 +389,161 @@
       "sha256": "055ca4054d9f723e899e56fae683719a106898409a1e3ab2feac159efa949321"
     },
     {
+      "path": "src/orbit-preview/avatars.js",
+      "bytes": 15007,
+      "sha256": "1f67d7f169fe240ebfc8c3fc041b2f9075900cbd9973ad00263a8eddb6a75d77"
+    },
+    {
+      "path": "src/orbit-preview/board-countdown.js",
+      "bytes": 5348,
+      "sha256": "0c2ce1e4c2bea9bb53f69b6e81203f7599caf78d5122ecd40161c0ca4021e1b4"
+    },
+    {
+      "path": "src/orbit-preview/board-glyphs.js",
+      "bytes": 27530,
+      "sha256": "515845009670ed728a883059b957d2462971bcc23d79493f5374f63f9b9f7b12"
+    },
+    {
+      "path": "src/orbit-preview/class-transfer.js",
+      "bytes": 3434,
+      "sha256": "aa9cb7b8316952fea8e944fcc4d6095ef79ec172465ae26d0beb542b6a3d5821"
+    },
+    {
+      "path": "src/orbit-preview/classes.js",
+      "bytes": 6875,
+      "sha256": "bdafb559208f04c91bb97e538c410a129ee97eec9574f4211ad7d75569593afd"
+    },
+    {
+      "path": "src/orbit-preview/countdown-digit-layout.js",
+      "bytes": 1992,
+      "sha256": "4b13e2cf5c5fc8be58b10768cbae8ee07512ea791db54a552ee7832b65e808ba"
+    },
+    {
+      "path": "src/orbit-preview/countdown-state.js",
+      "bytes": 1205,
+      "sha256": "93792a2c4fdf4f84f446f91f828305ae43b9379e0fc23562152f9fc34761562c"
+    },
+    {
+      "path": "src/orbit-preview/countdown.js",
+      "bytes": 4134,
+      "sha256": "7c748a8739890d6257679a12c4b79ae6599e8d64bbf0ffab29646063e4b16079"
+    },
+    {
+      "path": "src/orbit-preview/draw-timing.js",
+      "bytes": 538,
+      "sha256": "75586162856fddbac09ca5196d0add9f894454d676bf79ad28dc779776fb4c4f"
+    },
+    {
+      "path": "src/orbit-preview/drumroll.js",
+      "bytes": 2046,
+      "sha256": "dba6b33f4bf2e6781f3ea2a1ba23b229deee85a50429d36790000b6a0586a11b"
+    },
+    {
+      "path": "src/orbit-preview/duration-buttons.js",
+      "bytes": 1268,
+      "sha256": "1c17945a8b5f57921fab6021447b435adf81c1e3b74c17c6739f33fb2887015a"
+    },
+    {
+      "path": "src/orbit-preview/excel-transfer.js",
+      "bytes": 32083,
+      "sha256": "679872c0984941797f9c17afdcc7d36e09fa4c62e57a18e97f9bf84851eb6d16"
+    },
+    {
+      "path": "src/orbit-preview/index.html",
+      "bytes": 6412,
+      "sha256": "0629c0b84d26a5dbe2d73b1e52388c9ddd6c14caee56be317e98791437d55e60"
+    },
+    {
+      "path": "src/orbit-preview/name-readout.js",
+      "bytes": 2818,
+      "sha256": "055ca4054d9f723e899e56fae683719a106898409a1e3ab2feac159efa949321"
+    },
+    {
+      "path": "src/orbit-preview/paper-cards.js",
+      "bytes": 40108,
+      "sha256": "9ae0a78ab00a114c917591892dfc55fb2ba5949ce780062bb207dcf82c05fcaa"
+    },
+    {
+      "path": "src/orbit-preview/render-budget.js",
+      "bytes": 1539,
+      "sha256": "9ae2e57d53cae97206445b727aeb85bc9b3f1b929feb85aa5f311b7041a32de7"
+    },
+    {
+      "path": "src/orbit-preview/roster-editor.js",
+      "bytes": 10233,
+      "sha256": "0d6752bb712235dc5be0f5496c2769ed5ef76f8256b8492e88ace04e48dc60a3"
+    },
+    {
+      "path": "src/orbit-preview/roster.js",
+      "bytes": 4559,
+      "sha256": "37b820845a93cb22494df85ac2ba6bee2349712a755933ac24e8fc145ceaebf4"
+    },
+    {
+      "path": "src/orbit-preview/scene.js",
+      "bytes": 56542,
+      "sha256": "cf566bb18619f7734349236b7e61d42f50b2494b43f2a298806850aa2b45e7cb"
+    },
+    {
+      "path": "src/orbit-preview/selection-timing.js",
+      "bytes": 270,
+      "sha256": "7bbdf83e13ef67121f59e5f738078d9242e4c4e32ba35f4e267751ee79dc7d63"
+    },
+    {
+      "path": "src/orbit-preview/software-renderer.js",
+      "bytes": 7776,
+      "sha256": "5b188284b6687cc6a28e70b9cdc524dece821a05212247488153cac8092f9a24"
+    },
+    {
+      "path": "src/orbit-preview/sound-waveforms.js",
+      "bytes": 1544,
+      "sha256": "2a8c86d695b0c753cd8fb5e2bb26a127d9ab33c90191936864fd996009e69fdf"
+    },
+    {
+      "path": "src/orbit-preview/sounds.js",
+      "bytes": 4700,
+      "sha256": "1b8fc7220b4193f3abcf135adcd689b62eb93b4e59b00316ce97918408039607"
+    },
+    {
+      "path": "src/orbit-preview/space-card-art.js",
+      "bytes": 8784,
+      "sha256": "18edfc1c816b337a67e901f22a7af62a8a6ea285ef7b9bc41b6374602f887394"
+    },
+    {
+      "path": "src/orbit-preview/space-card-canvas.js",
+      "bytes": 4957,
+      "sha256": "c621100d72da4cea6a533005924936f0740cfa19de366bc294954b0732d0500f"
+    },
+    {
+      "path": "src/orbit-preview/space-card-model.js",
+      "bytes": 13527,
+      "sha256": "120f04c703fb20615f64bae0e79870f8f52ee22d880b0d536812029e3d703635"
+    },
+    {
+      "path": "src/orbit-preview/space-card-webgl.js",
+      "bytes": 11192,
+      "sha256": "a1d0b7db73717f57ac261e5b57db0aa450a105071754358d9525953e01f13da3"
+    },
+    {
+      "path": "src/orbit-preview/space-cards.js",
+      "bytes": 6780,
+      "sha256": "2ccc74242aab6f05497325c4dbf638c60f34480b43823d5be05d2a7196995a39"
+    },
+    {
+      "path": "src/orbit-preview/space-countdown.js",
+      "bytes": 11690,
+      "sha256": "fc407ade0e8025d6a9a25f1b614130163c5f3bb2a702f7e60448b63223a4c70e"
+    },
+    {
+      "path": "src/orbit-preview/space-meteors.js",
+      "bytes": 4228,
+      "sha256": "5fc995d341ab13a0ae577cc696c30bdac79bc94d7e11b791300160767ba711d8"
+    },
+    {
+      "path": "src/orbit-preview/style.css",
+      "bytes": 52390,
+      "sha256": "3479083948bf2e28176b8f77fea37b6b8132218f5578deb3aa3466ba2854e6d9"
+    },
+    {
       "path": "src/paper-cards.js",
       "bytes": 40143,
       "sha256": "26d83263dc0dd787da805b18576b7627ea15dfa6c93b37a4a34582ea6b73193b"
@@ -420,8 +630,8 @@
     },
     {
       "path": "tests/build-layout.mjs",
-      "bytes": 7635,
-      "sha256": "83a0753680db08ee44e2ab374f744a52ba3833a06885c7a33d9ec07fa77715e0"
+      "bytes": 8185,
+      "sha256": "2d73be15c974a3bd1b5ce32fdc1eadd230557bc0fc6eafd328aca75f9596a7f2"
     },
     {
       "path": "tests/busy-arrow.mjs",
@@ -495,8 +705,8 @@
     },
     {
       "path": "tests/helpers/theme-environment.mjs",
-      "bytes": 4080,
-      "sha256": "bba165b27518e39a12f2a79567bca02678b9362dce9dcf9ef94cd673eee8252c"
+      "bytes": 4171,
+      "sha256": "1d2f85cec1ca0b1e36d023c684bffd5113486bd04dc6205b6b5d6c5ee7d034d3"
     },
     {
       "path": "tests/helpers/theme-scene-loader.mjs",
@@ -507,6 +717,76 @@
       "path": "tests/name-readout.mjs",
       "bytes": 4368,
       "sha256": "05eeb618e08315e73643acadc2ef2d320796deaf0b076180ad4fe5412478cecc"
+    },
+    {
+      "path": "tests/orbit-preview-geometry.mjs",
+      "bytes": 2549,
+      "sha256": "62cfa0063babc844428d2a9310d1d12d76ee54eeb85dde1f928719e2646c0880"
+    },
+    {
+      "path": "tests/orbit-preview-identities.mjs",
+      "bytes": 1792,
+      "sha256": "47ad8af124b140fadfe4a3c4af5692143990556810da3b8c999e7df7e9ac4a22"
+    },
+    {
+      "path": "tests/orbit-preview-quiet-idle.mjs",
+      "bytes": 2252,
+      "sha256": "c34c4e7d12c7dda3b9534664208fc243229da8a98cd5111814faabc8228aeb03"
+    },
+    {
+      "path": "tests/orbit-preview.mjs",
+      "bytes": 550,
+      "sha256": "eb3092cdb4300e259bf909e22fadf20239ed917d2ac540e69cb8268106a2f7bd"
+    },
+    {
+      "path": "tests/orbit-preview/helpers/deterministic-dom.mjs",
+      "bytes": 17311,
+      "sha256": "cd3a288aa62e78652dace8e4ce805a9c35ec18413f4b12987ff6037be1e38d7d"
+    },
+    {
+      "path": "tests/orbit-preview/helpers/orbit-environment.mjs",
+      "bytes": 1795,
+      "sha256": "ecff7182ccbbdabf1182f4916416bfd496b4c7103b2a888d40956988351998a2"
+    },
+    {
+      "path": "tests/orbit-preview/helpers/orbit-scene-loader.mjs",
+      "bytes": 1484,
+      "sha256": "48cb5d8f6bbbf5a7750dfe0be55f09b979fb9eb8af7dcdcf9bb4153fe9ebf573"
+    },
+    {
+      "path": "tests/orbit-preview/helpers/paper-canvas-recorder.mjs",
+      "bytes": 5691,
+      "sha256": "4a71b7f7dd30b85923de7628d30af66b6ff34055fce2ea437b2c3ccf9aef35fe"
+    },
+    {
+      "path": "tests/orbit-preview/helpers/theme-environment.mjs",
+      "bytes": 4080,
+      "sha256": "dbd3ffbe2d5bb9d42e676614a4c96395cce8d0b357cbc8df248c39bda818df84"
+    },
+    {
+      "path": "tests/orbit-preview/helpers/theme-scene-loader.mjs",
+      "bytes": 1035,
+      "sha256": "b95d9d11522021808e75872d16b4b28126d10f85d83a9416c7a7d5ae6a859cf2"
+    },
+    {
+      "path": "tests/orbit-preview/orbit-host-flow.mjs",
+      "bytes": 19179,
+      "sha256": "0fc38f7ff8c78ae831a3ca3825366eb046e1d3a555f8681eb1dbd3681a78a712"
+    },
+    {
+      "path": "tests/orbit-preview/orbit-identity-lifecycle.mjs",
+      "bytes": 3794,
+      "sha256": "b9ae50dcfbfeb34473fd18c5e191ad03fe9c91c6b00a28ea9d1fcccdbb43a5eb"
+    },
+    {
+      "path": "tests/orbit-preview/root-baseline-sha256.json",
+      "bytes": 5343,
+      "sha256": "2f63d3ced83aa27576bb32702ba8c237e1c1b9d03e8da1dde1f450d116ed838e"
+    },
+    {
+      "path": "tests/orbit-preview/verify-root-baseline.mjs",
+      "bytes": 1119,
+      "sha256": "60c6772842df4afdf8781488bab053f90fd527f042403bb2266381b0d7e72a1d"
     },
     {
       "path": "tests/paper-card-corners.mjs",
@@ -537,6 +817,11 @@
       "path": "tests/paper-theme-palette.mjs",
       "bytes": 8641,
       "sha256": "ee73a89d664b012900e19bc964bfa3c71cf4ad99b5fe282517dab27237fe03ba"
+    },
+    {
+      "path": "tests/release-safety.mjs",
+      "bytes": 3338,
+      "sha256": "5b4183915496bf649f9c57ac289f544f3bb1a66692a6fb7e26691c723e4fdcba"
     },
     {
       "path": "tests/render-budget.mjs",

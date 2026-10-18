@@ -27,6 +27,9 @@ for (const entry of manifest) {
 assert.match(readFileSync(new URL('../.gitignore', import.meta.url), 'utf8'), /^\/dist\/$/m);
 assert.match(readFileSync(new URL('../.gitattributes', import.meta.url), 'utf8'), /^\* -text$/m);
 assert.equal(existsSync(path.join(ROOT, 'desktop')), false);
+assert.equal(existsSync(path.join(ROOT, 'src/orbit-preview/index.html')), true);
+assert.equal(existsSync(path.join(ROOT, 'public/orbit-preview/board-glyphs-LICENSE.txt')), true);
+assert.equal(outputs.filter(file => file.startsWith('orbit-preview/')).length, 32, 'Clean builds retain all independent preview assets');
 console.log(`PASS layout: all ${outputs.length} runtime files match reviewed manifest, source bytes and unchanged output URLs.`);
 
 const temporary = mkdtempSync(path.join(tmpdir(), 'sunlit-build-layout-'));
@@ -105,6 +108,9 @@ try {
   }
   const index = await fetch(origin + '/');
   assert.equal(sha(Buffer.from(await index.arrayBuffer())), manifest.find(entry => entry.path === 'index.html').sha256);
+  const preview = await fetch(origin + '/orbit-preview/');
+  assert.equal(preview.status, 200);
+  assert.equal(sha(Buffer.from(await preview.arrayBuffer())), manifest.find(entry => entry.path === 'orbit-preview/index.html').sha256);
   const head = await fetch(origin + '/index.html', {method: 'HEAD'});
   assert.equal(head.status, 200); assert.equal(await head.text(), '');
   for (const forbidden of ['/src/index.html', '/electron/main.cjs', '/SOURCE_MANIFEST.json', '/Data/roster.json', '/%2e%2e%2fREADME.md', '/missing.js']) {
