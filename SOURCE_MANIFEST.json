@@ -180,8 +180,8 @@
     },
     {
       "path": "electron/tests/windows-smoke.cjs",
-      "bytes": 25402,
-      "sha256": "f9fd4fc52376456516bcaa1a00184e5a3d624099e78ec615eb00fc1954606657"
+      "bytes": 25662,
+      "sha256": "783abac6cfabb1cf40859335cf4f8f4fb8ccc23db13b2a9c3b691869b339e25a"
     },
     {
       "path": "electron/verify-package.cjs",
