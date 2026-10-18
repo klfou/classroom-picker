@@ -418,5 +418,40 @@
     "path": "vendor/xlsx-0.20.3.mjs",
     "size": 1008308,
     "sha256": "1a0fb062ee9781b13f6687371b202aaefc53b6ce55b530c027e01f9c087b77db"
+  },
+  {
+    "path": "wheel-toy-preview/app.js",
+    "size": 6735,
+    "sha256": "98ea5599ccb13100167178ee387c6bef30ebdbe0cdf0b8e835ad21a52385fd02"
+  },
+  {
+    "path": "wheel-toy-preview/audio/SOURCE.txt",
+    "size": 299,
+    "sha256": "5351af11ebe0c8dd4297e1109215dc28e4ab66ffa65ae64e4520c059f9312090"
+  },
+  {
+    "path": "wheel-toy-preview/audio/wheel.mp3",
+    "size": 107047,
+    "sha256": "a239ae6c3ddf744aa3d84f19e5da86f7ff33b11ea91b80514ca850449233e354"
+  },
+  {
+    "path": "wheel-toy-preview/index.html",
+    "size": 2645,
+    "sha256": "9bb632832c605afd248878f306f4edc478aac6d75605184d763eba6a77eae279"
+  },
+  {
+    "path": "wheel-toy-preview/model.js",
+    "size": 1430,
+    "sha256": "137b96a4f9c9fab276bd3696503df1e5eb1a2f62b77408641884b4343f5cc861"
+  },
+  {
+    "path": "wheel-toy-preview/style.css",
+    "size": 10682,
+    "sha256": "4fbdb5ff8347785c36e326d8e3c6b312dc97bc44fef0856adf87e2f9268f4eca"
+  },
+  {
+    "path": "wheel-toy-preview/wheel.js",
+    "size": 1682,
+    "sha256": "a5bf38ae4b4d4d1b97be4c875a6bf5e65d55505970abfb63ff9e6f66de473971"
   }
 ]
