@@ -48,3 +48,7 @@ CI 在 Ubuntu 与 Windows 重建网页、运行全部回归、核验资源/源�
 GitHub Actions 的 PR/main CI 和手动预览只有 `contents: read`，不需要另加凭据。只有严格版本 tag 的发布 job 使用短期 `GITHUB_TOKEN` 的 `contents: write`。完整构建、下载、发布、备份步骤见 [打包与发布指南](../docs/RELEASING.md)。
 
 第三方来源与许可见 THIRD-PARTY.md。项目自身的开源许可证应由仓库拥有者选择；本目录不擅自授予新的许可。
+
+## 同源版本识别
+
+交付打包要求干净 Git 克隆。每次构建在网页与 ASAR 中嵌入相同的 `build-info.json` 和静态 `version.html`，EXE 同级另放同一份 `build-info.json`。CI 同次生成桌面和网页双 ZIP，发布说明记录完整提交和 buildId，校验不一致即拒绝发布。网页查看 `/version.html`，桌面查看 EXE 同级 JSON；同版本号不代表同一修复提交。网页附件不会自动部署到 Sites，旧 EXE 也不会自动更新。详见 [发布指南](../docs/RELEASING.md)。

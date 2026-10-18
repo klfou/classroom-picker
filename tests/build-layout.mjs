@@ -4,13 +4,15 @@ import {tmpdir} from 'node:os';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {createRequire} from 'node:module';
+import {execFileSync} from 'node:child_process';
+import provenance from '../scripts/build-info.cjs';
 import {buildWeb, listFiles, ROOT} from '../scripts/build.mjs';
 import {createPreviewServer} from '../scripts/serve.mjs';
 
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const manifestBytes = readFileSync(new URL('../electron/assets-manifest.json', import.meta.url));
 const manifest = JSON.parse(manifestBytes);
-const expected = manifest.map(entry => entry.path).sort();
+const expected = [...manifest.map(entry => entry.path), ...provenance.GENERATED].sort();
 const outputs = listFiles(path.join(ROOT, 'dist'));
 assert.deepEqual(outputs, expected);
 const inputs = ['src', 'public'].flatMap(directory => listFiles(path.join(ROOT, directory)).map(relative => ({directory, relative})));
@@ -30,7 +32,7 @@ assert.equal(existsSync(path.join(ROOT, 'desktop')), false);
 assert.equal(existsSync(path.join(ROOT, 'src/orbit-preview/index.html')), true);
 assert.equal(existsSync(path.join(ROOT, 'public/orbit-preview/board-glyphs-LICENSE.txt')), true);
 assert.equal(outputs.filter(file => file.startsWith('orbit-preview/')).length, 32, 'Clean builds retain all independent preview assets');
-console.log(`PASS layout: all ${outputs.length} runtime files match reviewed manifest, source bytes and unchanged output URLs.`);
+console.log(`PASS layout: ${manifest.length} approved resources retain source bytes/URLs, plus exact generated provenance.`);
 
 const temporary = mkdtempSync(path.join(tmpdir(), 'sunlit-build-layout-'));
 try {
@@ -68,11 +70,25 @@ try {
   const packaging = path.join(temporary, 'packaging');
   cpSync(path.join(ROOT, 'dist'), path.join(packaging, 'dist'), {recursive: true});
   mkdirSync(path.join(packaging, 'electron'));
+  mkdirSync(path.join(packaging, 'scripts'));
+  copyFileSync(path.join(ROOT, 'scripts/build-info.cjs'), path.join(packaging, 'scripts/build-info.cjs'));
+  for (const file of ['package.json', 'SOURCE_MANIFEST.json']) copyFileSync(path.join(ROOT, file), path.join(packaging, file));
   for (const file of ['build.cjs', 'assets-manifest.json', 'app-package.json', 'main.cjs', 'portable-data.cjs']) {
     copyFileSync(path.join(ROOT, 'electron', file), path.join(packaging, 'electron', file));
   }
+  writeFileSync(path.join(packaging, '.gitignore'), 'dist/\n');
+  const git = args => execFileSync('git', args, {cwd: packaging, stdio: 'pipe'});
+  git(['init']); git(['add', '.']);
+  git(['-c', 'user.name=Synthetic Test', '-c', 'user.email=test@example.invalid', 'commit', '-m', 'Synthetic packaging fixture']);
+  provenance.writeGenerated(packaging);
   const {verifyAssets, stageApplication} = createRequire(import.meta.url)(path.join(packaging, 'electron/build.cjs'));
   assert.deepEqual(verifyAssets(), expected);
+  for (const name of provenance.GENERATED) {
+    const target = path.join(packaging, 'dist', name), original = readFileSync(target);
+    writeFileSync(target, 'changed provenance');
+    assert.throws(verifyAssets, /Stale or changed generated provenance/);
+    writeFileSync(target, original);
+  }
   const target = path.join(packaging, 'dist/index.html');
   const original = readFileSync(target);
   writeFileSync(target, 'tampered');
@@ -113,6 +129,10 @@ try {
   assert.equal(sha(Buffer.from(await preview.arrayBuffer())), manifest.find(entry => entry.path === 'orbit-preview/index.html').sha256);
   const head = await fetch(origin + '/index.html', {method: 'HEAD'});
   assert.equal(head.status, 200); assert.equal(await head.text(), '');
+  const info = await (await fetch(origin + '/build-info.json')).json();
+  assert.deepEqual(info, provenance.buildInfo(ROOT));
+  const version = await fetch(origin + '/version.html');
+  assert.equal(version.status, 200); assert.ok((await version.text()).includes(info.buildId));
   for (const forbidden of ['/src/index.html', '/electron/main.cjs', '/SOURCE_MANIFEST.json', '/Data/roster.json', '/%2e%2e%2fREADME.md', '/missing.js']) {
     assert.equal((await fetch(origin + forbidden)).status, 404, forbidden);
   }

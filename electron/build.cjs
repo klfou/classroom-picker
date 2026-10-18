@@ -3,6 +3,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
 const ROOT = __dirname;
+const REPO = path.resolve(ROOT, '..');
+const provenance = require('../scripts/build-info.cjs');
 const WEB = path.resolve(ROOT, '../dist');
 const sha = x => crypto.createHash('sha256').update(x).digest('hex');
 const VERSION = JSON.parse(fs.readFileSync(path.join(ROOT, 'app-package.json'))).version;
@@ -16,13 +18,14 @@ function files(dir, prefix = '') {
 }
 function verifyAssets() {
   const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'assets-manifest.json')));
-  const expected = manifest.map(x => x.path).sort();
+  const expected = [...manifest.map(x => x.path), ...provenance.GENERATED].sort();
   const actual = files(WEB);
   if (JSON.stringify(actual) !== JSON.stringify(expected)) throw new Error('dist file list differs from the approved sanitized-source manifest. Review changes before updating the manifest.');
   for (const entry of manifest) {
     const bytes = fs.readFileSync(path.join(WEB, entry.path));
     if (bytes.length !== entry.size || sha(bytes) !== entry.sha256) throw new Error('Changed asset: ' + entry.path);
   }
+  provenance.verifyGenerated(REPO);
   const app = JSON.parse(fs.readFileSync(path.join(ROOT, 'app-package.json')));
   if (app.version !== VERSION || app.main !== 'main.cjs') throw new Error('Unexpected application version/main');
   return actual;
@@ -42,8 +45,13 @@ async function run() {
   // Packaging always consumes a fresh build. Verification alone checks existing output.
   if (!process.argv.includes('--verify-only')) (await import('../scripts/build.mjs')).buildWeb();
   const actual = verifyAssets();
-  console.log('Verified ' + actual.length + ' sanitized-source assets; desktop ' + VERSION);
+  console.log('Verified ' + (actual.length - provenance.GENERATED.length) + ' approved assets and 2 provenance files; desktop ' + VERSION);
   if (process.argv.includes('--verify-only')) return;
+  const buildInfo = provenance.requireClean(provenance.verifyGenerated(REPO));
+  const webFiles = actual.map(name => {
+    const bytes = fs.readFileSync(path.join(WEB, name));
+    return {path: name, size: bytes.length, sha256: sha(bytes)};
+  });
   const output = path.join(ROOT, 'out', VERSION);
   if (fs.existsSync(output)) throw new Error('Output already exists: ' + output + '. Move it away before rebuilding. Nothing was overwritten.');
   const workRoot = path.join(ROOT, '.build');
@@ -68,15 +76,16 @@ async function run() {
       fs.copyFileSync(path.join(ROOT, 'README.md'), path.join(folder, 'BUILD-README.md'));
       fs.copyFileSync(path.join(ROOT, 'THIRD-PARTY.md'), path.join(folder, 'THIRD-PARTY.md'));
       fs.copyFileSync(path.join(ROOT, 'PORTABLE-DATA.md'), path.join(folder, 'PORTABLE-DATA.md'));
+      fs.copyFileSync(path.join(WEB, 'build-info.json'), path.join(folder, 'build-info.json'));
       const packageEntries = files(folder).map(name => {
         const bytes = fs.readFileSync(path.join(folder, name));
         return {path: name, size: bytes.length, sha256: sha(bytes)};
       });
       const asar = fs.readFileSync(path.join(folder, 'resources/app.asar'));
       fs.writeFileSync(path.join(folder, 'build-manifest.json'), JSON.stringify({ version: VERSION, electron: ELECTRON,
-        sourceCommit: require('node:child_process').execFileSync('git', ['rev-parse', 'HEAD'], {cwd: ROOT, encoding: 'utf8'}).trim(),
+        sourceCommit: buildInfo.sourceCommit, buildInfo, webFiles,
         runtimeArchiveSha256: runtime.sha256, runtimeSource: runtime.source,
-        assetManifestSha256: sha(fs.readFileSync(path.join(ROOT, 'assets-manifest.json'))), assetCount: actual.length,
+        assetManifestSha256: sha(fs.readFileSync(path.join(ROOT, 'assets-manifest.json'))), assetCount: actual.length - provenance.GENERATED.length,
         asarSha256: sha(asar), exeSha256: sha(exe), files: packageEntries, signed: false, windowsRunVerified: false }, null, 2));
       await require('./verify-package.cjs').verifyPackage(folder);
       console.log('Built: ' + folder);

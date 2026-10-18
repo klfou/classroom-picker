@@ -10,13 +10,13 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "bytes": 2247,
-      "sha256": "0a5582eadd53e7f9bc204cea0197d35203daa4ab04a763deb510ed4c687009e4"
+      "bytes": 2880,
+      "sha256": "2c18bbefbc7e42c8ab477771a81de0de233169540b62b447cbc0c75262de3b6b"
     },
     {
       "path": ".github/workflows/release.yml",
-      "bytes": 3541,
-      "sha256": "011004a8d68c0b472642fda9743932fcde4cfc8b9e60a05155b810fc08014b5e"
+      "bytes": 16131,
+      "sha256": "d916e289b949554a9625561282422f6d489568eca0c98b9dc7e929c574ab68d7"
     },
     {
       "path": ".gitignore",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 9332,
-      "sha256": "385bba60f64121dad7ddc117346de29145635e229e5a7de468ed5657e0a41480"
+      "bytes": 9783,
+      "sha256": "50e86f209b4209ba2bc4d7ea7824957dcaac5258b8f5f9a1619709f33bac4141"
     },
     {
       "path": "SNAPSHOT_NOTES.md",
@@ -40,13 +40,13 @@
     },
     {
       "path": "docs/DEPLOYMENT.md",
-      "bytes": 2322,
-      "sha256": "4e9a3a268fa6edafca0edbbd2f09a6ce348dc2012f3246aa685b863b2778d657"
+      "bytes": 3472,
+      "sha256": "3fb26756fd1043c75604a4adb4d4337f16cc929ca37099e3e114f30eaaf12fa4"
     },
     {
       "path": "docs/RELEASING.md",
-      "bytes": 8048,
-      "sha256": "617b95dcd6126cbc23e1d1597a84e2b00ed92f8ef7c9ac26196808b64b1d820e"
+      "bytes": 10640,
+      "sha256": "ecdfa93e25e547e0a46c15bd6336470808bfb13bc40ff68b0a5ce8b0269ff7a6"
     },
     {
       "path": "docs/board-glyphs-SOURCE.txt",
@@ -95,8 +95,8 @@
     },
     {
       "path": "electron/README.md",
-      "bytes": 5476,
-      "sha256": "06461563afc57b69da3c6472e25c9c8f386b54aa0427bba3154159bc4839f5b7"
+      "bytes": 6020,
+      "sha256": "d17adbee282e7fb2ee5e1284b3b84cce395548abdd3d64216349918c7cc4130e"
     },
     {
       "path": "electron/THIRD-PARTY.md",
@@ -115,8 +115,8 @@
     },
     {
       "path": "electron/build.cjs",
-      "bytes": 5400,
-      "sha256": "88f6cad0bd8fb463c7e815a3a204f94cc4e446c54ec098f8df841686c8ab13a8"
+      "bytes": 5915,
+      "sha256": "caf1fb040fb3c48debddc1b5eab4810cec71cde405736b39571cfb5098cedade"
     },
     {
       "path": "electron/download-runtime.cjs",
@@ -135,8 +135,8 @@
     },
     {
       "path": "electron/package-portable.cjs",
-      "bytes": 2785,
-      "sha256": "0925ab1e4769d64cb7eb76b2173f2c6781f98add8b0ceb8202deef18b072ddc1"
+      "bytes": 4649,
+      "sha256": "e4738ddb43fe21c211cbbeec49d933ebb49871605c9ec0340157d57b6406e5f9"
     },
     {
       "path": "electron/package.json",
@@ -170,18 +170,23 @@
     },
     {
       "path": "electron/tests/windows-smoke.cjs",
-      "bytes": 25402,
-      "sha256": "f9fd4fc52376456516bcaa1a00184e5a3d624099e78ec615eb00fc1954606657"
+      "bytes": 26567,
+      "sha256": "7f30ba1888184fd68125595f733d0fae7493774a4679eff1d4d65de018d14f9b"
     },
     {
       "path": "electron/verify-package.cjs",
-      "bytes": 4555,
-      "sha256": "4010c5d3b9b872129d5e0f2833b7e3f2108077a9268c07f055073739f638ad5b"
+      "bytes": 5477,
+      "sha256": "b62f247379f5112e9fe5b573e71c04485cb8bba2ef4dcbb6faeba7112b068af1"
     },
     {
       "path": "electron/zip-portable.ps1",
-      "bytes": 1155,
-      "sha256": "5e2d8f5179ccdf8073cede7b6c9e29ed7fc5fc4ee205e12b2b05d7d6ae4cf7ef"
+      "bytes": 1914,
+      "sha256": "a89ce96eb3a2b3aabf416fa0dbcf7e41bbc8b6d1827e2a4a7e2d6c76fb43ac0e"
+    },
+    {
+      "path": "electron/zip-web.ps1",
+      "bytes": 2008,
+      "sha256": "f24b2c7056a0874651a43f099e7fe59e8fdbd8a6c60157aefc2da7883e53f216"
     },
     {
       "path": "package-lock.json",
@@ -299,9 +304,14 @@
       "sha256": "1a0fb062ee9781b13f6687371b202aaefc53b6ce55b530c027e01f9c087b77db"
     },
     {
+      "path": "scripts/build-info.cjs",
+      "bytes": 4453,
+      "sha256": "ef22c4082f7310265133815ef7f4d14ab839706fc11b6d63488db415b0c27eb2"
+    },
+    {
       "path": "scripts/build.mjs",
-      "bytes": 2505,
-      "sha256": "ded18f3bc1c7ab0c73d7f91a4730c08a11940dfbed9dac06498ecda2f42ba31e"
+      "bytes": 3055,
+      "sha256": "803b329cef90bbc4e5b604a79745423d78667b6b98dadd4380edfb10819fd193"
     },
     {
       "path": "scripts/serve.mjs",
@@ -630,8 +640,13 @@
     },
     {
       "path": "tests/build-layout.mjs",
-      "bytes": 8185,
-      "sha256": "2d73be15c974a3bd1b5ce32fdc1eadd230557bc0fc6eafd328aca75f9596a7f2"
+      "bytes": 9521,
+      "sha256": "d20f7cc5594aaae96019a4acc6e72de1337f61363bf537f5dfd6e9216b51041a"
+    },
+    {
+      "path": "tests/build-provenance.mjs",
+      "bytes": 4390,
+      "sha256": "a5a4e601b89db6c5e55be7e3e624f1b34244d6b0727c22c00bf2e3692f000a73"
     },
     {
       "path": "tests/busy-arrow.mjs",
@@ -817,6 +832,11 @@
       "path": "tests/paper-theme-palette.mjs",
       "bytes": 8641,
       "sha256": "ee73a89d664b012900e19bc964bfa3c71cf4ad99b5fe282517dab27237fe03ba"
+    },
+    {
+      "path": "tests/release-gate.py",
+      "bytes": 23849,
+      "sha256": "476c6c382d9f9193caafe78a581196726acf0d714d92d15eec297762cd8d04cc"
     },
     {
       "path": "tests/release-safety.mjs",
