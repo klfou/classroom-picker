@@ -55,8 +55,8 @@
     },
     {
       "path": "docs/TOY_WHEEL_PREVIEW.md",
-      "bytes": 1710,
-      "sha256": "a23eb22e5995d130440bfe533d8f1379b5ff2cca0ebeb5c8d332eaa66f3589fb"
+      "bytes": 2668,
+      "sha256": "e0c1f8d451b3705f91789fcc5502d663470e282de6efdb2f82469936915eece8"
     },
     {
       "path": "docs/board-glyphs-SOURCE.txt",
@@ -125,8 +125,8 @@
     },
     {
       "path": "electron/assets-manifest.json",
-      "bytes": 13466,
-      "sha256": "4c0d21fe6916c6f79864f358c520eb5755d0895a25d09de9f437acb17c8d5986"
+      "bytes": 13776,
+      "sha256": "4e4643e4a6c534512a6fac901df383fff6673be07812129e30af3484fb54427c"
     },
     {
       "path": "electron/build.cjs",
@@ -660,13 +660,13 @@
     },
     {
       "path": "src/wheel-toy-preview/app.js",
-      "bytes": 6735,
-      "sha256": "98ea5599ccb13100167178ee387c6bef30ebdbe0cdf0b8e835ad21a52385fd02"
+      "bytes": 8213,
+      "sha256": "4a325243de8376bc353a3ab8336cd6d8f94db29a3e2b8c32ffb7fb861a2cb384"
     },
     {
       "path": "src/wheel-toy-preview/index.html",
-      "bytes": 2645,
-      "sha256": "9bb632832c605afd248878f306f4edc478aac6d75605184d763eba6a77eae279"
+      "bytes": 4284,
+      "sha256": "d6cb5a200313a5062e5de68e69314ba4eaf8aeee5037824a3af885ca5218a60b"
     },
     {
       "path": "src/wheel-toy-preview/model.js",
@@ -674,14 +674,24 @@
       "sha256": "137b96a4f9c9fab276bd3696503df1e5eb1a2f62b77408641884b4343f5cc861"
     },
     {
+      "path": "src/wheel-toy-preview/qa.html",
+      "bytes": 855,
+      "sha256": "cd499a0a3fe5e42117bb09ba4e82d194488f84fee36c424fd45477b51b028101"
+    },
+    {
+      "path": "src/wheel-toy-preview/shared-controls.css",
+      "bytes": 52872,
+      "sha256": "2fac490948add7ac42f0969f4d94751625d0cb629af3a2b39d51e98eefbb68f0"
+    },
+    {
       "path": "src/wheel-toy-preview/style.css",
-      "bytes": 10682,
-      "sha256": "4fbdb5ff8347785c36e326d8e3c6b312dc97bc44fef0856adf87e2f9268f4eca"
+      "bytes": 13819,
+      "sha256": "a97806e56d01365919fee9c00595b06fe565f0ca290014776b96e31e53e3b896"
     },
     {
       "path": "src/wheel-toy-preview/wheel.js",
-      "bytes": 1682,
-      "sha256": "a5bf38ae4b4d4d1b97be4c875a6bf5e65d55505970abfb63ff9e6f66de473971"
+      "bytes": 2112,
+      "sha256": "bd3a1e4516291b6b0efd740d76bd92e2a85e99cf4135916a78d3f6c9856de285"
     },
     {
       "path": "tests/avatar-preparation.mjs",
@@ -1000,13 +1010,13 @@
     },
     {
       "path": "tests/wheel-toy-flow.mjs",
-      "bytes": 3318,
-      "sha256": "1526efd92cd2bb974ddaf19d88b226bf489507eed4577dbe6ff2f5b0db10524a"
+      "bytes": 4547,
+      "sha256": "06c92f9db349a7a78f828e8277a46db0bf6d61fc473cf94c425b9cbc1d5a5360"
     },
     {
       "path": "tests/wheel-toy-preview.mjs",
-      "bytes": 1903,
-      "sha256": "a2867f23e2b994ed4777901c165a3b577dd4b108859367e8a91ad340fd6adc27"
+      "bytes": 3013,
+      "sha256": "b2d91137bc69e09be06c11b746a5d9f36c110913b0b711467746a1999c8c3636"
     }
   ],
   "layout_base_commit": "01355fdd43b16797f605f7a83359a89a998f838c"

@@ -421,8 +421,8 @@
   },
   {
     "path": "wheel-toy-preview/app.js",
-    "size": 6735,
-    "sha256": "98ea5599ccb13100167178ee387c6bef30ebdbe0cdf0b8e835ad21a52385fd02"
+    "size": 8213,
+    "sha256": "4a325243de8376bc353a3ab8336cd6d8f94db29a3e2b8c32ffb7fb861a2cb384"
   },
   {
     "path": "wheel-toy-preview/audio/SOURCE.txt",
@@ -436,8 +436,8 @@
   },
   {
     "path": "wheel-toy-preview/index.html",
-    "size": 2645,
-    "sha256": "9bb632832c605afd248878f306f4edc478aac6d75605184d763eba6a77eae279"
+    "size": 4284,
+    "sha256": "d6cb5a200313a5062e5de68e69314ba4eaf8aeee5037824a3af885ca5218a60b"
   },
   {
     "path": "wheel-toy-preview/model.js",
@@ -445,13 +445,23 @@
     "sha256": "137b96a4f9c9fab276bd3696503df1e5eb1a2f62b77408641884b4343f5cc861"
   },
   {
+    "path": "wheel-toy-preview/qa.html",
+    "size": 855,
+    "sha256": "cd499a0a3fe5e42117bb09ba4e82d194488f84fee36c424fd45477b51b028101"
+  },
+  {
+    "path": "wheel-toy-preview/shared-controls.css",
+    "size": 52872,
+    "sha256": "2fac490948add7ac42f0969f4d94751625d0cb629af3a2b39d51e98eefbb68f0"
+  },
+  {
     "path": "wheel-toy-preview/style.css",
-    "size": 10682,
-    "sha256": "4fbdb5ff8347785c36e326d8e3c6b312dc97bc44fef0856adf87e2f9268f4eca"
+    "size": 13819,
+    "sha256": "a97806e56d01365919fee9c00595b06fe565f0ca290014776b96e31e53e3b896"
   },
   {
     "path": "wheel-toy-preview/wheel.js",
-    "size": 1682,
-    "sha256": "a5bf38ae4b4d4d1b97be4c875a6bf5e65d55505970abfb63ff9e6f66de473971"
+    "size": 2112,
+    "sha256": "bd3a1e4516291b6b0efd740d76bd92e2a85e99cf4135916a78d3f6c9856de285"
   }
 ]
