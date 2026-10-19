@@ -126,7 +126,7 @@
     {
       "path": "electron/assets-manifest.json",
       "bytes": 13776,
-      "sha256": "4e4643e4a6c534512a6fac901df383fff6673be07812129e30af3484fb54427c"
+      "sha256": "bb1f99746a3c7edd4a271c855d9bd39a7a68f3de33cfa3e3e369c666213676c1"
     },
     {
       "path": "electron/build.cjs",
@@ -680,13 +680,13 @@
     },
     {
       "path": "src/wheel-toy-preview/shared-controls.css",
-      "bytes": 52872,
-      "sha256": "2fac490948add7ac42f0969f4d94751625d0cb629af3a2b39d51e98eefbb68f0"
+      "bytes": 52774,
+      "sha256": "e4c65e394cf5dbdebbbe06ae38ed55442b40959b03adf85e6420358ca2e69686"
     },
     {
       "path": "src/wheel-toy-preview/style.css",
-      "bytes": 13819,
-      "sha256": "a97806e56d01365919fee9c00595b06fe565f0ca290014776b96e31e53e3b896"
+      "bytes": 13746,
+      "sha256": "5de09714c44d2b1b63c53e720dab8f54c3cd60cc7fc7eaafdb4b029eb57a7e6b"
     },
     {
       "path": "src/wheel-toy-preview/wheel.js",
@@ -1015,8 +1015,8 @@
     },
     {
       "path": "tests/wheel-toy-preview.mjs",
-      "bytes": 3013,
-      "sha256": "b2d91137bc69e09be06c11b746a5d9f36c110913b0b711467746a1999c8c3636"
+      "bytes": 3568,
+      "sha256": "0c7647cd2709707abba28b21f3a929b2db8169f7b8e59b8f74a8c463b67c0479"
     }
   ],
   "layout_base_commit": "01355fdd43b16797f605f7a83359a89a998f838c"

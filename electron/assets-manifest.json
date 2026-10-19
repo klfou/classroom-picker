@@ -451,13 +451,13 @@
   },
   {
     "path": "wheel-toy-preview/shared-controls.css",
-    "size": 52872,
-    "sha256": "2fac490948add7ac42f0969f4d94751625d0cb629af3a2b39d51e98eefbb68f0"
+    "size": 52774,
+    "sha256": "e4c65e394cf5dbdebbbe06ae38ed55442b40959b03adf85e6420358ca2e69686"
   },
   {
     "path": "wheel-toy-preview/style.css",
-    "size": 13819,
-    "sha256": "a97806e56d01365919fee9c00595b06fe565f0ca290014776b96e31e53e3b896"
+    "size": 13746,
+    "sha256": "5de09714c44d2b1b63c53e720dab8f54c3cd60cc7fc7eaafdb4b029eb57a7e6b"
   },
   {
     "path": "wheel-toy-preview/wheel.js",
