@@ -206,8 +206,8 @@
   },
   {
     "path": "orbit-preview/paper-cards.js",
-    "size": 40108,
-    "sha256": "9ae0a78ab00a114c917591892dfc55fb2ba5949ce780062bb207dcf82c05fcaa"
+    "size": 39764,
+    "sha256": "4395622fc80652092b0e8b7737a86f97cacaaf3209515548195118e7cc09b8d1"
   },
   {
     "path": "orbit-preview/render-budget.js",
@@ -226,8 +226,8 @@
   },
   {
     "path": "orbit-preview/scene.js",
-    "size": 56542,
-    "sha256": "cf566bb18619f7734349236b7e61d42f50b2494b43f2a298806850aa2b45e7cb"
+    "size": 56271,
+    "sha256": "b29b80f6cbb2f36a80c043b234bfdaa940b8f856dd880e4f3c7e96e81dc76d7c"
   },
   {
     "path": "orbit-preview/selection-timing.js",
@@ -261,8 +261,8 @@
   },
   {
     "path": "orbit-preview/space-card-model.js",
-    "size": 13527,
-    "sha256": "120f04c703fb20615f64bae0e79870f8f52ee22d880b0d536812029e3d703635"
+    "size": 13142,
+    "sha256": "9187a75bcbca73186f2bb01a47e21a572a5b8bbce4467664a294fb4bbd42b539"
   },
   {
     "path": "orbit-preview/space-card-webgl.js",
@@ -271,8 +271,8 @@
   },
   {
     "path": "orbit-preview/space-cards.js",
-    "size": 6780,
-    "sha256": "2ccc74242aab6f05497325c4dbf638c60f34480b43823d5be05d2a7196995a39"
+    "size": 6459,
+    "sha256": "cdb9eb17bf874d7f8fd59ee15d99d01572998c426817dab29db073231d8e8350"
   },
   {
     "path": "orbit-preview/space-countdown.js",
@@ -281,18 +281,18 @@
   },
   {
     "path": "orbit-preview/space-meteors.js",
-    "size": 4228,
-    "sha256": "5fc995d341ab13a0ae577cc696c30bdac79bc94d7e11b791300160767ba711d8"
+    "size": 4188,
+    "sha256": "d0d9b755aad1c6ccff77a589a15bdcf43f8653ce7cdc4dcb25c5b9e46f44df34"
   },
   {
     "path": "orbit-preview/style.css",
-    "size": 52390,
-    "sha256": "3479083948bf2e28176b8f77fea37b6b8132218f5578deb3aa3466ba2854e6d9"
+    "size": 52291,
+    "sha256": "6757c1993865c6c11f98ebd662ada9ad8471541e07e4f97948329d3e1bcf420f"
   },
   {
     "path": "paper-cards.js",
-    "size": 40407,
-    "sha256": "7cfb6a5fec4223e97c65f85913c2031951bd85693e38c88282abebc147e50875"
+    "size": 40108,
+    "sha256": "916f306141ff8b0cff88845aadea26b3afda89c615dd7abdbf84dc7876ab53b1"
   },
   {
     "path": "render-budget.js",
@@ -311,8 +311,8 @@
   },
   {
     "path": "scene.js",
-    "size": 57486,
-    "sha256": "004a2dd8bbc2038c593fe883fae871fd27bc66f59975048932c19dff22c2c730"
+    "size": 57215,
+    "sha256": "e7697e94bc043f98dd986d2dc4c6f6c588cbd08b74e5c2c073106c370a90e396"
   },
   {
     "path": "selection-timing.js",
@@ -346,8 +346,8 @@
   },
   {
     "path": "space-card-model.js",
-    "size": 11622,
-    "sha256": "1014abb8990d84e015fced8bbd0712cc0aa658bc595faed626476500ed0cc088"
+    "size": 11247,
+    "sha256": "2bf7e0ffaa2c0c7788b07b4aea9a51a58bbf47b4805bee040d29798483045f80"
   },
   {
     "path": "space-card-webgl.js",
@@ -356,8 +356,8 @@
   },
   {
     "path": "space-cards.js",
-    "size": 6700,
-    "sha256": "75d6561342b6b119b6d2c5b71d2611da253de715b946b7d7d9e82c828c4afd1b"
+    "size": 6379,
+    "sha256": "1563fa2fbf4acfed342766f5beee6ecaf9891a0e1416d6cbd035b5cc081db4a9"
   },
   {
     "path": "space-countdown.js",
@@ -366,13 +366,13 @@
   },
   {
     "path": "space-meteors.js",
-    "size": 4235,
-    "sha256": "5f9b05ccba22f151e64b74b38db0a7bfacf9ddfa4dc6bf80e4875534e12f0eba"
+    "size": 4195,
+    "sha256": "d4c83d787cffe88aec188b4147a1d3a289a1551b731e24b6295338f968cc51a4"
   },
   {
     "path": "style.css",
-    "size": 49716,
-    "sha256": "41a3238af5b6bcf5d91dedd16b5236dd73dadabb615c1a1d8168d005741e6fe2"
+    "size": 49617,
+    "sha256": "03edb6ce988e5bb41ddf587d3ffc395746fac413f918ee7d5d37fd9588c9137d"
   },
   {
     "path": "vendor/EXCEL-VENDOR-NOTICE.txt",

@@ -15,7 +15,7 @@ export function createMeteorField(surface){
  const particles=Array.from({length:COUNT},(_,id)=>({id,slot:id%5,group:Math.floor(id/5),cycle:NaN,wave:0,waveSize:0,delay:0,lifetime:0,depth:0,speed:0,anchorX:0,anchorY:0,cos:1,sin:0,strength:0,x:0,y:0,length:0,thickness:0,alpha:0,progress:0,visible:false}));
  let elapsed=0,width=1,height=1,visible=0,disposed=false;
  function sample(model){
-  if(disposed)return;width=model.width;height=model.height;elapsed=model.reducedMotion?model.frozenElapsed:Math.max(0,model.now-(model.epoch??model.now));visible=0;
+  if(disposed)return;width=model.width;height=model.height;elapsed=Math.max(0,model.now-(model.epoch??model.now));visible=0;
   const scale=Math.max(.5,Math.min(1.4,Math.min(width,height)/518));
   for(const p of particles){
    const cycle=Math.floor((elapsed-p.group*WAVE)/PERIOD);

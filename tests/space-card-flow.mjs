@@ -56,11 +56,12 @@ for(const [width,height] of [[1366,518],[1920,810],[900,700],[390,492]]){
  view.resize(height,width);const resized=view.debug();assert.deepEqual(resized.cards.map(c=>[c.name,c.idleCycle,c.idleDepth]),unchanged.cards.map(c=>[c.name,c.idleCycle,c.idleDepth]),'Layout change preserves names and cycle age');
  reports.push({width,height,wraps,hiddenNameChanges:changes,visibleRange:[minVisible,maxVisible],visibleRosterNames:seen.size,maxMotionPxPerFrame:maxMotion,maxAlphaStep,sizeRatio:maxWidth/minWidth,readableCenterOccupancy:centerFrames/frames,centerCountRange:[minCenter,maxCenter],longestCenterGapMs:maxCenterGap*1000/60,worldCenterCrossings:crossings});view.dispose();
 }
-// Switching reduced-motion on freezes the current frame, rather than returning
-// to epoch zero; switching off resumes from exactly that depth.
-let motionListener;globalThis.matchMedia=()=>({matches:false,addEventListener(_,fn){motionListener=fn},removeEventListener(){}});
-const view=createSpaceCards(new Canvas(1366,518));view.setNames(names);view.render(12345);const position=()=>view.debug().cards.map(c=>[c.x,c.y,c.z,c.name]);const paused=position();
-motionListener({matches:true});assert.deepEqual(position(),paused);view.render(90000);assert.deepEqual(position(),paused);motionListener({matches:false});assert.deepEqual(position(),paused);view.render(90016);assert.notDeepEqual(position(),paused);view.dispose();delete globalThis.matchMedia;
+// OS preferences are never consulted, so idle flow always advances.
+for(const preference of [false,true]){
+ globalThis.matchMedia=()=>{throw Error('Animation must not consult OS motion preference')};
+ const view=createSpaceCards(new Canvas(1366,518));view.setNames(names);view.render(12345);const position=()=>view.debug().cards.map(c=>[c.x,c.y,c.z,c.name]);const first=position();
+ view.render(12361);assert.notDeepEqual(position(),first);view.dispose();delete globalThis.matchMedia;
+}
 // Retina keeps CSS-space geometry and uses a bounded moving-scene raster.
 globalThis.devicePixelRatio=2;const retina=createSpaceCards(new Canvas(1920,810));assert.ok(retina.debug().dpr<=1.5);assert.ok(1920*810*retina.debug().dpr**2<=2400000.01);retina.dispose();delete globalThis.devicePixelRatio;
 console.log('PASS production idle-flow continuity: '+JSON.stringify(reports));

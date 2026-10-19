@@ -16,7 +16,7 @@ class Canvas {
  getContext(kind){return kind==='2d'?this.ctx:null}addEventListener(type,fn){this.events.set(type,fn)}removeEventListener(type){this.events.delete(type)}emit(type){this.events.get(type)?.({preventDefault(){}})}
 }
 const names=Array.from({length:64},(_,i)=>`学生${i+1}`),running={state:'running',text:'01:23',hundredths:'45'};
-const field=createMeteorField((w,h)=>new Canvas(w,h)),sample={width:1366,height:518,now:0,epoch:0,frozenElapsed:0,reducedMotion:false};
+const field=createMeteorField((w,h)=>new Canvas(w,h)),sample={width:1366,height:518,now:0,epoch:0};
 const particles=field.particles,sprite=field.sprite,initialSurfaces=surfaces;
 assert.equal(field.debug().waveInterval,3650/1.3,'Launch frequency is exactly 30% above v74');
 assert.equal(field.debug().period,2*3650/1.3,'Two fixed banks alternate at the new launch cadence');
@@ -33,15 +33,15 @@ assert.equal(minVisible,0,'Clusters need genuinely quiet gaps');assert.equal(max
 sample.now=1000;field.sample(sample);const cycleStart=field.debug().particles;sample.now=8300;field.sample(sample);assert.notDeepEqual(field.debug().particles,cycleStart,'Each wave has a new deterministic arrangement');
 sample.now=928473.25;field.sample(sample);const direct=field.debug();sample.now=1;field.sample(sample);sample.now=928473.25;field.sample(sample);assert.deepEqual(field.debug(),direct,'Sampling must catch up directly after a hidden tab without accumulating frame deltas');
 
-let motionListener;
-globalThis.matchMedia=()=>({matches:false,addEventListener(type,fn){motionListener=fn},removeEventListener(){}});
+
+globalThis.matchMedia=()=>{throw Error('Meteor animation must not consult OS motion preference')};
 for(const kind of ['canvas','webgl']){
  const canvas=new Canvas(),rendererCanvas=new Canvas(),calls=[],gl={lost:false,getParameter(){},createShader(){},drawElements(){},isContextLost(){return this.lost}},renderer={isWebGLRenderer:true,domElement:rendererCanvas,capabilities:{getMaxAnisotropy:()=>1},getContext:()=>gl,render(scene,camera){scene.updateMatrixWorld();camera.updateMatrixWorld();calls.push({scene,camera})}};
  const view=createSpaceCards(canvas,kind==='webgl'?{renderer}:{});view.setNames(names);view.setActive(true);view.render(11000);
  const meteorState=()=>view.debug().resources.render.meteors,pose=()=>meteorState().particles;
  const idle=pose();view.start(11000);assert.deepEqual(pose(),idle,'Draw start does not restart the shower');view.reveal(names[3],11000);assert.deepEqual(pose(),idle,'Winner does not restart it');view.setCountdown(running);view.render(11000);assert.deepEqual(pose(),idle,'Timer uses the identical background');view.setCountdown({state:'finished'});view.render(11000);assert.deepEqual(pose(),idle,'Time-up uses the identical background');
  const elapsed=meteorState().elapsed;view.resize(390,492);assert.equal(meteorState().elapsed,elapsed);view.resize(1366,518);assert.deepEqual(pose(),idle,'Resize must reproject, never reseed or reset');
- motionListener({matches:true});const frozen=pose();view.render(300000);assert.deepEqual(pose(),frozen,'Reduced motion is a static field');motionListener({matches:false});assert.deepEqual(pose(),frozen,'Motion resume begins at the frozen pose');view.render(300016);assert.ok(meteorState().elapsed>elapsed,'The clock resumes even during a quiet gap');view.render(300500);assert.notDeepEqual(pose(),frozen);
+ const first=pose();view.render(300000);assert.ok(meteorState().elapsed>elapsed,'Meteor clock always advances');view.render(300500);assert.notDeepEqual(pose(),first);
  view.setActive(false);const painted=calls.length;view.render(600000);const inactive=pose();assert.equal(calls.length,painted,'Inactive star view never paints');view.setActive(true);assert.deepEqual(pose(),inactive,'Theme return shows the current shared timeline');
  if(kind==='canvas'){
   view.setCountdown(null);view.reveal(names[3],610000);for(let time=610360;time<620000;time+=100){canvas.ctx.images.length=0;view.render(time);if(meteorState().visible)break}const images=canvas.ctx.images,meteor=images.find(image=>image.width===256&&image.height===32);assert.ok(meteor);assert.ok(images.indexOf(meteor)>0);assert.ok(images.lastIndexOf(meteor)<images.length-1,'Every meteor must be painted before the selected face');assert.equal(images.filter(image=>image!==meteor).length,2,'Only the cached stars and selected plaque remain');
@@ -59,4 +59,4 @@ for(const kind of ['canvas','webgl']){
  view.dispose();view.dispose();assert.equal(rendererCanvas.events.size,0);
 }
 delete globalThis.matchMedia;field.dispose();field.dispose();
-console.log('PASS meteor lifecycle, 30% higher launch cadence, staggered waves with 2–5 flights, 1.4–2.6s lifetimes, quiet gaps and bounded brightness/speed, static reduced-motion, context/theme/resize continuity, Canvas foreground order, GPU actual CCW winding and background blending/depth, shared state/texture parity, 1800-frame fixed buffers/resources and single disposal. '+JSON.stringify({minVisible,maxVisible,activeFrames,maxStep,maxAlphaStep,maxBrightnessDelta}));
+console.log('PASS meteor lifecycle, 30% higher launch cadence, staggered waves with 2–5 flights, 1.4–2.6s lifetimes, quiet gaps and bounded brightness/speed, OS-independent motion, context/theme/resize continuity, Canvas foreground order, GPU actual CCW winding and background blending/depth, shared state/texture parity, 1800-frame fixed buffers/resources and single disposal. '+JSON.stringify({minVisible,maxVisible,activeFrames,maxStep,maxAlphaStep,maxBrightnessDelta}));

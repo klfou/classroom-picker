@@ -30,7 +30,7 @@ function orient(c,u,v,n,t){
 }
 function card(id,name){return {id,name,x:0,y:0,z:1,size:1,width:0,height:0,opacity:1,shellMix:0,shade:1,uAxis:{x:1,y:0,z:0},vAxis:{x:0,y:1,z:0},normal:{x:0,y:0,z:-1},targetNormal:{x:0,y:0,z:0},targetU:{x:0,y:0,z:0},targetV:{x:0,y:0,z:0},targetQuaternion:{x:0,y:0,z:0,w:1},mesh:newPoints(UV),backMesh:newPoints(UV),frontRim:newPoints(RIM),backRim:newPoints(RIM)}}
 export function createCardModel(){
- const model={width:1,height:1,aspect:1,focal:1.26,names:[],cards:[],extras:[],allCards:[],order:[],winner:'',selected:null,countdown:null,now:0,epoch:null,frozenElapsed:0,reducedMotion:false,drawing:false,startedAt:0,revealedAt:0,timing:SPACE_DRAW_TIMING,stage:'idle',visibleCardCount:0};
+ const model={width:1,height:1,aspect:1,focal:1.26,names:[],cards:[],extras:[],allCards:[],order:[],winner:'',selected:null,countdown:null,now:0,epoch:null,drawing:false,startedAt:0,revealedAt:0,timing:SPACE_DRAW_TIMING,stage:'idle',visibleCardCount:0};
  function setNames(names){
   model.names=names;model.cards=[];model.extras=[];model.order=[];model.drawing=false;
   if(!names.includes(model.winner)){model.winner='';model.selected=null}
@@ -59,7 +59,7 @@ export function createCardModel(){
   const x=(offset-(members-1)/2)*pitchX*(.94+layer*.025)+stagger;
   const rowY=(row-(rows-1)/2)*pitchY,arc=(normalized*normalized-.35)*pitchY*.36;
   const y=rowY+arc;
-  const elapsed=model.reducedMotion?model.frozenElapsed:Math.max(0,now-(model.epoch??now)),breath=Math.sin(elapsed/18000+layer*.7)*.10;
+  const elapsed=Math.max(0,now-(model.epoch??now)),breath=Math.sin(elapsed/18000+layer*.7)*.10;
   c.x=(shown?x:(c.id%2?1:-1)*(width*.58+cardWidth))*depth/focal;c.y=y*depth/focal;c.z=depth-breath;c.size=cardWidth*depth/(focal*1.8);
   c.idleCycle=0;c.idleDepth=layer/2;c.idleLayer=layer;c.idleOpacity=1;c.idleInView=shown;c.distanceShade=(2-layer)*.08;
   // Stable identities include offscreen reserve cards, so duplicate names and
@@ -83,12 +83,12 @@ export function createCardModel(){
 
  function sample(now=model.now){
   model.now=Number.isFinite(now)?now:model.now;if(model.epoch==null)model.epoch=model.now;
-  const elapsed=Math.max(0,model.now-model.startedAt),t=model.timing,gather=smooth(elapsed/t.gather),disperse=smooth((elapsed-t.gather-t.rotate)/t.scatter),shellMix=model.drawing&&!model.reducedMotion&&elapsed<t.total?gather*(1-disperse):0;
+  const elapsed=Math.max(0,model.now-model.startedAt),t=model.timing,gather=smooth(elapsed/t.gather),disperse=smooth((elapsed-t.gather-t.rotate)/t.scatter),shellMix=model.drawing&&elapsed<t.total?gather*(1-disperse):0;
   model.stage=model.drawing?(elapsed<t.gather?'gather':elapsed<t.gather+t.rotate?'rotate':elapsed<t.total?'disperse':'awaiting-reveal'):(model.winner?'selected':'idle');
   const angle=-.35+clamp((elapsed-t.gather)/t.rotate)*t.turn,cs=Math.cos(angle),sn=Math.sin(angle),ct=Math.cos(-.18),st=Math.sin(-.18),sphereScale=Math.min(1,model.aspect/1.18),radius=3.05*sphereScale;
   // Keep absolute-time idle lives/names current behind result/timer views.
   // Their hidden meshes need no perspective projection, orientation or sorting.
-  const revealAge=model.reducedMotion?1:clamp((model.now-model.revealedAt)/360),revealProgress=1-Math.pow(1-revealAge,3);
+  const revealAge=clamp((model.now-model.revealedAt)/360),revealProgress=1-Math.pow(1-revealAge,3);
   const hideBackground=!!model.countdown||!!model.winner&&!model.drawing&&revealAge>=1;
   model.order.length=0;model.visibleCardCount=0;
   for(const c of model.cards){idle(c,model.now);c.idleX=c.x;c.idleY=c.y;c.idleZ=c.z;c.idleSize=c.size}
@@ -112,7 +112,7 @@ export function createCardModel(){
     // enters. This avoids an empty flash when its real source was off-screen.
     const exit=revealProgress*1.22;c.x+=(c.x>=0?1:-1)*model.aspect*c.z/1.26*exit;c.y+=(c.y>=0?1:-1)*c.z/1.26*exit*.24;
    }
-   project(c);c.shade=mix(1-c.distanceShade,.52+.48*clamp((13.25-c.z)/6.1),shellMix);if(model.drawing&&model.reducedMotion)c.shade*=.6;if(!hideBackground){model.order.push(c);if(c.inView&&c.size>.001)model.visibleCardCount++;}
+   project(c);c.shade=mix(1-c.distanceShade,.52+.48*clamp((13.25-c.z)/6.1),shellMix);if(!hideBackground){model.order.push(c);if(c.inView&&c.size>.001)model.visibleCardCount++;}
   }
   if(model.order.length>1)model.order.sort((a,b)=>b.z-a.z||a.id-b.id);
   if(model.winner&&!model.drawing&&!model.countdown){
@@ -135,6 +135,5 @@ export function createCardModel(){
   model.drawing=false;model.winner=name;model.revealedAt=now;model.selected=c;sample(now);return true;
  }
  function resize(w,h){model.width=w;model.height=h;model.aspect=w/h;model.focal=h*1.26}
- function motion(next){if(next===model.reducedMotion)return;if(next)model.frozenElapsed=Math.max(0,model.now-(model.epoch??model.now));else model.epoch=model.now-model.frozenElapsed;model.reducedMotion=next}
- return Object.assign(model,{setNames,sample,start,reveal,resize,motion});
+ return Object.assign(model,{setNames,sample,start,reveal,resize});
 }

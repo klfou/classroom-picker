@@ -29,20 +29,20 @@ await test('Fresh preview defaults to orbit, preserves original theme preference
 
 for(const reduced of [false,true])for(const size of [1,2,64,128])await test(`${size} students / ${reduced?'reduced':'normal'} motion: real button → sole RAF → one original-index winner`,async()=>{
  await clean();env.setReducedMotion(reduced);assert.equal(app.applyRoster(roster(size)),true);mode(false);await env.step(16);await env.flush();
- const initial=view();assert.equal(initial.cardCount,size,'Ordered preview keeps one physical card per real roster identity');assert.ok(initial.shellCardCount>=Math.max(initial.cardCount,size)&&initial.shellCardCount<=128);assert.equal(initial.reducedMotion,reduced);
+ const initial=view();assert.equal(initial.cardCount,size,'Ordered preview keeps one physical card per real roster identity');assert.ok(initial.shellCardCount>=Math.max(initial.cardCount,size)&&initial.shellCardCount<=128);assert.equal('reducedMotion' in initial,false);
  const before=calls.length,spoken=env.speech.spoken.length,used=state().used,start=env.now;env.randomQueue=Array(1000).fill(0);$('pick').click();await env.flush();
  assert.equal(state().busy,true);assert.equal(qa().drawStart,start);assert.equal(state().drawDurationMs,1750);assert.deepEqual(view().timing,{gather:400,rotate:1000,scatter:350,total:1750,turn:Math.PI*1.55});assert.deepEqual(qa().drawCandidates,Array.from({length:size},(_,i)=>i));
  const generation=qa().drawGeneration;
  for(const [offset,stage]of [[0,'gather'],[200,'gather'],[400,'rotate'],[900,'rotate'],[1399,'rotate'],[1400,'disperse'],[1749,'disperse']]){
   await at(start+offset);const d=view();assert.equal(d.stage,stage);assert.equal(d.selectedCard,null);assert.equal(d.winner,'');assert.equal(state().selected,-1);assert.deepEqual(state().used,used);assert.equal(since('sounds.result',before).length,0);assert.equal(env.speech.spoken.length,spoken);assert.equal(env.frames.size,1);assert.ok(d.shellCards.every((c,i,a)=>!i||a[i-1].z>=c.z));assert.ok(d.shellCards.every(c=>['x','y','z','width','height','facing'].every(key=>Number.isFinite(c[key]))),'Projected card geometry remains finite');
-  if(reduced)assert.ok(d.cards.every(c=>c.shellMix===0));
+  if(offset>=400&&offset<=1399)assert.ok(d.cards.every(c=>c.shellMix===1),'Sphere gathers under either OS preference');
   $('pick').click();env.key('Space');assert.equal(qa().drawGeneration,generation,'Busy requests cannot create another draw');
  }
  app.finishPick();assert.equal(state().selected,-1,'An early finish cannot commit');assert.equal(since('space.reveal',before).length,0);
  const winner=size===1?0:1;env.randomQueue=[winner];await at(start+1750);
  assert.equal(state().selected,winner);assert.deepEqual(state().used,[winner]);assert.equal(since('sounds.begin',before).length,1);assert.equal(since('sounds.result',before).length,1);assert.equal(since('space.reveal',before).length,1);assert.deepEqual(since('space.reveal',before)[0].args,[state().names[winner],start+1750,winner]);assert.equal(env.speech.spoken.length,spoken,'No voice before its postcommit delay');
  const selected=view().selectedCard,source=view().cards.find(c=>c.id===selected.sourceCardId);assert.equal(source.rosterIndex,winner);
- if(!reduced)for(const key of ['x','y','z','width','height','screenX','screenY'])assert.ok(Math.abs(selected[key]-source[key])<1e-8,`${key}: reveal begins at matching current card pose`);
+ for(const key of ['x','y','z','width','height','screenX','screenY'])assert.ok(Math.abs(selected[key]-source[key])<1e-8,`${key}: reveal begins at matching current card pose`);
  app.finishPick();app.finishPick();assert.equal(since('sounds.result',before).length,1);
  await at(start+2110);const settled=exactWinner(winner);assert.ok(settled.selectedCard.frontRim.every(p=>p.x>=0&&p.x<=settled.width&&p.y>=0&&p.y<=settled.height));
  await at(start+2420);assert.equal(env.speech.spoken.length,spoken+1);assert.equal(env.speech.spoken.at(-1).utterance.text,state().names[winner]);assert.equal(env.speech.spoken.at(-1).utterance.voice.localService,true);

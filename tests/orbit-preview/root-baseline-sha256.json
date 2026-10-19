@@ -1,7 +1,7 @@
 {
   "root": "dist",
-  "main_commit": "6575f42cda114bdff6fae9318b5260efdb1a05d0",
-  "sha256": "d479351ebe71e8660be1d40d9cfa98e230d2116f8b25c02c53e1ede8b5b58e5b",
+  "main_commit": "bcbd6ab3bf2fd00e1bf3ff1a9fa7a6e70aa65b11",
+  "sha256": "16e353c601bb1076a219ca2f87e1b58da5e1e1ad24f17c38cec8dc5ff92708f0",
   "files": {
     "audio/LICENSE.txt": "78cf2fbe01f241fb39ae60b9a40b2c6283410c7d11c5d0e6cd93450a8b0a2f7b",
     "audio/rollcall-drum.mp3": "e6fd796d8d041903c7de709f68b68b5e0dbc89369677162460751d1c84abc8a9",
@@ -29,23 +29,23 @@
     "models/relaxed-hand-morphs.json": "bfdd7d4de10a7d1a9119f81dc569a93bfa6771a8e20097969fac66c7a35dcbb2",
     "models/teacher.scene.json": "7c6ab58d12aad304eb60a5033298812ea5f0d1f025f0148d1a862d153f6e7bce",
     "name-readout.js": "055ca4054d9f723e899e56fae683719a106898409a1e3ab2feac159efa949321",
-    "paper-cards.js": "7cfb6a5fec4223e97c65f85913c2031951bd85693e38c88282abebc147e50875",
+    "paper-cards.js": "916f306141ff8b0cff88845aadea26b3afda89c615dd7abdbf84dc7876ab53b1",
     "render-budget.js": "9ae2e57d53cae97206445b727aeb85bc9b3f1b929feb85aa5f311b7041a32de7",
     "roster-editor.js": "0d6752bb712235dc5be0f5496c2769ed5ef76f8256b8492e88ace04e48dc60a3",
     "roster.js": "37b820845a93cb22494df85ac2ba6bee2349712a755933ac24e8fc145ceaebf4",
-    "scene.js": "004a2dd8bbc2038c593fe883fae871fd27bc66f59975048932c19dff22c2c730",
+    "scene.js": "e7697e94bc043f98dd986d2dc4c6f6c588cbd08b74e5c2c073106c370a90e396",
     "selection-timing.js": "7bbdf83e13ef67121f59e5f738078d9242e4c4e32ba35f4e267751ee79dc7d63",
     "software-renderer.js": "5b188284b6687cc6a28e70b9cdc524dece821a05212247488153cac8092f9a24",
     "sound-waveforms.js": "2a8c86d695b0c753cd8fb5e2bb26a127d9ab33c90191936864fd996009e69fdf",
     "sounds.js": "2de5deabed8d1e325c86b2ff55324f665bb84c2b73aead2698dd18e4e8019b77",
     "space-card-art.js": "3e43ea1df045f81b1207679b32fff9ff15f46cb8c2e980cf20fea6977f88789d",
     "space-card-canvas.js": "c621100d72da4cea6a533005924936f0740cfa19de366bc294954b0732d0500f",
-    "space-card-model.js": "1014abb8990d84e015fced8bbd0712cc0aa658bc595faed626476500ed0cc088",
+    "space-card-model.js": "2bf7e0ffaa2c0c7788b07b4aea9a51a58bbf47b4805bee040d29798483045f80",
     "space-card-webgl.js": "9ec9dc24ee13799e71184d3d1b34597c237bde176a77cd00ce53167aece46b28",
-    "space-cards.js": "75d6561342b6b119b6d2c5b71d2611da253de715b946b7d7d9e82c828c4afd1b",
+    "space-cards.js": "1563fa2fbf4acfed342766f5beee6ecaf9891a0e1416d6cbd035b5cc081db4a9",
     "space-countdown.js": "9d1446d6245e2750a027544e37071a685f6d73382f8b5aaff9049522c596b847",
-    "space-meteors.js": "5f9b05ccba22f151e64b74b38db0a7bfacf9ddfa4dc6bf80e4875534e12f0eba",
-    "style.css": "41a3238af5b6bcf5d91dedd16b5236dd73dadabb615c1a1d8168d005741e6fe2",
+    "space-meteors.js": "d4c83d787cffe88aec188b4147a1d3a289a1551b731e24b6295338f968cc51a4",
+    "style.css": "03edb6ce988e5bb41ddf587d3ffc395746fac413f918ee7d5d37fd9588c9137d",
     "vendor/EXCEL-VENDOR-NOTICE.txt": "0a0b3265db4cfa89871e8ca76c8f0eb004d99273da9ade16eb2c3776dbb9c467",
     "vendor/FFLATE-LICENSE.txt": "0a1df3a083d0c010560aa342e87959c8c1070e6fd54545741f083f22d0c8b551",
     "vendor/OrbitControls.js": "b97879c748170baadeb3fb84cea1ffdf4674e283dc06042f34e2acb95a76042c",
@@ -77,5 +77,6 @@
       ],
       "reason": "Prepare bounded draw resources in idle slices and remove the duplicate paper start paint; preserve core sphere/flip, exact deadlines, selection and independent preview."
     }
-  ]
+  ],
+  "revision": "OS-independent motion; reviewed root changes"
 }
