@@ -418,5 +418,50 @@
     "path": "vendor/xlsx-0.20.3.mjs",
     "size": 1008308,
     "sha256": "1a0fb062ee9781b13f6687371b202aaefc53b6ce55b530c027e01f9c087b77db"
+  },
+  {
+    "path": "wheel-toy-preview/app.js",
+    "size": 8213,
+    "sha256": "4a325243de8376bc353a3ab8336cd6d8f94db29a3e2b8c32ffb7fb861a2cb384"
+  },
+  {
+    "path": "wheel-toy-preview/audio/SOURCE.txt",
+    "size": 299,
+    "sha256": "5351af11ebe0c8dd4297e1109215dc28e4ab66ffa65ae64e4520c059f9312090"
+  },
+  {
+    "path": "wheel-toy-preview/audio/wheel.mp3",
+    "size": 107047,
+    "sha256": "a239ae6c3ddf744aa3d84f19e5da86f7ff33b11ea91b80514ca850449233e354"
+  },
+  {
+    "path": "wheel-toy-preview/index.html",
+    "size": 4284,
+    "sha256": "d6cb5a200313a5062e5de68e69314ba4eaf8aeee5037824a3af885ca5218a60b"
+  },
+  {
+    "path": "wheel-toy-preview/model.js",
+    "size": 1430,
+    "sha256": "137b96a4f9c9fab276bd3696503df1e5eb1a2f62b77408641884b4343f5cc861"
+  },
+  {
+    "path": "wheel-toy-preview/qa.html",
+    "size": 855,
+    "sha256": "cd499a0a3fe5e42117bb09ba4e82d194488f84fee36c424fd45477b51b028101"
+  },
+  {
+    "path": "wheel-toy-preview/shared-controls.css",
+    "size": 52774,
+    "sha256": "e4c65e394cf5dbdebbbe06ae38ed55442b40959b03adf85e6420358ca2e69686"
+  },
+  {
+    "path": "wheel-toy-preview/style.css",
+    "size": 13746,
+    "sha256": "5de09714c44d2b1b63c53e720dab8f54c3cd60cc7fc7eaafdb4b029eb57a7e6b"
+  },
+  {
+    "path": "wheel-toy-preview/wheel.js",
+    "size": 2112,
+    "sha256": "bd3a1e4516291b6b0efd740d76bd92e2a85e99cf4135916a78d3f6c9856de285"
   }
 ]

@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import {PHRASES,randomIndex,candidates,landingAngle,sectorAtPointer,createSession,ease,DURATION} from '../src/wheel-toy-preview/model.js';
+import {readFileSync} from 'node:fs';
+assert.equal(PHRASES.length,20);assert.equal(new Set(PHRASES).size,20);assert(PHRASES.every(x=>!/[?？]/.test(x)));assert.equal(DURATION,6687);
+for(const current of [-3,0,2,98])for(let sector=0;sector<20;sector++){const a=landingAngle(current,sector);assert.equal(sectorAtPointer(a),sector);assert(a-current>=Math.PI*12)}
+const seats=Array.from({length:128},(_,i)=>({name:`测试${i}`,row:Math.floor(i/8)+1,col:i%8+1})),used=new Set([0,19,87]);const pool=candidates(seats,used,true);assert.equal(pool.length,125);assert.equal(pool.at(-1).index,127);assert.equal(candidates(seats,used,false).length,128);
+let n=0;const rng={getRandomValues(a){a[0]=n++===0?0xffffffff:124}};assert.equal(randomIndex(125,rng),124);assert.equal(n,2);assert.throws(()=>randomIndex(0));
+const session=createSession(),item={id:'one',seats},history=session(item);history.add(120);assert.equal(session({...item,name:'改名'}),history);assert.equal(session({id:'two',seats}).size,0);assert.equal(session({...item,seats:seats.slice(1)}).size,0);assert.equal(createSession()(item).size,0);assert.equal(ease(0),0);assert.equal(ease(1),1);assert(ease(.8)-ease(.7)<ease(.3)-ease(.2));
+const app=readFileSync(new URL('../src/wheel-toy-preview/app.js',import.meta.url),'utf8');assert(app.includes("voice")===false);assert(app.includes('createNameReadout'));assert(app.includes("toy-wheel-preview:"));assert(app.includes('token!==generation'));assert(app.includes('audioEnded'));assert(!app.includes('1.75'));
+console.log('PASS: 20 phrases, 80 pointer landings, unbiased rejection sampling, all 128 students eligible, session nonrepeat/reset/roster invalidation, deceleration, isolated storage and full-clip timing.');
+assert(PHRASES.every(x=>[...x].length===4),'Every decorative sector uses exactly four Chinese characters');
+const html=readFileSync(new URL('../src/wheel-toy-preview/index.html',import.meta.url),'utf8');assert(!html.includes('wheel-stand'));assert(!html.includes('wheel-foot'));for(const id of ['pick','timer-primary','timer-minutes','repeat-allow','repeat-once','sound-toggle','edit','fullscreen'])assert(html.includes(`id="${id}"`));
+const shared=readFileSync(new URL('../src/wheel-toy-preview/shared-controls.css',import.meta.url),'utf8'),mainStyle=readFileSync(new URL('../src/style.css',import.meta.url),'utf8');// Main's legacy suppression is removed independently in PR14; never copy it back.
+const fullMotionMain=mainStyle.replace(/@media\(prefers-reduced-motion:reduce\)\{\*\{transition:none!important;scroll-behavior:auto!important\}\}/g,'');
+assert(shared.replace(/\n{2,}/g,'\n').includes(fullMotionMain.replace(/\n{2,}/g,'\n')),'Production control CSS must be reused without legacy motion suppression');
+for(const file of ['style.css','shared-controls.css'])assert(!readFileSync(new URL('../src/wheel-toy-preview/'+file,import.meta.url),'utf8').includes('prefers-reduced-motion'),'Wheel CSS must preserve animation for every system preference');
+const art=readFileSync(new URL('../src/wheel-toy-preview/wheel.js',import.meta.url),'utf8');assert(art.includes('c.fillText(label,0,0'));assert(!art.includes('chars.forEach'));assert(art.includes('size*.037'));
+console.log('PASS visual structure: all20 phrases exactly4 characters, shared radius/font/radial baseline, no glyph wrapping, original control CSS verbatim, production IDs, no pedestal markup.');

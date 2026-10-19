@@ -54,6 +54,11 @@
       "sha256": "617b95dcd6126cbc23e1d1597a84e2b00ed92f8ef7c9ac26196808b64b1d820e"
     },
     {
+      "path": "docs/TOY_WHEEL_PREVIEW.md",
+      "bytes": 2668,
+      "sha256": "e0c1f8d451b3705f91789fcc5502d663470e282de6efdb2f82469936915eece8"
+    },
+    {
       "path": "docs/board-glyphs-SOURCE.txt",
       "bytes": 1618,
       "sha256": "60fb4cb16e70e376a0f3e32d5d5cd2e0824859a984b452a0407a5c92ac61711a"
@@ -120,8 +125,8 @@
     },
     {
       "path": "electron/assets-manifest.json",
-      "bytes": 12398,
-      "sha256": "f4074ecc5d3780746e6f2fef6565c5474cbcadf8eee902a7d98d4ceea298ef58"
+      "bytes": 13776,
+      "sha256": "bb1f99746a3c7edd4a271c855d9bd39a7a68f3de33cfa3e3e369c666213676c1"
     },
     {
       "path": "electron/build.cjs",
@@ -307,6 +312,16 @@
       "path": "public/vendor/xlsx-0.20.3.mjs",
       "bytes": 1008308,
       "sha256": "1a0fb062ee9781b13f6687371b202aaefc53b6ce55b530c027e01f9c087b77db"
+    },
+    {
+      "path": "public/wheel-toy-preview/audio/SOURCE.txt",
+      "bytes": 299,
+      "sha256": "5351af11ebe0c8dd4297e1109215dc28e4ab66ffa65ae64e4520c059f9312090"
+    },
+    {
+      "path": "public/wheel-toy-preview/audio/wheel.mp3",
+      "bytes": 107047,
+      "sha256": "a239ae6c3ddf744aa3d84f19e5da86f7ff33b11ea91b80514ca850449233e354"
     },
     {
       "path": "scripts/build.mjs",
@@ -644,6 +659,41 @@
       "sha256": "41a3238af5b6bcf5d91dedd16b5236dd73dadabb615c1a1d8168d005741e6fe2"
     },
     {
+      "path": "src/wheel-toy-preview/app.js",
+      "bytes": 8213,
+      "sha256": "4a325243de8376bc353a3ab8336cd6d8f94db29a3e2b8c32ffb7fb861a2cb384"
+    },
+    {
+      "path": "src/wheel-toy-preview/index.html",
+      "bytes": 4284,
+      "sha256": "d6cb5a200313a5062e5de68e69314ba4eaf8aeee5037824a3af885ca5218a60b"
+    },
+    {
+      "path": "src/wheel-toy-preview/model.js",
+      "bytes": 1430,
+      "sha256": "137b96a4f9c9fab276bd3696503df1e5eb1a2f62b77408641884b4343f5cc861"
+    },
+    {
+      "path": "src/wheel-toy-preview/qa.html",
+      "bytes": 855,
+      "sha256": "cd499a0a3fe5e42117bb09ba4e82d194488f84fee36c424fd45477b51b028101"
+    },
+    {
+      "path": "src/wheel-toy-preview/shared-controls.css",
+      "bytes": 52774,
+      "sha256": "e4c65e394cf5dbdebbbe06ae38ed55442b40959b03adf85e6420358ca2e69686"
+    },
+    {
+      "path": "src/wheel-toy-preview/style.css",
+      "bytes": 13746,
+      "sha256": "5de09714c44d2b1b63c53e720dab8f54c3cd60cc7fc7eaafdb4b029eb57a7e6b"
+    },
+    {
+      "path": "src/wheel-toy-preview/wheel.js",
+      "bytes": 2112,
+      "sha256": "bd3a1e4516291b6b0efd740d76bd92e2a85e99cf4135916a78d3f6c9856de285"
+    },
+    {
       "path": "tests/avatar-preparation.mjs",
       "bytes": 3481,
       "sha256": "d18a0b0ffad80912a91de2171131c8a4e84fc7561bfc5caf82ac0b8ed0e18d4f"
@@ -957,6 +1007,16 @@
       "path": "tests/timer-camera-takeover.mjs",
       "bytes": 9440,
       "sha256": "132b1d116375e7c61955ad8f3324023e0034ff5d5fbbb42c5fc94bcab961ed78"
+    },
+    {
+      "path": "tests/wheel-toy-flow.mjs",
+      "bytes": 4547,
+      "sha256": "06c92f9db349a7a78f828e8277a46db0bf6d61fc473cf94c425b9cbc1d5a5360"
+    },
+    {
+      "path": "tests/wheel-toy-preview.mjs",
+      "bytes": 3568,
+      "sha256": "0c7647cd2709707abba28b21f3a929b2db8169f7b8e59b8f74a8c463b67c0479"
     }
   ],
   "layout_base_commit": "01355fdd43b16797f605f7a83359a89a998f838c"

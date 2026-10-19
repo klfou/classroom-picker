@@ -1,0 +1,3 @@
+wheel.mp3 is the user-supplied 转盘.mp3, preserved byte-for-byte.
+Duration: 6.687 seconds; stereo 44.1 kHz; 107047 bytes.
+The user authorized publishing this clip in the public classroom-picker repository and isolated wheel preview on 2026-10-18. No general third-party reuse license is asserted.
