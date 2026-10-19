@@ -930,8 +930,8 @@
     },
     {
       "path": "tests/space-cards.mjs",
-      "bytes": 9714,
-      "sha256": "82020c441bbd7f721d71da1402734c381bfb73ec427b335669ba29b5350eed42"
+      "bytes": 9717,
+      "sha256": "962584a91427c9701e84ba653ad348378f5f21ccc2ca557bd0a83a3853647ba0"
     },
     {
       "path": "tests/space-meteors.mjs",
