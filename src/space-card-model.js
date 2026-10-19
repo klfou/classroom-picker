@@ -30,7 +30,7 @@ function orient(c,u,v,n,t){
 }
 function card(id,name){return {id,name,x:0,y:0,z:1,size:1,width:0,height:0,opacity:1,shellMix:0,shade:1,uAxis:{x:1,y:0,z:0},vAxis:{x:0,y:1,z:0},normal:{x:0,y:0,z:-1},targetNormal:{x:0,y:0,z:0},targetU:{x:0,y:0,z:0},targetV:{x:0,y:0,z:0},targetQuaternion:{x:0,y:0,z:0,w:1},mesh:newPoints(UV),backMesh:newPoints(UV),frontRim:newPoints(RIM),backRim:newPoints(RIM)}}
 export function createCardModel(){
- const model={width:1,height:1,aspect:1,focal:1.26,names:[],cards:[],extras:[],allCards:[],order:[],winner:'',selected:null,countdown:null,now:0,epoch:null,frozenElapsed:0,reducedMotion:false,drawing:false,startedAt:0,revealedAt:0,timing:SPACE_DRAW_TIMING,stage:'idle',visibleCardCount:0};
+ const model={width:1,height:1,aspect:1,focal:1.26,names:[],cards:[],extras:[],allCards:[],order:[],winner:'',selected:null,countdown:null,now:0,epoch:null,drawing:false,startedAt:0,revealedAt:0,timing:SPACE_DRAW_TIMING,stage:'idle',visibleCardCount:0};
  function setNames(names){
   model.names=names;model.cards=[];model.extras=[];model.order=[];model.drawing=false;
   if(!names.includes(model.winner)){model.winner='';model.selected=null}
@@ -44,7 +44,7 @@ export function createCardModel(){
   model.allCards=model.cards.concat(model.extras);
  }
  function idle(c,now){
-  const {aspect,width,height,focal}=model,elapsed=model.reducedMotion?model.frozenElapsed:Math.max(0,now-(model.epoch??now)),cycle=c.phase+elapsed/CARD.idlePeriod,depth=fract(cycle);
+  const {aspect,width,height,focal}=model,elapsed=Math.max(0,now-(model.epoch??now)),cycle=c.phase+elapsed/CARD.idlePeriod,depth=fract(cycle);
   const normalSize=aspect>1.78?Math.min(1.35,aspect/1.78):clamp(aspect/.95,.72,1),base=normalSize*CARD.scale;
   c.size=base*CARD.idleScale*Math.pow(3.6,-.24*smooth((depth-.5)/.5));
   const pathHalfW=.9*base,pathHalfH=pathHalfW*168/384,halfW=.9*c.size,halfH=halfW*168/384,near=c.nearZ*(aspect<.95?.68:1);
@@ -74,7 +74,6 @@ export function createCardModel(){
 
  function sample(now=model.now){
   model.now=Number.isFinite(now)?now:model.now;if(model.epoch==null)model.epoch=model.now;
-  // The requested draw is essential feedback; reduced motion only pauses ambience.
   const elapsed=Math.max(0,model.now-model.startedAt),t=model.timing,gather=smooth(elapsed/t.gather),disperse=smooth((elapsed-t.gather-t.rotate)/t.scatter),shellMix=model.drawing&&elapsed<t.total?gather*(1-disperse):0;
   model.stage=model.drawing?(elapsed<t.gather?'gather':elapsed<t.gather+t.rotate?'rotate':elapsed<t.total?'disperse':'awaiting-reveal'):(model.winner?'selected':'idle');
   const angle=.22+elapsed/t.total*t.turn,cs=Math.cos(angle),sn=Math.sin(angle),ct=Math.cos(-.18),st=Math.sin(-.18),sphereScale=Math.min(1,model.aspect/.95),radius=3.06*sphereScale;
@@ -106,6 +105,5 @@ export function createCardModel(){
  function start(now,profile=SPACE_DRAW_TIMING){if(!model.names.length)return false;model.drawing=false;model.winner='';model.selected=null;sample(now);for(const c of model.cards){c.startX=c.x;c.startY=c.y;c.startZ=c.z;c.startSize=c.size}model.timing=profile;model.startedAt=now;model.drawing=true;sample(now);return true}
  function reveal(name,now){if(!model.names.includes(name))return false;model.drawing=false;model.winner=name;model.revealedAt=now;model.selected=card(96,name);model.selected.selected=true;sample(now);return true}
  function resize(w,h){model.width=w;model.height=h;model.aspect=w/h;model.focal=h*1.26}
- function motion(next){if(next===model.reducedMotion)return;if(next)model.frozenElapsed=Math.max(0,model.now-(model.epoch??model.now));else model.epoch=model.now-model.frozenElapsed;model.reducedMotion=next}
- return Object.assign(model,{setNames,sample,start,reveal,resize,motion});
+ return Object.assign(model,{setNames,sample,start,reveal,resize});
 }

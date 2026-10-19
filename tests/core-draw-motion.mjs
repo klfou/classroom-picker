@@ -39,6 +39,7 @@ if (!process.argv.includes('--child')) {
  const at=async time=>{assert.ok(time>=env.now);await env.step(time-env.now);await env.flush()};
  const pose=cards=>cards.map(c=>({id:c.id,x:c.x,y:c.y,z:c.z,width:c.width,height:c.height,facing:c.facing}));
  const visual=theme=>theme==='space'?pose(app.spaceCards.debug().shellCards):theme==='paper'?pose(app.paperCards.debug().cards):app.people().map(p=>({i:p.i,highlight:p.highlight,pose:p.pose}));
+ await clean('space');const idle=visual('space');await env.step(160);assert.notDeepEqual(visual('space'),idle,'Idle cards move under either OS preference');
  const results=[];const originalResult=qa().sounds.result;qa().sounds.result=(...args)=>{results.push(args);return originalResult(...args)};
 
  for(const theme of ['space','paper','classroom']) {
@@ -104,5 +105,6 @@ if (!process.argv.includes('--child')) {
  await env.step(1800);assert.equal(results.length,before+1);assert.equal(state().selected,0);
  assert.deepEqual(frames,['selected'],'Known delayed-first-RAF limitation is unchanged');
  app.spaceCards.render=nativeRender;app.cancelDraw();
+ assert.equal(queries.size,0,'App must never consult or subscribe to OS reduced motion');
  console.log(`PASS core draw motion (initial reduced-motion=${initial}): sphere geometry/rotation, paper flip, classroom highlight/stand/camera, live preference switches, exact deadlines/winner, busy guard, theme switches, cancel/restart and timer takeover. Characterized unchanged >1750ms first-RAF gap.`);
 }

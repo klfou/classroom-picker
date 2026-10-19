@@ -12,7 +12,7 @@ const modelSHA=await sha(),counts=[1,2,3,5,7,11,16,23,29,35,36,37,64,96,128],rep
 const elapsedSpan=Math.max(230000,Math.ceil(CARD.idlePeriod*3.2/1000)*1000);
 for(const reducedMotion of [false,true])for(const count of counts){
  const names=Array.from({length:count},(_,i)=>i<2?'同名同学':`身份验证${i+1}`),model=createCardModel();
- model.resize(1366,518);model.setNames(names);model.motion(reducedMotion);
+ model.resize(1366,518);model.setNames(names);assert.equal('motion' in model,false);
  const allIndices=Array.from({length:count},(_,i)=>i),initial=model.cards.map(c=>[c.id,c.rosterIndex,c.name]);
  let samples=0;
  for(let elapsed=0;elapsed<=elapsedSpan;elapsed+=1000){
@@ -26,7 +26,7 @@ for(const reducedMotion of [false,true])for(const count of counts){
   for(const phase of [0,399,400,1399,1400,1749,1750]){model.sample(now+phase);assert.equal(model.selected,null);assert.equal(model.winner,'');assert.deepEqual([...new Set(model.cards.map(c=>c.rosterIndex))].sort((a,b)=>a-b),allIndices)}
   assert.equal(model.reveal(names[index],now+1750,index),true,`${count} seats: every original index can be revealed, including index ${index}`);
   assert.equal(model.selected.rosterIndex,index);assert.equal(model.selected.name,names[index]);const source=model.cards.find(c=>c.id===model.selected.sourceCardId);assert.equal(source.rosterIndex,index);
-  if(!reducedMotion)for(const key of ['x','y','z','width','height','screenX','screenY'])assert.ok(Math.abs(model.selected[key]-source[key])<1e-8,`${key}: reveal starts at actual source pose`);
+  for(const key of ['x','y','z','width','height','screenX','screenY'])assert.ok(Math.abs(model.selected[key]-source[key])<1e-8,`${key}: reveal starts at actual source pose`);
   model.sample(now+2110);assert.equal(model.order.length,1);assert.equal(model.order[0],model.selected);assert.equal(model.selected.rosterIndex,index);assert.ok(model.selected.inView);
   now+=4000;
  }

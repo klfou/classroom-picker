@@ -210,8 +210,6 @@ function boardFocusPath(){
  tween.polar=spherical.phi;tween.azimuth=spherical.theta;
 }
 function moveToBoard(pos,target){
- const reduced=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
- if(reduced){camera.position.copy(pos);controls.target.copy(target);camera.lookAt(target);tween=null;sceneRevision++;return}
  moveCamera(pos,target);tween.boardFlight=true;tween.startFade=boardFade;tween.duration=1500;boardFocusPath();
  tween.approachRadius=Math.max(tween.far,Math.min(tween.near,tween.far+3.5));
 }
@@ -493,7 +491,7 @@ function resize(){
  if(boardMode){
   const view=boardCamera();boardFadeView=view.pos.clone();
   // Fullscreen/layout changes refit the existing view, never replay the entry tour.
-  if(tween&&(tween.boardFlight||tween.boardRefit)&&!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches){
+  if(tween&&(tween.boardFlight||tween.boardRefit)){
    const remaining=Math.max(120,Math.min(350,(tween.duration||1500)-(performance.now()-tween.time)));
    const end=camera.clone();end.position.copy(view.pos);end.lookAt(view.target);moveCamera(view.pos,view.target);tween.duration=Math.max(remaining,camera.quaternion.angleTo(end.quaternion)>Math.PI/2?700:250);tween.boardRefit=true;tween.startFade=boardFade;boardFocusPath();
   }else{camera.position.copy(view.pos);controls.target.copy(view.target);camera.lookAt(view.target);tween=null}

@@ -94,6 +94,11 @@
       "sha256": "da494cacae34f215c28eaaeaca812590dfee09b3c24c41b1c47900db7ea3ebb3"
     },
     {
+      "path": "docs/motion-preference-audit.md",
+      "bytes": 2368,
+      "sha256": "45be11975a8368548ea68e1eef69764d5bd74230cdfb1d6cf02e925cc56b0cd2"
+    },
+    {
       "path": "electron/.gitignore",
       "bytes": 53,
       "sha256": "307128fcc69de76ccd06b63697fa79e8d60a7d978207e9d55c86f4f389cd9486"
@@ -121,7 +126,7 @@
     {
       "path": "electron/assets-manifest.json",
       "bytes": 12398,
-      "sha256": "f4074ecc5d3780746e6f2fef6565c5474cbcadf8eee902a7d98d4ceea298ef58"
+      "sha256": "d5bf5175f18e5f88f9105c73db42147710af2d1197cc1532343143ae6747b952"
     },
     {
       "path": "electron/build.cjs",
@@ -475,8 +480,8 @@
     },
     {
       "path": "src/orbit-preview/paper-cards.js",
-      "bytes": 40108,
-      "sha256": "9ae0a78ab00a114c917591892dfc55fb2ba5949ce780062bb207dcf82c05fcaa"
+      "bytes": 39764,
+      "sha256": "4395622fc80652092b0e8b7737a86f97cacaaf3209515548195118e7cc09b8d1"
     },
     {
       "path": "src/orbit-preview/render-budget.js",
@@ -495,8 +500,8 @@
     },
     {
       "path": "src/orbit-preview/scene.js",
-      "bytes": 56542,
-      "sha256": "cf566bb18619f7734349236b7e61d42f50b2494b43f2a298806850aa2b45e7cb"
+      "bytes": 56271,
+      "sha256": "b29b80f6cbb2f36a80c043b234bfdaa940b8f856dd880e4f3c7e96e81dc76d7c"
     },
     {
       "path": "src/orbit-preview/selection-timing.js",
@@ -530,8 +535,8 @@
     },
     {
       "path": "src/orbit-preview/space-card-model.js",
-      "bytes": 13527,
-      "sha256": "120f04c703fb20615f64bae0e79870f8f52ee22d880b0d536812029e3d703635"
+      "bytes": 13142,
+      "sha256": "9187a75bcbca73186f2bb01a47e21a572a5b8bbce4467664a294fb4bbd42b539"
     },
     {
       "path": "src/orbit-preview/space-card-webgl.js",
@@ -540,8 +545,8 @@
     },
     {
       "path": "src/orbit-preview/space-cards.js",
-      "bytes": 6780,
-      "sha256": "2ccc74242aab6f05497325c4dbf638c60f34480b43823d5be05d2a7196995a39"
+      "bytes": 6459,
+      "sha256": "cdb9eb17bf874d7f8fd59ee15d99d01572998c426817dab29db073231d8e8350"
     },
     {
       "path": "src/orbit-preview/space-countdown.js",
@@ -550,18 +555,18 @@
     },
     {
       "path": "src/orbit-preview/space-meteors.js",
-      "bytes": 4228,
-      "sha256": "5fc995d341ab13a0ae577cc696c30bdac79bc94d7e11b791300160767ba711d8"
+      "bytes": 4188,
+      "sha256": "d0d9b755aad1c6ccff77a589a15bdcf43f8653ce7cdc4dcb25c5b9e46f44df34"
     },
     {
       "path": "src/orbit-preview/style.css",
-      "bytes": 52390,
-      "sha256": "3479083948bf2e28176b8f77fea37b6b8132218f5578deb3aa3466ba2854e6d9"
+      "bytes": 52291,
+      "sha256": "6757c1993865c6c11f98ebd662ada9ad8471541e07e4f97948329d3e1bcf420f"
     },
     {
       "path": "src/paper-cards.js",
-      "bytes": 40407,
-      "sha256": "7cfb6a5fec4223e97c65f85913c2031951bd85693e38c88282abebc147e50875"
+      "bytes": 40108,
+      "sha256": "916f306141ff8b0cff88845aadea26b3afda89c615dd7abdbf84dc7876ab53b1"
     },
     {
       "path": "src/render-budget.js",
@@ -580,8 +585,8 @@
     },
     {
       "path": "src/scene.js",
-      "bytes": 57486,
-      "sha256": "004a2dd8bbc2038c593fe883fae871fd27bc66f59975048932c19dff22c2c730"
+      "bytes": 57215,
+      "sha256": "e7697e94bc043f98dd986d2dc4c6f6c588cbd08b74e5c2c073106c370a90e396"
     },
     {
       "path": "src/selection-timing.js",
@@ -615,8 +620,8 @@
     },
     {
       "path": "src/space-card-model.js",
-      "bytes": 11622,
-      "sha256": "1014abb8990d84e015fced8bbd0712cc0aa658bc595faed626476500ed0cc088"
+      "bytes": 11247,
+      "sha256": "2bf7e0ffaa2c0c7788b07b4aea9a51a58bbf47b4805bee040d29798483045f80"
     },
     {
       "path": "src/space-card-webgl.js",
@@ -625,8 +630,8 @@
     },
     {
       "path": "src/space-cards.js",
-      "bytes": 6700,
-      "sha256": "75d6561342b6b119b6d2c5b71d2611da253de715b946b7d7d9e82c828c4afd1b"
+      "bytes": 6379,
+      "sha256": "1563fa2fbf4acfed342766f5beee6ecaf9891a0e1416d6cbd035b5cc081db4a9"
     },
     {
       "path": "src/space-countdown.js",
@@ -635,13 +640,13 @@
     },
     {
       "path": "src/space-meteors.js",
-      "bytes": 4235,
-      "sha256": "5f9b05ccba22f151e64b74b38db0a7bfacf9ddfa4dc6bf80e4875534e12f0eba"
+      "bytes": 4195,
+      "sha256": "d4c83d787cffe88aec188b4147a1d3a289a1551b731e24b6295338f968cc51a4"
     },
     {
       "path": "src/style.css",
-      "bytes": 49716,
-      "sha256": "41a3238af5b6bcf5d91dedd16b5236dd73dadabb615c1a1d8168d005741e6fe2"
+      "bytes": 49617,
+      "sha256": "03edb6ce988e5bb41ddf587d3ffc395746fac413f918ee7d5d37fd9588c9137d"
     },
     {
       "path": "tests/avatar-preparation.mjs",
@@ -665,8 +670,8 @@
     },
     {
       "path": "tests/core-draw-motion.mjs",
-      "bytes": 8127,
-      "sha256": "c61fd498722238262ae2c8cb9fd6dc1569f36ce4da693feb4b58c9ac431fcc35"
+      "bytes": 8374,
+      "sha256": "550f19c8b77ef5b9826ada66ba3cfa5c238eb38fa3bf61c84e1ff450f7acd283"
     },
     {
       "path": "tests/countdown-all-minutes.mjs",
@@ -675,8 +680,8 @@
     },
     {
       "path": "tests/countdown-digit-layout.mjs",
-      "bytes": 14089,
-      "sha256": "26ea4eb0aadc4b08e03373ea6ff0cdc8a40788cd2d572e6d9ba676c7d1001562"
+      "bytes": 14102,
+      "sha256": "fca658ff2f8ee7ad6a8975857243285a62df1bb8b87e3ca7dbc2f4e8a70e2922"
     },
     {
       "path": "tests/countdown-presets.mjs",
@@ -749,6 +754,11 @@
       "sha256": "b95d9d11522021808e75872d16b4b28126d10f85d83a9416c7a7d5ae6a859cf2"
     },
     {
+      "path": "tests/motion-preference-audit.mjs",
+      "bytes": 754,
+      "sha256": "2e96a049b3b732465d5a613b043741f9095306b5780aefe6d88da2602bddd724"
+    },
+    {
       "path": "tests/name-readout.mjs",
       "bytes": 4368,
       "sha256": "05eeb618e08315e73643acadc2ef2d320796deaf0b076180ad4fe5412478cecc"
@@ -805,18 +815,18 @@
     },
     {
       "path": "tests/orbit-preview/orbit-host-flow.mjs",
-      "bytes": 19179,
-      "sha256": "0fc38f7ff8c78ae831a3ca3825366eb046e1d3a555f8681eb1dbd3681a78a712"
+      "bytes": 19232,
+      "sha256": "65637ceccc319be4b2fc4697ef14362d43d759b00a21a25fff6ab5684f536326"
     },
     {
       "path": "tests/orbit-preview/orbit-identity-lifecycle.mjs",
-      "bytes": 3794,
-      "sha256": "b9ae50dcfbfeb34473fd18c5e191ad03fe9c91c6b00a28ea9d1fcccdbb43a5eb"
+      "bytes": 3786,
+      "sha256": "a2b143343bccd4a0c2f0220b266ac2355dbf0e5920f70b08a105c611eed249db"
     },
     {
       "path": "tests/orbit-preview/root-baseline-sha256.json",
-      "bytes": 5874,
-      "sha256": "760033ba0b56ee87837b77c0ab0383b69fef197e1f193debe68c301d1865354a"
+      "bytes": 5936,
+      "sha256": "771cbf872b3d58be9c996b9b9249df777ee5b916fdd093a24f9fcb3501b3bf32"
     },
     {
       "path": "tests/orbit-preview/verify-root-baseline.mjs",
@@ -830,8 +840,8 @@
     },
     {
       "path": "tests/paper-cards.mjs",
-      "bytes": 21365,
-      "sha256": "67a9c95e3292d4bebc6fd246f23d497fd1c756f9e817c38b10c9cad0a1b1c0ed"
+      "bytes": 21440,
+      "sha256": "6530c3a8a9a9c25119c2a5a28faf7d40964799259b57346b2bede01d2a6ccef3"
     },
     {
       "path": "tests/paper-countdown-cards.mjs",
@@ -850,8 +860,8 @@
     },
     {
       "path": "tests/paper-theme-palette.mjs",
-      "bytes": 8641,
-      "sha256": "ee73a89d664b012900e19bc964bfa3c71cf4ad99b5fe282517dab27237fe03ba"
+      "bytes": 8663,
+      "sha256": "469eae3994c69d6ab0a8135ca4d8d8bfcd6bfe2886377a6f2fd2b547a03b47fd"
     },
     {
       "path": "tests/release-safety.mjs",
@@ -900,8 +910,8 @@
     },
     {
       "path": "tests/space-card-flow.mjs",
-      "bytes": 7590,
-      "sha256": "610ea6a59b66dbfd89249549006e69185722056682332b7aec42da305a31d580"
+      "bytes": 7328,
+      "sha256": "12d0fccdb365c88a696008dcd53e529fbf61efebac0696a123cb91a3a3956ae3"
     },
     {
       "path": "tests/space-card-idle-size.mjs",
@@ -920,13 +930,13 @@
     },
     {
       "path": "tests/space-cards.mjs",
-      "bytes": 9714,
-      "sha256": "82020c441bbd7f721d71da1402734c381bfb73ec427b335669ba29b5350eed42"
+      "bytes": 9717,
+      "sha256": "962584a91427c9701e84ba653ad348378f5f21ccc2ca557bd0a83a3853647ba0"
     },
     {
       "path": "tests/space-meteors.mjs",
-      "bytes": 11410,
-      "sha256": "47b88bd240b4a5f586ade3d700721ca357787e9b96ab423c2ece575dbe278c7f"
+      "bytes": 11101,
+      "sha256": "ad1510061a73e361d886f4bc757b05e20c7c887e499d1d424fc7a4627cf3754f"
     },
     {
       "path": "tests/space-preparation-isolation.mjs",
@@ -955,8 +965,8 @@
     },
     {
       "path": "tests/timer-camera-takeover.mjs",
-      "bytes": 9440,
-      "sha256": "132b1d116375e7c61955ad8f3324023e0034ff5d5fbbb42c5fc94bcab961ed78"
+      "bytes": 9509,
+      "sha256": "3b919d799ee1e8ff0e14efd9e32fa547938e8f8a9a74147c3b145d3173002541"
     }
   ],
   "layout_base_commit": "01355fdd43b16797f605f7a83359a89a998f838c"

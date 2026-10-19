@@ -61,7 +61,7 @@ try {
  view.setNames([]);check(()=>assert.equal(view.start(604000),false));check(()=>assert.equal(view.reveal(names[0],604000),false));check(()=>assert.equal(view.debug().cardCount,0));check(()=>assert.equal(view.debug().textureCount,0));
  globalThis.matchMedia=()=>({matches:true,addEventListener(){},removeEventListener(){}});
  const reduced=createSpaceCards(new Canvas());reduced.setNames(names);reduced.render(0);const initial=reduced.debug().cards.map(c=>[c.x,c.y,c.z]);reduced.render(900000);
- check(()=>assert.deepEqual(reduced.debug().cards.map(c=>[c.x,c.y,c.z]),initial));reduced.start(901000);reduced.render(901450);
+ check(()=>assert.notDeepEqual(reduced.debug().cards.map(c=>[c.x,c.y,c.z]),initial));reduced.start(901000);reduced.render(901450);
  check(()=>assert.notDeepEqual(reduced.debug().cards.map(c=>[c.x,c.y,c.z]),initial));check(()=>assert.equal(reduced.debug().stage,'rotate'));
  const reducedSphere=reduced.debug();check(()=>assert.equal(reducedSphere.shellCards.length,96));check(()=>assert.ok(reducedSphere.shellCards.every(c=>c.shellMix===1&&c.mesh.length===9)));
  check(()=>assert.ok(reducedSphere.shellCards.every(c=>Math.abs(Math.hypot(c.x,c.y,c.z-reducedSphere.sphereCenter.z)-reducedSphere.sphereRadius)<1e-8)));
